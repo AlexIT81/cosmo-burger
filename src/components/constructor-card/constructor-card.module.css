@@ -1,0 +1,11 @@
+.card {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+}
+
+.draggable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

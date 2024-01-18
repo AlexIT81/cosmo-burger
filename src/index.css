@@ -1,13 +1,43 @@
+@import './utils/reset.css';
+@import './fonts/fonts.css';
+@import './utils/variables.css';
+
+html {
+  height: 100%;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--interface-scroll); 
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--interface-scroll); 
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--text-secondary);
+
+}
+
 body {
+  height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-style: normal;
+  background-color: var(--interface-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
 }

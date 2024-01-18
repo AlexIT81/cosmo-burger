@@ -1,0 +1,45 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/recommended",
+        "airbnb",
+        "prettier",
+        "plugin:react/jsx-runtime"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "no-unused-vars": "off",
+        "import/no-unresolved": [
+            2, 
+            { "caseSensitive": false }
+         ],
+         "import/prefer-default-export": "off",
+         "import/no-extraneous-dependencies": "off",
+         "react/forbid-prop-types": "off",
+         "react/function-component-definition": "off",
+         "arrow-body-style": "off",
+         "no-return-assign": "off",
+         "no-param-reassign": "off",
+         "no-underscore-dangle": "off"
+    },
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
+      }
+}

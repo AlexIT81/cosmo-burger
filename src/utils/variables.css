@@ -1,0 +1,10 @@
+html {
+  --text-primary: #F2F2F3;
+  --text-secondary: #8585AD;
+  --interface-success: #00CCCC;
+  --interface-modal-bg: #1C1C21;
+  --interface-bg: #131316;
+  --interface-scroll: #2F2F37;
+  --font-primary: 'Jet Brains Mono', Arial, Helvetica, sans-serif;
+  --font-secondary: 'Iceland', Arial, Helvetica, sans-serif;
+}

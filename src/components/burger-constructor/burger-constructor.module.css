@@ -1,0 +1,10 @@
+.list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+  max-height: calc(100vh - 88px - 100px - 84px - 40px - 24px - 96px - 96px);
+  /* max-height: calc(100vh - 500px); */
+  min-height: 424px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
