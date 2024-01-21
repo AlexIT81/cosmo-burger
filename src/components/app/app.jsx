@@ -10,11 +10,26 @@ import { OrderDetails } from '../order-details/order-details';
 
 function App() {
   const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
-  const [isOpenModalOrder, setIsOpenModalOrder] = useState(true);
+  const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
+
+  const [orderNumber, setOrderNumber] = useState(0);
+  const [currentIngredient, setCurrentIngredient] = useState({});
+
+  const handleModalOrder = () => {
+    setOrderNumber('034536');
+    setIsOpenModalOrder(true);
+  }
+
+  const handleModalIngredient = (id) => {
+    setCurrentIngredient(data.find((item) => item._id === id));
+    console.log(currentIngredient)
+    setIsOpenModalIngredient(true);
+  }
 
   const closeModal = () => {
     setIsOpenModalIngredient(false);
     setIsOpenModalOrder(false);
+    setCurrentIngredient({});
   };
 
   return (
@@ -22,25 +37,25 @@ function App() {
       <div className={`${styles.App} mb-10`}>
         <AppHeader />
         <main className={styles.main}>
-          <BurgerIngredients ingredients={data} />
-          <BurgerConstructor ingredients={data} />
+          <BurgerIngredients ingredients={data} handleModalIngredient={handleModalIngredient} />
+          <BurgerConstructor ingredients={data} handleModalOrder={handleModalOrder} />
         </main>
       </div>
       {isOpenModalIngredient && (
         <Modal closeModal={closeModal} title='Детали ингредиента'>
           <IngredientDetails
-            image="https://code.s3.yandex.net/react/code/bun-02.png"
-            name="Краторная булка N-200i"
-            calories="2674"
-            proteins="400"
-            fat="700"
-            carbohydrates="652"
+            image={currentIngredient.image}
+            name={currentIngredient.name}
+            calories={currentIngredient.calories}
+            proteins={currentIngredient.proteins}
+            fat={currentIngredient.fat}
+            carbohydrates={currentIngredient.carbohydrates}
           />
         </Modal>
       )}
       {isOpenModalOrder && (
         <Modal closeModal={closeModal}>
-          <OrderDetails orderNumber='034536' />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
     </>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = ({ ingredients, handleModalIngredient }) => {
   const [current, setCurrent] = useState('bun');
   const bunArr = ingredients.filter((item) => item.type === 'bun');
   const sauceArr = ingredients.filter((item) => item.type === 'sauce');
@@ -63,15 +63,15 @@ export const BurgerIngredients = ({ ingredients }) => {
         <h2 className='text text_type_main-medium' ref={bunRef}>
           Булки
         </h2>
-        <IngredientsList ingredients={bunArr} />
+        <IngredientsList ingredients={bunArr} handleModalIngredient={handleModalIngredient} />
         <h2 className='text text_type_main-medium' ref={sauceRef}>
           Соусы
         </h2>
-        <IngredientsList ingredients={sauceArr} />
+        <IngredientsList ingredients={sauceArr} handleModalIngredient={handleModalIngredient} />
         <h2 className='text text_type_main-medium' ref={mainRef}>
           Начинки
         </h2>
-        <IngredientsList ingredients={mainArr} />
+        <IngredientsList ingredients={mainArr} handleModalIngredient={handleModalIngredient} />
       </div>
     </section>
   );
@@ -79,4 +79,5 @@ export const BurgerIngredients = ({ ingredients }) => {
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleModalIngredient: PropTypes.func.isRequired,
 };

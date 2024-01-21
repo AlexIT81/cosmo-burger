@@ -1,4 +1,3 @@
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-details.module.css';
 import doneIcon from '../../images/done.svg';
 
