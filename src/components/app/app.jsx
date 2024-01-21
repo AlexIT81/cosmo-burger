@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -7,6 +7,7 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
+import { apiData } from '../../utils/api';
 
 function App() {
   const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
@@ -14,6 +15,22 @@ function App() {
 
   const [orderNumber, setOrderNumber] = useState(0);
   const [currentIngredient, setCurrentIngredient] = useState({});
+
+  const [ingredients, setIngredients] = useState([]);
+
+  const getIngredient = () => {
+    return apiData().then((res) => {
+      setIngredients(res.data)
+    })
+    .catch((err) => {
+      console.log('Ошибка API!');
+    });
+  }
+
+  useEffect(() => {
+    getIngredient();
+  }, [])
+
 
   const handleModalOrder = () => {
     setOrderNumber('034536');
