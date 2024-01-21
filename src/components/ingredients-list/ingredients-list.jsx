@@ -7,7 +7,7 @@ export const IngredientsList = ({ ingredients, handleModalIngredient }) => {
   return (
     <ul className={styles.list}>
       {ingredients.map((item) => {
-        const count = Math.round(Math.random());
+        const count = 5; // временно для отображения счетчика
         return (
           <IngredientsCard
             key={item._id}

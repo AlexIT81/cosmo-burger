@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import doneIcon from '../../images/done.svg';
 
@@ -13,4 +14,8 @@ export const OrderDetails = ({ orderNumber }) => {
       <p className='text text_type_main-default text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
     </div>
   );
+};
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
 };

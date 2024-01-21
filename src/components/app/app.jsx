@@ -22,7 +22,6 @@ function App() {
 
   const handleModalIngredient = (id) => {
     setCurrentIngredient(data.find((item) => item._id === id));
-    console.log(currentIngredient)
     setIsOpenModalIngredient(true);
   }
 
