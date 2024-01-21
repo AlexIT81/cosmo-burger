@@ -16,7 +16,7 @@ export const BurgerConstructor = ({ingredients}) => {
   return (
     <section className='pt-25'>
       <div className='mr-4 ml-4 mb-4'>
-        <ConstructorCard isDraggable={false} isLocked name={currentBun.name} price={currentBun.price} img={currentBun.image_mobile} type='top' extraClass='ml-4' />
+        <ConstructorCard isDraggable={false} isLocked name={`${currentBun.name} (верх)`} price={currentBun.price} img={currentBun.image_mobile} type='top' extraClass='ml-4' />
       </div>
       
       <ul className={`${styles.list} pr-4 pl-4 mb-4`}>
@@ -25,7 +25,7 @@ export const BurgerConstructor = ({ingredients}) => {
       })}
       </ul>
       <div className='mr-4 ml-4 mb-10'>
-        <ConstructorCard isDraggable={false} isLocked name={currentBun.name} price={currentBun.price} img={currentBun.image_mobile} type='bottom' />
+        <ConstructorCard isDraggable={false} isLocked name={`${currentBun.name} (низ)`} price={currentBun.price} img={currentBun.image_mobile} type='bottom' />
       </div>
       <ConstructorTotal totalSum={totalSum} />
     </section>
