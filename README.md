@@ -6,7 +6,7 @@
 Бургерная с возможностью ... (будет дополняться)
 
 ### 1 спринт
-В 1 спринте реализована инфраструктуру проекта и сверстаны несколько компонентов.
+В 1 спринте реализована инфраструктуру проекта и сверстаны несколько компонентов(основной интерфейс бургерной, модальное окно заказа и ингридиента).
 
 
 ## Основные команды
@@ -28,4 +28,6 @@
 ![webpack](https://img.shields.io/badge/webpack-073502?style=for-the-badge&logo=webpack&labelColor=3d3f3d)
 ![vscode](https://img.shields.io/badge/vscode-073502?style=for-the-badge&logo=visualstudiocode&labelColor=3d3f3d)
 ![figma](https://img.shields.io/badge/figma-073502?style=for-the-badge&logo=figma&labelColor=3d3f3d)
+![postman](https://img.shields.io/badge/postman-073502?style=for-the-badge&logo=postman&labelColor=3d3f3d)
 ![github](https://img.shields.io/badge/github-073502?style=for-the-badge&logo=github&labelColor=3d3f3d)
+![json](https://img.shields.io/badge/json-073502?style=for-the-badge&logo=json&labelColor=3d3f3d)
