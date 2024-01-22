@@ -4,12 +4,13 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
+import { ESC_KEYCODE } from '../../utils/constants';
 
 const modalRoot = document.getElementById('react-modals');
 
 export const Modal = ({ children, title, closeModal }) => {
   const escCloseModal = (e) => {
-    if (e.keyCode === 27) closeModal();
+    if (e.keyCode === ESC_KEYCODE) closeModal();
   };
 
   useEffect(() => {

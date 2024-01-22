@@ -1,16 +1,20 @@
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorCard } from '../constructor-card/constructor-card';
 import { ConstructorTotal } from '../constructor-total/constructor-total';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
 export const BurgerConstructor = ({ ingredients, handleModalOrder }) => {
   const currentBun = ingredients.find((item) => item.type === 'bun');
 
-  const totalSum = ingredients.reduce((result, item) => {
-    return item.type === 'bun'
-      ? (result += item.price * 2)
-      : (result += item.price);
-  }, 0);
+  const totalSum = useMemo(() => {
+    return ingredients.reduce((result, item) => {
+      return item.type === 'bun'
+        ? (result += item.price * 2)
+        : (result += item.price);
+    }, 0);
+  }, [ingredients]);
 
   return (
     <section className="pt-25">
@@ -65,21 +69,6 @@ export const BurgerConstructor = ({ ingredients, handleModalOrder }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleModalOrder: PropTypes.func.isRequired,
 };

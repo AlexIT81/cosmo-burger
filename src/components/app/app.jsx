@@ -17,13 +17,16 @@ function App() {
 
   const [ingredients, setIngredients] = useState([]);
 
+  const [errorMsg, setErrorMsg] = useState('');
+
   function getIngredients() {
     return apiData()
       .then((res) => {
         setIngredients(res.data);
+        if (errorMsg) setErrorMsg('');
       })
-      .catch((err) => {
-        console.log('Ошибка API!');
+      .catch(() => {
+        setErrorMsg('Произошла ошибка при запросе данных. Пожалуйста, зайдите позже.');
       });
   }
 
@@ -51,7 +54,8 @@ function App() {
     <>
       <div className={`${styles.App} mb-10`}>
         <AppHeader />
-        <main className={styles.main}>
+        {errorMsg ? <p style={{textAlign: 'center'}}>{errorMsg}</p> : 
+        (<main className={styles.main}>
           <BurgerIngredients
             ingredients={ingredients}
             handleModalIngredient={handleModalIngredient}
@@ -60,7 +64,7 @@ function App() {
             ingredients={ingredients}
             handleModalOrder={handleModalOrder}
           />
-        </main>
+          </main>)}
       </div>
       {isOpenModalIngredient && (
         <Modal closeModal={closeModal} title="Детали ингредиента">
