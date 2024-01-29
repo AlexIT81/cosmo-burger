@@ -1,0 +1,13 @@
+@font-face {
+  src: url(./JetBrainsMono-Regular.ttf) format('truetype');
+  font-family: 'Jet Brains Mono';
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  src: url(./Iceland-Regular.ttf) format('truetype');
+  font-family: 'Iceland';
+  font-weight: normal;
+  font-display: swap;
+}

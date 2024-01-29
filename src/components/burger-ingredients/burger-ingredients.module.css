@@ -1,0 +1,9 @@
+.ingredients-menu {
+  display: flex;
+}
+
+.cards-wrapper {
+  max-height: calc(100vh - 88px - 100px - 96px - 40px);
+  min-height: 500px;
+  overflow-y: auto;
+}

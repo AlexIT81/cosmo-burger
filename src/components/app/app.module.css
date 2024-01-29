@@ -1,0 +1,12 @@
+.App {
+  height: 100%;
+  width: 1280px;
+  min-width: 1280px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(2, 600px);
+  gap: 40px;
+  justify-content: center;
+}
