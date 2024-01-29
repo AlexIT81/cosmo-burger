@@ -1,50 +1,51 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorCard } from '../constructor-card/constructor-card';
 import { ConstructorTotal } from '../constructor-total/constructor-total';
-import { ingredientPropTypes } from '../../utils/prop-types';
+// import { ingredientPropTypes } from '../../utils/prop-types';
+import { IngredientsDataContext } from '../../services/ingredientsContext';
 
-export const BurgerConstructor = ({ ingredients, handleModalOrder }) => {
-  const currentBun = ingredients.find((item) => item.type === 'bun');
+export const BurgerConstructor = ({ handleModalOrder }) => {
+  const { ingredientsData } = useContext(IngredientsDataContext);
 
   const totalSum = useMemo(() => {
-    return ingredients.reduce((result, item) => {
-      return item.type === 'bun'
-        ? (result += item.price * 2)
-        : (result += item.price);
-    }, 0);
-  }, [ingredients]);
+    if (ingredientsData.ingredients && ingredientsData.bun) {
+      return ingredientsData.ingredients.reduce((result, item) => {
+        return result += item.price;
+      }, ingredientsData.bun.price * 2);
+    }
+    return 0
+  }, [ingredientsData.ingredients, ingredientsData.bun]);
 
   return (
     <section className="pt-25">
-      {totalSum && currentBun && (
+      {totalSum && ingredientsData.bun && (
         <>
           <div className="mr-4 ml-4 mb-4">
             <ConstructorCard
               isDraggable={false}
               isLocked
-              name={`${currentBun.name} (верх)`}
-              price={currentBun.price}
-              img={currentBun.image_mobile}
+              name={`${ingredientsData.bun.name} (верх)`}
+              price={ingredientsData.bun.price}
+              img={ingredientsData.bun.image_mobile}
               type="top"
               extraClass="ml-4"
             />
           </div>
           <ul className={`${styles.list} pr-4 pl-4 mb-4`}>
-            {ingredients.map((item) => {
+            {ingredientsData.ingredients.map((item) => {
               return (
-                item.type !== 'bun' && (
                   <li key={item._id}>
                     <ConstructorCard
                       isDraggable
+                      id={item._id}
                       isLocked={false}
                       name={item.name}
                       price={item.price}
                       img={item.image_mobile}
                     />
                   </li>
-                )
               );
             })}
           </ul>
@@ -52,9 +53,9 @@ export const BurgerConstructor = ({ ingredients, handleModalOrder }) => {
             <ConstructorCard
               isDraggable={false}
               isLocked
-              name={`${currentBun.name} (низ)`}
-              price={currentBun.price}
-              img={currentBun.image_mobile}
+              name={`${ingredientsData.bun.name} (низ)`}
+              price={ingredientsData.bun.price}
+              img={ingredientsData.bun.image_mobile}
               type="bottom"
             />
           </div>
@@ -69,6 +70,6 @@ export const BurgerConstructor = ({ ingredients, handleModalOrder }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  // ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleModalOrder: PropTypes.func.isRequired,
 };

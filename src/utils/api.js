@@ -9,12 +9,25 @@ const checkRes = (res) => {
   });
 };
 
-export const apiData = (name, email, password) => {
-  return fetch(`${API_URL}`, {
+export const getData = () => {
+  return fetch(`${API_URL}/ingredients`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
+  })
+    .then((res) => checkRes(res))
+};
+
+export const createOrder = (data) => {
+  return fetch(`${API_URL}/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ingredients: data,
+    }),
   })
     .then((res) => checkRes(res))
 };
