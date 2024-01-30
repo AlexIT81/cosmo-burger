@@ -1,7 +1,7 @@
 import { API_URL } from './constants';
 
 const checkRes = (res) => {
-  if (res.ok) {
+    if (res.ok) {
     return res.json();
   }
   return res.json().then((err) => {
@@ -9,25 +9,17 @@ const checkRes = (res) => {
   });
 };
 
+const request = (endpoint, options) => {
+  return fetch(`${API_URL}/${endpoint}`, options).then(checkRes)
+}
+
 export const getData = () => {
-  return fetch(`${API_URL}/ingredients`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => checkRes(res))
-};
+  return request('ingredients', {method: 'GET', headers: {'Content-Type': 'application/json'}})};
 
 export const createOrder = (data) => {
-  return fetch(`${API_URL}/orders`, {
+  return request('orders', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ingredients: data,
-    }),
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ingredients: data}),
   })
-    .then((res) => checkRes(res))
 };

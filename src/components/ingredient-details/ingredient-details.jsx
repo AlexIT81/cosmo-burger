@@ -1,35 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
+import { ingredientPropTypes } from '../../utils/prop-types';
 
-export const IngredientDetails = ({
-  image,
-  name,
-  calories,
-  proteins,
-  fat,
-  carbohydrates,
-}) => {
+export const IngredientDetails = ({currentIngredient}) => {
   return (
     <div className={styles.wrapper}>
-      <img src={image} alt={name} className={styles.image} />
-      <h2 className={styles.title}>{name}</h2>
+      <img src={currentIngredient.image} alt={currentIngredient.name} className={styles.image} />
+      <h2 className={styles.title}>{currentIngredient.name}</h2>
       <ul className={styles.nutritionals}>
         <li className={`${styles['nutritional-wrapper']}`}>
           <h3 className={`${styles['nutritional-title']}`}>Калории,ккал</h3>
-          <p className={`${styles['nutritional-value']}`}>{calories}</p>
+          <p className={`${styles['nutritional-value']}`}>{currentIngredient.calories}</p>
         </li>
         <li className={`${styles['nutritional-wrapper']}`}>
           <h3 className={`${styles['nutritional-title']}`}>Белки, г</h3>
-          <p className={`${styles['nutritional-value']}`}>{proteins}</p>
+          <p className={`${styles['nutritional-value']}`}>{currentIngredient.proteins}</p>
         </li>
         <li className={`${styles['nutritional-wrapper']}`}>
           <h3 className={`${styles['nutritional-title']}`}>Жиры, г</h3>
-          <p className={`${styles['nutritional-value']}`}>{fat}</p>
+          <p className={`${styles['nutritional-value']}`}>{currentIngredient.fat}</p>
         </li>
         <li className={`${styles['nutritional-wrapper']}`}>
           <h3 className={`${styles['nutritional-title']}`}>Углеводы, г</h3>
-          <p className={`${styles['nutritional-value']}`}>{carbohydrates}</p>
+          <p className={`${styles['nutritional-value']}`}>{currentIngredient.carbohydrates}</p>
         </li>
       </ul>
     </div>
@@ -37,10 +29,5 @@ export const IngredientDetails = ({
 };
 
 IngredientDetails.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
+  currentIngredient: ingredientPropTypes.isRequired,
 };

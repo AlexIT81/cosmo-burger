@@ -12,6 +12,7 @@ import { IngredientsDataContext } from '../../services/ingredientsContext';
 function App() {
   const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
+  const [isModalOrderLoading, setIsModalOrderLoading] = useState(false);
 
   const [orderNumber, setOrderNumber] = useState(0);
   const [currentIngredient, setCurrentIngredient] = useState({});
@@ -23,7 +24,7 @@ function App() {
   const [ingredientsData, setIngredientsData] = useState({ bun: null, ingredients: [] });
 
   function getIngredients() {
-    return getData()
+    getData()
       .then((res) => {
         setIngredients(res.data);
         setIngredientsData({
@@ -44,6 +45,7 @@ function App() {
   }, []);
 
   const setOrderData = () => {
+    setIsModalOrderLoading(true);
     const orderData = []
     ingredientsData.ingredients.forEach((item) => {
       orderData.push(item._id);
@@ -53,9 +55,11 @@ function App() {
     createOrder(orderData)
       .then((res) => {
         setOrderNumber(+res.order.number)
+        setIsModalOrderLoading(false);
         if (errorMsg) setErrorMsg('');
       })
       .catch(() => {
+        setIsModalOrderLoading(false);
         setErrorMsg(
           'Произошла ошибка при запросе данных формирования заказа. Пожалуйста, повторите запрос позже',
         );
@@ -102,19 +106,12 @@ function App() {
       </div>
       {isOpenModalIngredient && (
         <Modal closeModal={closeModal} title="Детали ингредиента">
-          <IngredientDetails
-            image={currentIngredient.image}
-            name={currentIngredient.name}
-            calories={currentIngredient.calories}
-            proteins={currentIngredient.proteins}
-            fat={currentIngredient.fat}
-            carbohydrates={currentIngredient.carbohydrates}
-          />
+          <IngredientDetails currentIngredient={currentIngredient} />
         </Modal>
       )}
       {isOpenModalOrder && (
         <Modal closeModal={closeModal}>
-          <OrderDetails orderNumber={+orderNumber} />
+          <OrderDetails orderNumber={+orderNumber} isModalOrderLoading={isModalOrderLoading} />
         </Modal>
       )}
     </>
