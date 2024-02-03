@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { ingredientPropTypes } from '../../utils/prop-types';
+import { getInrgedients } from '../../services/actions/ingredients';
 
-export const BurgerIngredients = ({ ingredients, handleModalIngredient }) => {
+export const BurgerIngredients = ({ handleModalIngredient }) => {
+  const dispatch = useDispatch();
+  // получение ингредиентов из API
+  useEffect(() => {
+    dispatch(getInrgedients());
+  }, [dispatch]);
+
+  const ingredients = useSelector(state => state.ingredients.ingredients);
+
   const [current, setCurrent] = useState('bun');
   const bunArr = ingredients.filter((item) => item.type === 'bun');
   const sauceArr = ingredients.filter((item) => item.type === 'sauce');
@@ -79,6 +89,6 @@ export const BurgerIngredients = ({ ingredients, handleModalIngredient }) => {
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  // ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleModalIngredient: PropTypes.func.isRequired,
 };

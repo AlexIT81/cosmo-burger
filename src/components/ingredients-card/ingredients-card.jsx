@@ -1,34 +1,36 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import styles from './ingredients-card.module.css';
+import { ingredientPropTypes } from '../../utils/prop-types';
+import { ADD_INGREDIENT } from '../../services/actions/ingredient';
 
-export const IngredientsCard = ({ id, image, name, price, counter, handleModalIngredient }) => {
+export const IngredientsCard = ({ ingredient, counter, handleModalIngredient }) => {
+  const dispatch = useDispatch();
 
   const onModalIngredient = () => {
-    handleModalIngredient(id);
+    handleModalIngredient(ingredient._id);
+    dispatch({type: ADD_INGREDIENT, payload: ingredient});
   }
   return (
     <li className={styles.card} onClick={onModalIngredient} role="tab">
-      <img src={image} alt={name} className={styles.image} />
+      <img src={ingredient.image_large} alt={ingredient.name} className={styles.image} />
       <div className={styles['price-wrapper']}>
-        <span className='text text_type_digits-medium'>{price}</span>
+        <span className='text text_type_digits-medium'>{ingredient.price}</span>
         <CurrencyIcon type='primary' />
       </div>
-      <h3 className={`${styles.name} text text_type_main-default`}>{name}</h3>
+      <h3 className={`${styles.name} text text_type_main-default`}>{ingredient.name}</h3>
       {!!counter && <Counter count={counter} size='default' extraClass={styles.counter} />}
     </li>
   );
 };
 
 IngredientsCard.propTypes = {
-  id: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  ingredient: ingredientPropTypes.isRequired,
   counter: PropTypes.number,
   handleModalIngredient: PropTypes.func.isRequired,
 };

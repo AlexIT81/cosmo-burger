@@ -1,10 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-export const IngredientDetails = ({currentIngredient}) => {
+export const IngredientDetails = () => {
+  const currentIngredient = useSelector(state => state.ingredient.ingredient);
   return (
     <div className={styles.wrapper}>
-      <img src={currentIngredient.image} alt={currentIngredient.name} className={styles.image} />
+      <img src={currentIngredient.image_large} alt={currentIngredient.name} className={styles.image} />
       <h2 className={styles.title}>{currentIngredient.name}</h2>
       <ul className={styles.nutritionals}>
         <li className={`${styles['nutritional-wrapper']}`}>
@@ -28,6 +30,6 @@ export const IngredientDetails = ({currentIngredient}) => {
   );
 };
 
-IngredientDetails.propTypes = {
-  currentIngredient: ingredientPropTypes.isRequired,
-};
+// IngredientDetails.propTypes = {
+//   currentIngredient: ingredientPropTypes.isRequired,
+// };

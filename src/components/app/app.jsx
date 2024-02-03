@@ -1,4 +1,5 @@
 import React, { useContext, useLayoutEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -8,16 +9,15 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
 import { getData, createOrder } from '../../utils/api';
 import { IngredientsDataContext } from '../../services/ingredientsContext';
+import { REMOVE_INGREDIENT } from '../../services/actions/ingredient';
 
 function App() {
+  const dispatch = useDispatch()
   const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
   const [isModalOrderLoading, setIsModalOrderLoading] = useState(false);
 
   const [orderNumber, setOrderNumber] = useState(0);
-  const [currentIngredient, setCurrentIngredient] = useState({});
-
-  const [ingredients, setIngredients] = useState([]);
 
   const [errorMsg, setErrorMsg] = useState('');
   // For Context
@@ -26,7 +26,6 @@ function App() {
   function getIngredients() {
     getData()
       .then((res) => {
-        setIngredients(res.data);
         setIngredientsData({
           bun: res.data.find((item) => item.type === 'bun'),
           ingredients: res.data.filter((item) => item.type !== 'bun')
@@ -72,14 +71,13 @@ function App() {
   };
 
   const handleModalIngredient = (id) => {
-    setCurrentIngredient(ingredients.find((item) => item._id === id));
     setIsOpenModalIngredient(true);
   };
 
   const closeModal = () => {
     setIsOpenModalIngredient(false);
     setIsOpenModalOrder(false);
-    setCurrentIngredient({});
+    dispatch({type: REMOVE_INGREDIENT});
     setOrderNumber(0);
   };
 
@@ -92,7 +90,6 @@ function App() {
         ) : (
           <main className={styles.main}>
             <BurgerIngredients
-              ingredients={ingredients}
               handleModalIngredient={handleModalIngredient}
             />
             {/* eslint-disable-next-line */}
@@ -106,7 +103,7 @@ function App() {
       </div>
       {isOpenModalIngredient && (
         <Modal closeModal={closeModal} title="Детали ингредиента">
-          <IngredientDetails currentIngredient={currentIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
       {isOpenModalOrder && (

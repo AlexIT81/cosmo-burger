@@ -12,10 +12,7 @@ export const IngredientsList = ({ ingredients, handleModalIngredient }) => {
         return (
           <IngredientsCard
             key={item._id}
-            id={item._id}
-            image={item.image}
-            name={item.name}
-            price={item.price}
+            ingredient={item}
             counter={count}
             handleModalIngredient={handleModalIngredient}
           />
