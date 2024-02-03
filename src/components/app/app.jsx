@@ -9,10 +9,10 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
 import { getData, createOrder } from '../../utils/api';
 import { IngredientsDataContext } from '../../services/ingredientsContext';
-import { REMOVE_INGREDIENT } from '../../services/actions/ingredient';
+import { removeIngredient } from '../../services/actions/ingredient';
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
   const [isModalOrderLoading, setIsModalOrderLoading] = useState(false);
@@ -21,14 +21,17 @@ function App() {
 
   const [errorMsg, setErrorMsg] = useState('');
   // For Context
-  const [ingredientsData, setIngredientsData] = useState({ bun: null, ingredients: [] });
+  const [ingredientsData, setIngredientsData] = useState({
+    bun: null,
+    ingredients: [],
+  });
 
   function getIngredients() {
     getData()
       .then((res) => {
         setIngredientsData({
           bun: res.data.find((item) => item.type === 'bun'),
-          ingredients: res.data.filter((item) => item.type !== 'bun')
+          ingredients: res.data.filter((item) => item.type !== 'bun'),
         });
         if (errorMsg) setErrorMsg('');
       })
@@ -45,15 +48,15 @@ function App() {
 
   const setOrderData = () => {
     setIsModalOrderLoading(true);
-    const orderData = []
+    const orderData = [];
     ingredientsData.ingredients.forEach((item) => {
       orderData.push(item._id);
-    })
+    });
     orderData.push(ingredientsData.bun._id);
     orderData.unshift(ingredientsData.bun._id);
     createOrder(orderData)
       .then((res) => {
-        setOrderNumber(+res.order.number)
+        setOrderNumber(+res.order.number);
         setIsModalOrderLoading(false);
         if (errorMsg) setErrorMsg('');
       })
@@ -63,21 +66,21 @@ function App() {
           'Произошла ошибка при запросе данных формирования заказа. Пожалуйста, повторите запрос позже',
         );
       });
-  }
+  };
 
   const handleModalOrder = () => {
     setOrderData();
     setIsOpenModalOrder(true);
   };
 
-  const handleModalIngredient = (id) => {
+  const handleModalIngredient = () => {
     setIsOpenModalIngredient(true);
   };
 
   const closeModal = () => {
     setIsOpenModalIngredient(false);
     setIsOpenModalOrder(false);
-    dispatch({type: REMOVE_INGREDIENT});
+    dispatch(removeIngredient());
     setOrderNumber(0);
   };
 
@@ -89,15 +92,8 @@ function App() {
           <p style={{ textAlign: 'center' }}>{errorMsg}</p>
         ) : (
           <main className={styles.main}>
-            <BurgerIngredients
-              handleModalIngredient={handleModalIngredient}
-            />
-            {/* eslint-disable-next-line */}
-            <IngredientsDataContext.Provider value={{ ingredientsData, setIngredientsData }}>
-              <BurgerConstructor
-                handleModalOrder={handleModalOrder}
-              />
-            </IngredientsDataContext.Provider>
+            <BurgerIngredients handleModalIngredient={handleModalIngredient} />
+            <BurgerConstructor handleModalOrder={handleModalOrder} />
           </main>
         )}
       </div>
@@ -108,7 +104,10 @@ function App() {
       )}
       {isOpenModalOrder && (
         <Modal closeModal={closeModal}>
-          <OrderDetails orderNumber={+orderNumber} isModalOrderLoading={isModalOrderLoading} />
+          <OrderDetails
+            orderNumber={+orderNumber}
+            isModalOrderLoading={isModalOrderLoading}
+          />
         </Modal>
       )}
     </>

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { getCurrentInrgedientSelector } from '../../utils/constants';
 
 export const IngredientDetails = () => {
-  const currentIngredient = useSelector(state => state.ingredient.ingredient);
+  const currentIngredient = useSelector(getCurrentInrgedientSelector);
   return (
     <div className={styles.wrapper}>
       <img src={currentIngredient.image_large} alt={currentIngredient.name} className={styles.image} />

@@ -1,45 +1,46 @@
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { useContext, useEffect, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorCard } from '../constructor-card/constructor-card';
 import { ConstructorTotal } from '../constructor-total/constructor-total';
-// import { ingredientPropTypes } from '../../utils/prop-types';
-import { IngredientsDataContext } from '../../services/ingredientsContext';
+import { getBurgerBunSelector, getBurgerIngredientsSelector } from '../../utils/constants';
 
 export const BurgerConstructor = ({ handleModalOrder }) => {
-  const { ingredientsData } = useContext(IngredientsDataContext);
+  const burgerIng = useSelector(getBurgerIngredientsSelector);
+  const burgerBun = useSelector(getBurgerBunSelector);
 
   const totalSum = useMemo(() => {
-    if (ingredientsData.ingredients && ingredientsData.bun) {
-      return ingredientsData.ingredients.reduce((result, item) => {
+    if (burgerIng && burgerBun) {
+      return burgerIng.reduce((result, item) => {
         return result += item.price;
-      }, ingredientsData.bun.price * 2);
+      }, burgerBun.price * 2);
     }
     return 0
-  }, [ingredientsData.ingredients, ingredientsData.bun]);
+  }, [burgerIng, burgerBun]);
 
   return (
     <section className="pt-25">
-      {totalSum && ingredientsData.bun && (
+      {burgerBun ? (
         <>
           <div className="mr-4 ml-4 mb-4">
             <ConstructorCard
               isDraggable={false}
               isLocked
-              name={`${ingredientsData.bun.name} (верх)`}
-              price={ingredientsData.bun.price}
-              img={ingredientsData.bun.image_mobile}
+              name={`${burgerBun.name} (верх)`}
+              price={burgerBun.price}
+              img={burgerBun.image_mobile}
               type="top"
               extraClass="ml-4"
             />
           </div>
           <ul className={`${styles.list} pr-4 pl-4 mb-4`}>
-            {ingredientsData.ingredients.map((item) => {
+            {burgerIng.length ? (burgerIng.map((item) => {
               return (
-                  <li key={item._id}>
+                  <li key={item.id}>
                     <ConstructorCard
                       isDraggable
-                      id={item._id}
+                      id={item.id}
                       isLocked={false}
                       name={item.name}
                       price={item.price}
@@ -47,15 +48,15 @@ export const BurgerConstructor = ({ handleModalOrder }) => {
                     />
                   </li>
               );
-            })}
+            })) : (<p className='text text_type_main-medium ml-4'>Добавьте ингредиенты</p>)}
           </ul>
           <div className="mr-4 ml-4 mb-10">
             <ConstructorCard
               isDraggable={false}
               isLocked
-              name={`${ingredientsData.bun.name} (низ)`}
-              price={ingredientsData.bun.price}
-              img={ingredientsData.bun.image_mobile}
+              name={`${burgerBun.name} (низ)`}
+              price={burgerBun.price}
+              img={burgerBun.image_mobile}
               type="bottom"
             />
           </div>
@@ -64,7 +65,7 @@ export const BurgerConstructor = ({ handleModalOrder }) => {
             handleModalOrder={handleModalOrder}
           />
         </>
-      )}
+      ) : (<p className='text text_type_main-medium ml-4'>Выберите булку!</p>)}
     </section>
   );
 };

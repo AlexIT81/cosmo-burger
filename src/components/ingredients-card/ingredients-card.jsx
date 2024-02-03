@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   CurrencyIcon,
   Counter,
@@ -7,14 +7,16 @@ import {
 import PropTypes from 'prop-types';
 import styles from './ingredients-card.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
-import { ADD_INGREDIENT } from '../../services/actions/ingredient';
+import { addIngredient } from '../../services/actions/ingredient';
+import { addBurgerIngredient } from '../../services/actions/burger';
 
 export const IngredientsCard = ({ ingredient, counter, handleModalIngredient }) => {
   const dispatch = useDispatch();
 
   const onModalIngredient = () => {
-    handleModalIngredient(ingredient._id);
-    dispatch({type: ADD_INGREDIENT, payload: ingredient});
+    handleModalIngredient();
+    dispatch(addIngredient(ingredient));
+    dispatch(addBurgerIngredient(ingredient)) // удалить когда будет DND
   }
   return (
     <li className={styles.card} onClick={onModalIngredient} role="tab">

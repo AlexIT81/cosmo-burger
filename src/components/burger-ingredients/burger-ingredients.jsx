@@ -6,6 +6,7 @@ import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import { getInrgedients } from '../../services/actions/ingredients';
+import { getInrgedientsSelector } from '../../utils/constants';
 
 export const BurgerIngredients = ({ handleModalIngredient }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export const BurgerIngredients = ({ handleModalIngredient }) => {
     dispatch(getInrgedients());
   }, [dispatch]);
 
-  const ingredients = useSelector(state => state.ingredients.ingredients);
+  const ingredients = useSelector(getInrgedientsSelector);
 
   const [current, setCurrent] = useState('bun');
   const bunArr = ingredients.filter((item) => item.type === 'bun');
