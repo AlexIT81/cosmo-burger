@@ -60,10 +60,10 @@ export const BurgerConstructor = ({ handleModalOrder }) => {
               type="bottom"
             />
           </div>
-          <ConstructorTotal
+          {burgerIng.length > 0 && burgerBun && <ConstructorTotal
             totalSum={totalSum}
             handleModalOrder={handleModalOrder}
-          />
+          />}
         </>
       ) : (<p className='text text_type_main-medium ml-4'>Выберите булку!</p>)}
     </section>

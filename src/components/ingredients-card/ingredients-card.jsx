@@ -14,8 +14,8 @@ export const IngredientsCard = ({ ingredient, counter, handleModalIngredient }) 
   const dispatch = useDispatch();
 
   const onModalIngredient = () => {
-    handleModalIngredient();
-    dispatch(addIngredient(ingredient));
+    // handleModalIngredient();
+    // dispatch(addIngredient(ingredient));
     dispatch(addBurgerIngredient(ingredient)) // удалить когда будет DND
   }
   return (

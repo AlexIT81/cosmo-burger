@@ -21,6 +21,7 @@
         "react"
     ],
     "rules": {
+        "max-len": ["error", {"code": 150}],
         "no-unused-vars": "off",
         "import/no-unresolved": [
             2, 

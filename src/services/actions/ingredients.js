@@ -20,6 +20,6 @@ export function getInrgedients() {
           type: GET_INGREDIENTS_FAILED
         });
       }
-    });
+    }).catch((err) => dispatch({type: GET_INGREDIENTS_FAILED}));
   };
 }
