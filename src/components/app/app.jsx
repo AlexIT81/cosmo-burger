@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -14,6 +16,7 @@ import {
   getBurgerIngredientsSelector,
 } from '../../utils/constants';
 import { clearOrder, getOrder } from '../../services/actions/order';
+import { clearBurgerIngredient } from '../../services/actions/burger';
 
 function App() {
   const dispatch = useDispatch();
@@ -45,10 +48,14 @@ function App() {
   };
 
   const closeModal = () => {
-    setIsOpenModalIngredient(false);
-    setIsOpenModalOrder(false);
-    dispatch(removeIngredient());
-    dispatch(clearOrder());
+    if (isOpenModalOrder) {
+      dispatch(clearBurgerIngredient());
+      dispatch(clearOrder());
+      setIsOpenModalOrder(false);
+    } else {
+      dispatch(removeIngredient());
+      setIsOpenModalIngredient(false);
+    }
   };
 
   return (
@@ -56,11 +63,13 @@ function App() {
       <div className={`${styles.App} mb-10`}>
         <AppHeader />
         {apiError ? (
-          <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже...</p>
+          <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.</p>
         ) : (
           <main className={styles.main}>
-            <BurgerIngredients handleModalIngredient={handleModalIngredient} />
-            <BurgerConstructor handleModalOrder={handleModalOrder} />
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients handleModalIngredient={handleModalIngredient} />
+              <BurgerConstructor handleModalOrder={handleModalOrder} />
+            </DndProvider>
           </main>
         )}
       </div>

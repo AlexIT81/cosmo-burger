@@ -8,3 +8,11 @@
   overflow-y: auto;
   box-sizing: border-box;
 }
+
+.bun {
+  min-height: 80px;
+}
+
+.hover {
+  background: var(--interface-modal-bg);
+}
