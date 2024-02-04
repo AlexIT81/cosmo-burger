@@ -1,31 +1,55 @@
-import { useDispatch} from 'react-redux';
-import {
-  DragIcon,
-  ConstructorElement,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useDrag, useDrop } from 'react-dnd';
+import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import styles from './constructor-card.module.css';
-import { removeBurgerIngredient } from '../../services/actions/burger';
+import { removeBurgerIngredient, sortBurgerIngredient } from '../../services/actions/burger';
 
-export const ConstructorCard = ({
-  id,
-  isDraggable,
-  isLocked,
-  name,
-  price,
-  img,
-  type,
-}) => {
+export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, type, index }) => {
   const dispatch = useDispatch();
 
   const onRemove = () => {
     dispatch(removeBurgerIngredient(id));
   };
+
+  // DnD
+  const ref = useRef();
+
+  const sortCard = useCallback((dragIndex, hoverIndex) => {
+    dispatch(sortBurgerIngredient(dragIndex, hoverIndex));
+  }, []);
+
+  const [, drop] = useDrop({
+    accept: type ? 'none' : 'sort',
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      sortCard(dragIndex, hoverIndex);
+      item.index = hoverIndex;
+    },
+  });
+
+  const [_, drag] = useDrag({
+    type: 'sort',
+    item: () => {
+      return { id, index };
+    },
+  });
+
+  drag(drop(ref));
+
   return (
-    <div className={styles.card}>
-      <span className={styles.draggable}>
-        {isDraggable && <DragIcon type="primary" />}
-      </span>
+    <div ref={ref} className={styles.card} >
+      <span className={styles.draggable}>{isDraggable && <DragIcon type="primary" />}</span>
       <ConstructorElement
         type={type}
         isLocked={isLocked}
@@ -46,6 +70,8 @@ ConstructorCard.propTypes = {
   price: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
   type: PropTypes.string,
+  // moveCard: PropTypes.func.isRequired,
+  index: PropTypes.number,
 };
 
 ConstructorCard.defaultProps = {
@@ -53,4 +79,5 @@ ConstructorCard.defaultProps = {
   isDraggable: true,
   isLocked: false,
   type: '',
+  index: 0,
 };

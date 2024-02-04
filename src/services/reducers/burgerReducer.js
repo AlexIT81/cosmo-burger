@@ -1,4 +1,9 @@
-import { ADD_BURGER_INGREDIENT, CLEAR_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT } from '../actions/burger';
+import {
+  ADD_BURGER_INGREDIENT,
+  CLEAR_BURGER_INGREDIENT,
+  REMOVE_BURGER_INGREDIENT,
+  SORT_BURGER_INGREDIENT,
+} from '../actions/burger';
 
 const initialState = {
   bun: null,
@@ -25,6 +30,18 @@ export const burgerReducer = (state = initialState, action) => {
     }
     case CLEAR_BURGER_INGREDIENT: {
       return initialState;
+    }
+    case SORT_BURGER_INGREDIENT: {
+      const { dragIndex, hoverIndex } = action.payload;
+      const result = [...state.ingredients];
+      const item = state.ingredients[dragIndex];
+      result[dragIndex] = state.ingredients[hoverIndex];
+      result[hoverIndex] = item;
+
+      return {
+        ...state,
+        ingredients: [...result],
+      };
     }
     default: {
       return state;

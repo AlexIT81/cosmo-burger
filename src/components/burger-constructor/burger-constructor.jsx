@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
 import { ConstructorCard } from '../constructor-card/constructor-card';
@@ -23,9 +23,10 @@ export const BurgerConstructor = ({ handleModalOrder }) => {
   }, [burgerIng, burgerBun]);
 
   // DnD ингредиенты
-  const onDropHandler = (ingredient) => {
-    dispatch(addBurgerIngredient(ingredient));
+  const onDropHandler = (data) => {
+    dispatch(addBurgerIngredient(data));
   };
+
   const [{ isListHover }, dropIngredientTarget] = useDrop({
     accept: 'filling',
     drop(ingredient) {
@@ -49,6 +50,23 @@ export const BurgerConstructor = ({ handleModalOrder }) => {
   });
   const bunStyle = isBunHover ? `${styles.hover} mr-4 ml-4 mb-4 ${styles.bun}` : `mr-4 ml-4 mb-4 ${styles.bun}`;
 
+  // Сортировка по индексу
+  const renderCard = useCallback((item, index) => {
+    return (
+      <li key={item.id}>
+        <ConstructorCard
+          isDraggable
+          id={item.id}
+          isLocked={false}
+          name={item.name}
+          price={item.price}
+          img={item.image_mobile}
+          index={index}
+        />
+      </li>
+    );
+  }, []);
+
   return (
     <section className="pt-25">
       <div className={bunStyle} ref={dropBunTarget}>
@@ -68,21 +86,8 @@ export const BurgerConstructor = ({ handleModalOrder }) => {
       </div>
       <ul className={listStyle} ref={dropIngredientTarget}>
         {burgerIng.length ? (
-          burgerIng.map((item) => {
-            return (
-              <li key={item.id}>
-                <ConstructorCard
-                  isDraggable
-                  id={item.id}
-                  isLocked={false}
-                  name={item.name}
-                  price={item.price}
-                  img={item.image_mobile}
-                />
-              </li>
-            );
-          })
-        ) : (
+          burgerIng.map((item, i) => renderCard(item, i))
+          ) : (
           <p className="text text_type_main-medium ml-8">Перетащите сюда соусы и начинки!</p>
         )}
       </ul>
