@@ -5,7 +5,7 @@ import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
 import { ConstructorCard } from '../constructor-card/constructor-card';
 import { ConstructorTotal } from '../constructor-total/constructor-total';
-import { getBurgerBunSelector, getBurgerIngredientsSelector } from '../../utils/constants';
+import { getBurgerBunSelector, getBurgerIngredientsSelector } from '../../services/selectors';
 import { addBurgerIngredient } from '../../services/actions/burger';
 
 export const BurgerConstructor = ({ handleModalOrder }) => {

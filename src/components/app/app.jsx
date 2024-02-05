@@ -14,7 +14,7 @@ import {
   getBurgerBunSelector,
   getBurgerIngredientsErrorSelector,
   getBurgerIngredientsSelector,
-} from '../../utils/constants';
+} from '../../services/selectors';
 import { clearOrder, getOrder } from '../../services/actions/order';
 import { clearBurgerIngredient } from '../../services/actions/burger';
 

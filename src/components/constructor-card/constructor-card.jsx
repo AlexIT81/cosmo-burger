@@ -18,7 +18,7 @@ export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, t
 
   const sortCard = useCallback((dragIndex, hoverIndex) => {
     dispatch(sortBurgerIngredient(dragIndex, hoverIndex));
-  }, []);
+  }, [dispatch]);
 
   const [, drop] = useDrop({
     accept: type ? 'none' : 'sort',

@@ -6,7 +6,7 @@ import {
   getOrderErrorSelector,
   getOrderSelector,
   getOrderRequestActiveSelector,
-} from '../../utils/constants';
+} from '../../services/selectors';
 
 export const OrderDetails = () => {
   const order = useSelector(getOrderSelector);

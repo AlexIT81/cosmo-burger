@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { getInrgedients } from '../../services/actions/ingredients';
-import { getInrgedientsSelector } from '../../utils/constants';
+import { getInrgedientsSelector } from '../../services/selectors';
 
 export const BurgerIngredients = ({ handleModalIngredient }) => {
   const dispatch = useDispatch();

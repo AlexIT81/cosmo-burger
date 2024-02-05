@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './ingredients-card.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import { addIngredient } from '../../services/actions/ingredient';
-import { getAllBurgerParts } from '../../utils/constants';
+import { getAllBurgerParts } from '../../services/selectors';
 
 export const IngredientsCard = ({ ingredient, handleModalIngredient }) => {
   const dispatch = useDispatch();

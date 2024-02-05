@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
-import { getCurrentInrgedientSelector } from '../../utils/constants';
+import { getCurrentInrgedientSelector } from '../../services/selectors';
 
 export const IngredientDetails = () => {
   const currentIngredient = useSelector(getCurrentInrgedientSelector);
