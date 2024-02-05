@@ -1,4 +1,7 @@
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -6,81 +9,78 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
-import { apiData } from '../../utils/api';
+import { removeIngredient } from '../../services/actions/ingredient';
+import {
+  getBurgerBunSelector,
+  getBurgerIngredientsErrorSelector,
+  getBurgerIngredientsSelector,
+} from '../../services/selectors';
+import { clearOrder, getOrder } from '../../services/actions/order';
+import { clearBurgerIngredient } from '../../services/actions/burger';
 
 function App() {
+  const dispatch = useDispatch();
   const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
 
-  const [orderNumber, setOrderNumber] = useState(0);
-  const [currentIngredient, setCurrentIngredient] = useState({});
+  const orderBun = useSelector(getBurgerBunSelector);
+  const orderIngredients = useSelector(getBurgerIngredientsSelector);
 
-  const [ingredients, setIngredients] = useState([]);
+  const apiError = useSelector(getBurgerIngredientsErrorSelector);
 
-  const [errorMsg, setErrorMsg] = useState('');
-
-  function getIngredients() {
-    return apiData()
-      .then((res) => {
-        setIngredients(res.data);
-        if (errorMsg) setErrorMsg('');
-      })
-      .catch(() => {
-        setErrorMsg('Произошла ошибка при запросе данных. Пожалуйста, зайдите позже.');
-      });
-  }
-
-  useLayoutEffect(() => {
-    getIngredients();
-  }, []);
+  const setOrderData = () => {
+    const orderData = [];
+    orderIngredients.forEach((item) => {
+      orderData.push(item._id);
+    });
+    orderData.push(orderBun._id);
+    orderData.unshift(orderBun._id);
+    dispatch(getOrder(orderData));
+  };
 
   const handleModalOrder = () => {
-    setOrderNumber('034536');
+    setOrderData();
     setIsOpenModalOrder(true);
   };
 
-  const handleModalIngredient = (id) => {
-    setCurrentIngredient(ingredients.find((item) => item._id === id));
+  const handleModalIngredient = () => {
     setIsOpenModalIngredient(true);
   };
 
   const closeModal = () => {
-    setIsOpenModalIngredient(false);
-    setIsOpenModalOrder(false);
-    setCurrentIngredient({});
+    if (isOpenModalOrder) {
+      dispatch(clearBurgerIngredient());
+      dispatch(clearOrder());
+      setIsOpenModalOrder(false);
+    } else {
+      dispatch(removeIngredient());
+      setIsOpenModalIngredient(false);
+    }
   };
 
   return (
     <>
       <div className={`${styles.App} mb-10`}>
         <AppHeader />
-        {errorMsg ? <p style={{textAlign: 'center'}}>{errorMsg}</p> : 
-        (<main className={styles.main}>
-          <BurgerIngredients
-            ingredients={ingredients}
-            handleModalIngredient={handleModalIngredient}
-          />
-          <BurgerConstructor
-            ingredients={ingredients}
-            handleModalOrder={handleModalOrder}
-          />
-          </main>)}
+        {apiError ? (
+          <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.</p>
+        ) : (
+          <main className={styles.main}>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients handleModalIngredient={handleModalIngredient} />
+              <BurgerConstructor handleModalOrder={handleModalOrder} />
+            </DndProvider>
+          </main>
+        )}
       </div>
       {isOpenModalIngredient && (
         <Modal closeModal={closeModal} title="Детали ингредиента">
-          <IngredientDetails
-            image={currentIngredient.image}
-            name={currentIngredient.name}
-            calories={currentIngredient.calories}
-            proteins={currentIngredient.proteins}
-            fat={currentIngredient.fat}
-            carbohydrates={currentIngredient.carbohydrates}
-          />
+          <IngredientDetails />
         </Modal>
       )}
       {isOpenModalOrder && (
         <Modal closeModal={closeModal}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails />
         </Modal>
       )}
     </>
