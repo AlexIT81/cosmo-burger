@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
@@ -18,7 +19,7 @@ export const IngredientsCard = ({ ingredient, handleModalIngredient }) => {
   // DnD
   const ingredientType = ingredient.type === 'bun' ? 'bun' : 'filling';
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [_, dragRef] = useDrag({
     type: ingredientType,
     item: ingredient,
     // collect: (monitor) => ({
@@ -27,10 +28,14 @@ export const IngredientsCard = ({ ingredient, handleModalIngredient }) => {
   });
 
   // Счетчик
-  const allBurgerParts = useSelector(state => getAllBurgerParts(state));
-  const counter = allBurgerParts.reduce((acc, item) => {
-    return item._id === ingredient._id ? acc += 1 : acc
-  }, 0)
+  const allBurgerParts = useSelector((state) => getAllBurgerParts(state));
+
+  const counter = useMemo(() => {
+    return allBurgerParts.reduce((acc, item) => {
+      if (item === null) return acc;
+      return item._id === ingredient._id ? (acc += 1) : acc;
+    }, 0);
+  }, [allBurgerParts]);
 
   return (
     <li className={styles.card} onClick={onModalIngredient} role="tab" ref={dragRef}>

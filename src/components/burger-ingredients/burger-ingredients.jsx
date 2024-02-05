@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
@@ -32,7 +32,6 @@ export const BurgerIngredients = ({ handleModalIngredient }) => {
     const scrollToElement = (elementRef) => {
       scrollingElement.scrollTo({
         top: elementRef.current.scrollIntoView(),
-        // top: elementRef.current.offsetTop - 284,
         behavior: 'smooth',
       });
     };

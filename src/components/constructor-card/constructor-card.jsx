@@ -22,7 +22,7 @@ export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, t
 
   const [, drop] = useDrop({
     accept: type ? 'none' : 'sort',
-    hover(item, monitor) {
+    hover(item) {
       if (!ref.current) {
         return;
       }
@@ -48,8 +48,10 @@ export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, t
   drag(drop(ref));
 
   return (
-    <div ref={ref} className={styles.card} >
-      <span className={styles.draggable}>{isDraggable && <DragIcon type="primary" />}</span>
+    <div ref={isDraggable ? ref : undefined} className={styles.card}>
+      <span className={`${styles.draggable} ${isDraggable && styles.pointer}`}>
+        {isDraggable && <DragIcon type="primary" />}
+      </span>
       <ConstructorElement
         type={type}
         isLocked={isLocked}
@@ -70,7 +72,6 @@ ConstructorCard.propTypes = {
   price: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
   type: PropTypes.string,
-  // moveCard: PropTypes.func.isRequired,
   index: PropTypes.number,
 };
 
