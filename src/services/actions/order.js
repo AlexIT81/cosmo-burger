@@ -1,4 +1,4 @@
-import { createOrder } from '../../utils/api';
+import { createOrderRequest } from '../../utils/api';
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -14,7 +14,7 @@ export function getOrder(data) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    createOrder(data)
+    createOrderRequest(data)
       .then((res) => {
         dispatch({
           type: GET_ORDER_SUCCESS,

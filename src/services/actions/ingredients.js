@@ -1,4 +1,4 @@
-import { getData } from '../../utils/api';
+import { getDataRequest } from '../../utils/api';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -9,7 +9,7 @@ export function getInrgedients() {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    getData()
+    getDataRequest()
       .then((res) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,

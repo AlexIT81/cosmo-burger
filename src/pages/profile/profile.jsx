@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
@@ -67,19 +68,19 @@ export const Profile = () => {
           <nav className="mb-20">
             <ul className={styles.list}>
               <li className={styles.item}>
-                <a href="/profile" className={`${styles.link} ${styles.link_active}`}>
+                <Link to="/profile" className={`${styles.link} ${styles.link_active}`}>
                   Профиль
-                </a>
+                </Link>
               </li>
               <li className={styles.item}>
-                <a href="/profile/orders" className={`${styles.link}`}>
+                <Link to="/profile/orders" className={`${styles.link}`}>
                   История заказов
-                </a>
+                </Link>
               </li>
               <li className={styles.item}>
-                <a href="/logout" className={`${styles.link}`}>
+                <Link to="/logout" className={`${styles.link}`}>
                   Выход
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

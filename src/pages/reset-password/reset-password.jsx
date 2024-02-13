@@ -1,9 +1,19 @@
-import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
+import { resetPasswordRequest } from '../../utils/api';
 
 export const ResetPassword = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const forgotPasswordCheck = localStorage.getItem('forgotPassword');
+    if (!forgotPasswordCheck) {
+      navigate('/forgot-password', { replace: true });
+    }
+  });
+
   const [formValue, setFormValue] = useState({
     code: '',
     pass: '',
@@ -18,6 +28,14 @@ export const ResetPassword = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (formValue.code && formValue.pass) {
+      resetPasswordRequest({ password: formValue.pass, token: formValue.code })
+        .then(() => {
+          localStorage.removeItem('forgotPassword');
+          navigate('/login', { replace: true });
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const setFormData = (e) => {

@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password.module.css';
+import { forgotPasswordRequest } from '../../utils/api';
 
 export const ForgotPassword = () => {
+
+  const navigate = useNavigate()
   const [formValue, setFormValue] = useState({
     email: '',
     emailError: false,
@@ -13,6 +16,12 @@ export const ForgotPassword = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    forgotPasswordRequest(formValue.email)
+    .then(() => {
+      localStorage.setItem('forgotPassword', true);
+      navigate('/reset-password', {replace: true});
+    })
+    .catch(err => console.log(err))
   };
 
   const setFormData = (e) => {

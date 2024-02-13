@@ -31,12 +31,28 @@ const request = (endpoint, options) => {
   return fetch(`${API_URL}/${endpoint}`, options).then(checkResponse).then(checkSuccess);
 };
 
-export const getData = () => request('ingredients');
+export const getDataRequest = () => request('ingredients');
 
-export const createOrder = (data) => {
+export const createOrderRequest = (data) => {
   return request('orders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ingredients: data }),
+  });
+};
+
+export const forgotPasswordRequest = (email) => {
+  return request('password-reset', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+};
+
+export const resetPasswordRequest = ({password, token}) => {
+  return request('password-reset/reset', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password, token }),
   });
 };
