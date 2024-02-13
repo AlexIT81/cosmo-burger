@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -17,6 +18,7 @@ import {
 } from '../../services/selectors';
 import { clearOrder, getOrder } from '../../services/actions/order';
 import { clearBurgerIngredient } from '../../services/actions/burger';
+import { ForgotPassword, Login, Main, Profile, Register, ResetPassword } from '../../pages';
 
 function App() {
   const dispatch = useDispatch();
@@ -60,19 +62,28 @@ function App() {
 
   return (
     <>
-      <div className={`${styles.App} mb-10`}>
-        <AppHeader />
-        {apiError ? (
-          <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.</p>
-        ) : (
-          <main className={styles.main}>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients handleModalIngredient={handleModalIngredient} />
-              <BurgerConstructor handleModalOrder={handleModalOrder} />
-            </DndProvider>
-          </main>
-        )}
-      </div>
+      <BrowserRouter>
+        <div className={`${styles.App} mb-10`}>
+          <AppHeader />
+          {apiError ? (
+            <p style={{ textAlign: 'center' }}>
+              Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.
+            </p>
+          ) : (
+            <Routes>
+              <Route
+                path="/"
+                element={<Main handleModalIngredient={handleModalIngredient} handleModalOrder={handleModalOrder} />}
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          )}
+        </div>
+      </BrowserRouter>
       {isOpenModalIngredient && (
         <Modal closeModal={closeModal} title="Детали ингредиента">
           <IngredientDetails />
