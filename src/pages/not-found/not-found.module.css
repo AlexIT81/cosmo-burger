@@ -1,0 +1,29 @@
+.primary {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding: 100px 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.link {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: .3s linear;
+  composes: text text_type_main-medium from global;
+}
+
+.link:hover {
+  opacity: .7;
+}
+
+.image {
+  width: 400px;
+  height: 286;
+  margin-bottom: 100px;
+}

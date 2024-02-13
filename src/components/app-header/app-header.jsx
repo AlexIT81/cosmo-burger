@@ -41,18 +41,18 @@ export function AppHeader() {
       </Link>
       <nav>
         <ul className={`${styles['header-menu__list_type_profile']} ${styles['header-menu__list']}`}>
-          <li className={`${styles['header-menu__item']}`}>
-            <NavLink
+          <li className={`${styles['header-menu__item']} pt-4 pr-5 pb-4 pl-5`}>
+            <Link
               to="/profile"
-              className={({ isActive }) =>
-                isActive
+              className={
+                pathname === '/profile'
                   ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
                   : `${styles['header-menu__link']}`
               }
             >
               <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
               <span className="text text_type_main-default">Личный кабинет</span>
-            </NavLink>
+            </Link>
           </li>
         </ul>
       </nav>

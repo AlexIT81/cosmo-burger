@@ -21,6 +21,8 @@ export const ResetPassword = () => {
     passError: false,
   });
 
+  const [apiError, setApiError] = useState('');
+
   const [isShowPass, setIsShowPass] = useState(false);
 
   const codeRef = useRef(null);
@@ -32,13 +34,18 @@ export const ResetPassword = () => {
       resetPasswordRequest({ password: formValue.pass, token: formValue.code })
         .then(() => {
           localStorage.removeItem('forgotPassword');
+          setApiError('');
           navigate('/login', { replace: true });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setApiError('Указанный токен не найден!');
+          console.log(err.message);
+        });
     }
   };
 
   const setFormData = (e) => {
+    if (apiError) setApiError('');
     setFormValue({
       ...formValue,
       [e.target.name]: e.target.value,
@@ -76,6 +83,7 @@ export const ResetPassword = () => {
             size="default"
             extraClass="mb-6"
           />
+          {apiError && <p className={styles['api-error']}>{apiError}</p>}
           <Button htmlType="submit" type="primary" size="large">
             Сохранить
           </Button>

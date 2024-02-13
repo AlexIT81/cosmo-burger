@@ -18,7 +18,7 @@ import {
 } from '../../services/selectors';
 import { clearOrder, getOrder } from '../../services/actions/order';
 import { clearBurgerIngredient } from '../../services/actions/burger';
-import { ForgotPassword, Login, Main, Profile, Register, ResetPassword } from '../../pages';
+import { ForgotPassword, Login, Main, NotFound404, Profile, ProfileOrders, Register, ResetPassword } from '../../pages';
 
 function App() {
   const dispatch = useDispatch();
@@ -80,6 +80,8 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/orders" element={<ProfileOrders />} />
+              <Route path="*" element={<NotFound404 />} />
             </Routes>
           )}
         </div>

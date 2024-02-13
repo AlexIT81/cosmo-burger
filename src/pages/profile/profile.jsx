@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
+import { ProfileMenu } from '../../components/profile-menu/profile-menu';
 
 export const Profile = () => {
   const [formValue, setFormValue] = useState({
@@ -64,28 +65,7 @@ export const Profile = () => {
   return (
     <main>
       <section className={styles.wrapper}>
-        <div className={styles['navigation-block']}>
-          <nav className="mb-20">
-            <ul className={styles.list}>
-              <li className={styles.item}>
-                <Link to="/profile" className={`${styles.link} ${styles.link_active}`}>
-                  Профиль
-                </Link>
-              </li>
-              <li className={styles.item}>
-                <Link to="/profile/orders" className={`${styles.link}`}>
-                  История заказов
-                </Link>
-              </li>
-              <li className={styles.item}>
-                <Link to="/logout" className={`${styles.link}`}>
-                  Выход
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <p className={styles.description}>В этом разделе вы можете изменить свои персональные данные</p>
-        </div>
+        <ProfileMenu />
         <form name="forgot-password" className={styles.form}>
           <Input
             autoFocus

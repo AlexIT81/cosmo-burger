@@ -1,6 +1,7 @@
 html {
   --text-primary: #F2F2F3;
   --text-secondary: #8585AD;
+  --text-error: red;
   --interface-success: #00CCCC;
   --interface-modal-bg: #1C1C21;
   --interface-modal-edge: rgba(76, 76, 255, 0.20);

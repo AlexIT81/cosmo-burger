@@ -27,7 +27,7 @@ const checkSuccess = (res) => {
   return Promise.reject(new Error(`Ответ не success: ${res}`));
 };
 
-const request = (endpoint, options) => {
+const request = async (endpoint, options) => {
   return fetch(`${API_URL}/${endpoint}`, options).then(checkResponse).then(checkSuccess);
 };
 
