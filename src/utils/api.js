@@ -64,3 +64,28 @@ export const registerRequest = (email, password, name) => {
     body: JSON.stringify({ email, password, name }),
   });
 };
+
+export const loginRequest = (email, password) => {
+  return request('auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+};
+
+export const updateTokenRequest = () => {
+  return request('auth/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(localStorage.getItem('refreshToken')),
+  });
+};
+
+
+export const logoutRequest = () => {
+  return request('auth/logout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(localStorage.getItem('refreshToken')),
+  });
+};

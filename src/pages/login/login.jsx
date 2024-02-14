@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
+import {  } from '../../utils/api';
+import { loginAction } from '../../services/actions/user/login';
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const [formValue, setFormValue] = useState({
     email: '',
     pass: '',
@@ -18,6 +22,10 @@ export const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log('here')
+    if (formValue.email && formValue.pass) {
+      dispatch(loginAction(formValue.email, formValue.pass))
+    }
   };
 
   const setFormData = (e) => {

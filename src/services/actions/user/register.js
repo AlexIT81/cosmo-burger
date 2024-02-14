@@ -1,7 +1,6 @@
 import { registerRequest } from '../../../utils/api';
 import { setCookie } from '../../../utils/cookie';
 
-
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
@@ -20,8 +19,6 @@ export const registerAction = (email, password, name) => {
 
         dispatch({
           type: REGISTER_SUCCESS,
-          accessToken: res.accessToken,
-          refreshToken: res.refreshToken,
           email: res.user.email,
           name: res.user.name,
         });
