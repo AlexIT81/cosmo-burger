@@ -49,10 +49,18 @@ export const forgotPasswordRequest = (email) => {
   });
 };
 
-export const resetPasswordRequest = ({password, token}) => {
+export const resetPasswordRequest = ({ password, token }) => {
   return request('password-reset/reset', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password, token }),
+  });
+};
+
+export const registerRequest = (email, password, name) => {
+  return request('auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, name }),
   });
 };

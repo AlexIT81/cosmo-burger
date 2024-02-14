@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register.module.css';
+import { registerAction } from '../../services/actions/user/register';
 
 export const Register = () => {
+  const dispatch = useDispatch();
   const [formValue, setFormValue] = useState({
     name: '',
     email: '',
@@ -21,6 +24,9 @@ export const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (formValue.name && formValue.email && formValue.pass) {
+      dispatch(registerAction(formValue.email, formValue.pass, formValue.name));
+    }
   };
 
   const setFormData = (e) => {
