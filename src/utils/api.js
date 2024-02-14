@@ -1,4 +1,5 @@
 import { API_URL } from './constants';
+import { getCookie } from './cookie';
 
 // const checkRes = (res) => {
 //     if (res.ok) {
@@ -77,15 +78,22 @@ export const updateTokenRequest = () => {
   return request('auth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(localStorage.getItem('refreshToken')),
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken')}),
   });
 };
-
 
 export const logoutRequest = () => {
   return request('auth/logout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(localStorage.getItem('refreshToken')),
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken')}),
   });
 };
+
+export const getUserDataRequest = () => {
+  const myHeaders = new Headers();
+  myHeaders.append('Authorization', `Bearer ${getCookie('accessToken')}`);
+  return request('auth/user', {
+    headers: myHeaders,
+  });
+}

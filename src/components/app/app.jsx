@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -19,6 +19,9 @@ import {
 import { clearOrder, getOrder } from '../../services/actions/order';
 import { clearBurgerIngredient } from '../../services/actions/burger';
 import { ForgotPassword, Login, Main, NotFound404, Profile, ProfileOrders, Register, ResetPassword } from '../../pages';
+import { getCookie } from '../../utils/cookie';
+import { updateTokenAction } from '../../services/actions/user/update-token';
+import { getUserDataAction } from '../../services/actions/user/get-user';
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +62,18 @@ function App() {
       setIsOpenModalIngredient(false);
     }
   };
+
+  // авторизация
+  const refreshToken = localStorage.getItem('refreshToken');
+  const accessToken = getCookie('accessToken');
+
+  if (refreshToken) console.log(refreshToken);
+  if (accessToken) console.log(accessToken);
+
+  useEffect(() => {
+    if (!accessToken && refreshToken) dispatch(updateTokenAction());
+    if (accessToken) dispatch(getUserDataAction())
+  }, [refreshToken, accessToken, dispatch]);
 
   return (
     <>
