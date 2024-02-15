@@ -48,3 +48,7 @@ export const getAllBurgerParts = createSelector([selectIngredients, selectBun], 
 export const getUserDataSelector = (state) => {
   return state.user.user;
 };
+
+export const isLoggedInSelector = (state) => {
+  return state.user.isLoggedIn;
+};

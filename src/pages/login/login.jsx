@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useRef, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import {  } from '../../utils/api';
 import { loginAction } from '../../services/actions/user/login';
+import { isLoggedInSelector } from '../../services/selectors';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,18 @@ export const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  // роутинг
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(isLoggedInSelector);
+  const location = useLocation();
+
+  // eslint-disable-next-line prefer-destructuring
+  const from = location.state?.from?.pathname || '/';
+
+  useEffect(() => {
+    if (isLoggedIn) navigate(from, {replace: true})
+  }, [isLoggedIn, navigate])
 
   return (
     <main className={styles.primary}>

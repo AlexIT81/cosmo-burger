@@ -10,7 +10,6 @@ export const setUserDataAction = (data) => (dispatch) => {
   });
   setUserDataRequest(data)
     .then((res) => {
-      console.log(res)
       dispatch({
         type: SET_USER_DATA_SUCCESS,
         email: res.user.email,

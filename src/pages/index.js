@@ -6,5 +6,6 @@ import { ResetPassword } from './reset-password/reset-password';
 import { Main } from './main/main';
 import { ProfileOrders } from './profile-orders/profile-orders';
 import { NotFound404 } from './not-found/not-found';
+import { Feed } from './feed/feed';
 
-export { ForgotPassword, Login, Profile, Register, ResetPassword, Main, ProfileOrders, NotFound404 };
+export { ForgotPassword, Login, Profile, Register, ResetPassword, Main, ProfileOrders, NotFound404, Feed };

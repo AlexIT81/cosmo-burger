@@ -1,8 +1,17 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation, Navigate } from 'react-router-dom';
 import styles from './profile-menu.module.css';
+import { logoutAction } from '../../services/actions/user/logout';
 
 export const ProfileMenu = () => {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(logoutAction());
+    <Navigate to="/login" replace />
+  };
+
   return (
     <div className={styles['navigation-block']}>
       <nav className="mb-20">
@@ -24,9 +33,9 @@ export const ProfileMenu = () => {
             </Link>
           </li>
           <li className={styles.item}>
-            <Link to="/logout" className={`${styles.link}`}>
+            <button type="button" className={`${styles.button}`} onClick={logout}>
               Выход
-            </Link>
+            </button>
           </li>
         </ul>
       </nav>

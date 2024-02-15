@@ -24,7 +24,18 @@
   color: var(--text-primary);
 }
 
-.link:hover {
+.button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: .3s linear;
+  composes: text text_type_main-medium from global;
+  cursor: pointer;
+}
+
+.link:hover, .button:hover {
   opacity: .8;
   color: var(--text-primary);
 }

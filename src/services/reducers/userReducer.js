@@ -9,7 +9,7 @@ const initialState = {
     email: null,
     name: null,
   },
-  isLogedIn: false,
+  isLoggedIn: false,
   isLoading: false,
   isRequestFailed: false,
 };
@@ -29,7 +29,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isRequestFailed: false,
-        isLogedIn: true,
+        isLoggedIn: true,
         user: {
           email: rest.email,
           name: rest.name,
@@ -39,7 +39,7 @@ export const userReducer = (state = initialState, action) => {
     case REGISTER_ERROR: {
       return {
         ...state,
-        isLogedIn: false,
+        isLoggedIn: false,
         isLoading: false,
         isRequestFailed: true,
       };
@@ -55,7 +55,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isRequestFailed: false,
-        isLogedIn: true,
+        isLoggedIn: true,
         user: {
           email: rest.email,
           name: rest.name,
@@ -65,7 +65,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_ERROR: {
       return {
         ...state,
-        isLogedIn: false,
+        isLoggedIn: false,
         isRequestFailed: true,
         isLoading: false,
       };
@@ -97,7 +97,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isRequestFailed: false,
-        isLogedIn: true,
+        isLoggedIn: true,
         user: {
           email: rest.email,
           name: rest.name,
@@ -108,7 +108,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        isLogedIn: false,
+        isLoggedIn: false,
         isRequestFailed: true,
       };
     }
