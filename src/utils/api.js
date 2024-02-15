@@ -97,3 +97,15 @@ export const getUserDataRequest = () => {
     headers: myHeaders,
   });
 }
+
+export const setUserDataRequest = (data) => {  
+  const myHeaders = new Headers();
+  myHeaders.append('Authorization', `Bearer ${getCookie('accessToken')}`);
+  myHeaders.append('Content-Type', 'application/json');
+
+  return request('auth/user', {
+    method: 'PATCH',
+    headers: myHeaders,
+    body: JSON.stringify(data),
+  });
+}

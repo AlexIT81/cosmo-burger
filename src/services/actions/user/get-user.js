@@ -1,4 +1,3 @@
-
 import { getUserDataRequest } from '../../../utils/api';
 
 export const GET_USER_DATA_REQUEST = 'GET_USER_DATA_REQUEST';

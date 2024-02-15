@@ -1,21 +1,36 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { ProfileMenu } from '../../components/profile-menu/profile-menu';
+import { getUserDataSelector } from '../../services/selectors';
+import { setUserDataAction } from '../../services/actions/user/set-user';
 
 export const Profile = () => {
+  const dispatch = useDispatch();
+  const { name, email } = useSelector(getUserDataSelector);
+
   const [formValue, setFormValue] = useState({
-    name: 'Марк',
+    name: '',
     nameError: false,
     nameDisabled: true,
-    email: 'mail@stellar.burgers',
+    email: '',
     emailError: false,
     emailDisabled: true,
-    pass: '123456',
+    pass: '',
     passError: false,
     passDisabled: true,
   });
+
+  useEffect(() => {
+    if (name && email) {
+      setFormValue({
+        ...formValue,
+        name,
+        email,
+      });
+    }
+  }, [name, email]);
 
   const nameRef = useRef(null);
   const emailRef = useRef(null);
@@ -54,25 +69,44 @@ export const Profile = () => {
     }
   }, [formValue.nameDisabled, formValue.emailDisabled, formValue.passDisabled]);
 
-  // const onBlur = (string) => {
-  //   const key = `${string}Disabled`;
-  //   setFormValue({
-  //     ...formValue,
-  //     [key]: !formValue[key],
-  //   });
-  // };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const bodyRequest = {};
+    if (formValue.name !== name && formValue.name !== '') bodyRequest.name = formValue.name;
+    if (formValue.email !== email && formValue.email !== '') bodyRequest.email = formValue.email;
+    if (formValue.pass !== '') bodyRequest.password = formValue.pass;
+    dispatch(setUserDataAction(bodyRequest));
+    setFormValue({
+      ...formValue,
+      nameDisabled: true,
+      emailDisabled: true,
+      passDisabled: true,
+    });
+
+  };
+
+  const onReset = () => {
+    setFormValue({
+      ...formValue,
+      name,
+      email,
+      pass: '',
+    });
+  };
+
+  const showButtons = name !== formValue.name || email !== formValue.email || formValue.pass;
 
   return (
     <main>
       <section className={styles.wrapper}>
         <ProfileMenu />
-        <form name="forgot-password" className={styles.form}>
+        <form name="edit-user" className={styles.form} onSubmit={onSubmit}>
           <Input
             autoFocus
             type="text"
             placeholder="Имя"
             onChange={setFormData}
-            value={formValue.name}
+            value={formValue.name || ''}
             name="name"
             error={formValue.nameError}
             ref={nameRef}
@@ -82,11 +116,10 @@ export const Profile = () => {
             icon="EditIcon"
             onIconClick={() => onIconClick('name')}
             disabled={formValue.nameDisabled}
-            // onBlur={(e) => onBlur(e.target.name)}
           />
           <Input
             type="email"
-            placeholder="Укажите e-mail"
+            placeholder="Логин"
             onChange={setFormData}
             value={formValue.email}
             name="email"
@@ -98,11 +131,10 @@ export const Profile = () => {
             icon="EditIcon"
             onIconClick={() => onIconClick('email')}
             disabled={formValue.emailDisabled}
-            // onBlur={(e) => onBlur(e.target.name)}
           />
           <Input
             type="password"
-            placeholder="Укажите пароль"
+            placeholder="Пароль"
             onChange={setFormData}
             value={formValue.pass}
             name="pass"
@@ -114,8 +146,17 @@ export const Profile = () => {
             icon="EditIcon"
             onIconClick={() => onIconClick('pass')}
             disabled={formValue.passDisabled}
-            // onBlur={(e) => onBlur(e.target.name)}
           />
+          {showButtons && (
+            <div className={styles['buttons-wrapper']}>
+              <Button htmlType="button" type="secondary" size="large" onClick={onReset}>
+                Отмена
+              </Button>
+              <Button htmlType="submit" type="primary" size="large">
+                Сохранить
+              </Button>
+            </div>
+          )}
         </form>
       </section>
     </main>

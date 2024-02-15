@@ -43,3 +43,8 @@ export const getAllBurgerParts = createSelector([selectIngredients, selectBun], 
 // export const getAllBurgerParts = (state) => {
 //   return [...state.burger.ingredients, state.burger.bun];
 // };
+
+// Users selectors
+export const getUserDataSelector = (state) => {
+  return state.user.user;
+};

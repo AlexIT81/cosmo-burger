@@ -1,4 +1,3 @@
-
 import { logoutRequest } from '../../../utils/api';
 import { deleteCookie } from '../../../utils/cookie';
 

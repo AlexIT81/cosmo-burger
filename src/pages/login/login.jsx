@@ -22,7 +22,6 @@ export const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('here')
     if (formValue.email && formValue.pass) {
       dispatch(loginAction(formValue.email, formValue.pass))
     }

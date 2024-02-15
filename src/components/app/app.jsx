@@ -67,9 +67,6 @@ function App() {
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = getCookie('accessToken');
 
-  if (refreshToken) console.log(refreshToken);
-  if (accessToken) console.log(accessToken);
-
   useEffect(() => {
     if (!accessToken && refreshToken) dispatch(updateTokenAction());
     if (accessToken) dispatch(getUserDataAction())
