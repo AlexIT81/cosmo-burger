@@ -35,12 +35,23 @@ const request = async (endpoint, options) => {
 export const getDataRequest = () => request('ingredients');
 
 export const createOrderRequest = (data) => {
+  const myHeaders = new Headers();
+  myHeaders.append('Authorization', `Bearer ${getCookie('accessToken')}`);
+  myHeaders.append('Content-Type', 'application/json');
   return request('orders', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: myHeaders,
     body: JSON.stringify({ ingredients: data }),
   });
 };
+
+// export const createOrderRequest = (data) => {
+//   return request('orders', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ ingredients: data }),
+//   });
+// };
 
 export const forgotPasswordRequest = (email) => {
   return request('password-reset', {
@@ -78,7 +89,7 @@ export const updateTokenRequest = () => {
   return request('auth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token: localStorage.getItem('refreshToken')}),
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   });
 };
 
@@ -86,7 +97,7 @@ export const logoutRequest = () => {
   return request('auth/logout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token: localStorage.getItem('refreshToken')}),
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   });
 };
 
@@ -96,9 +107,9 @@ export const getUserDataRequest = () => {
   return request('auth/user', {
     headers: myHeaders,
   });
-}
+};
 
-export const setUserDataRequest = (data) => {  
+export const setUserDataRequest = (data) => {
   const myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${getCookie('accessToken')}`);
   myHeaders.append('Content-Type', 'application/json');
@@ -108,4 +119,4 @@ export const setUserDataRequest = (data) => {
     headers: myHeaders,
     body: JSON.stringify(data),
   });
-}
+};

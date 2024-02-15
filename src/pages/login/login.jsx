@@ -42,10 +42,11 @@ export const Login = () => {
 
   // eslint-disable-next-line prefer-destructuring
   const from = location.state?.from?.pathname || '/';
+  console.log(from)
 
   useEffect(() => {
     if (isLoggedIn) navigate(from, {replace: true})
-  }, [isLoggedIn, navigate])
+  }, [isLoggedIn, navigate, from])
 
   return (
     <main className={styles.primary}>

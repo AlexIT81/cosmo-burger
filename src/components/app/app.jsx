@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -98,7 +98,7 @@ function App() {
                 path="/"
                 element={<Main handleModalIngredient={handleModalIngredient} handleModalOrder={handleModalOrder} />}
               />
-              <Route path="/login" element={<ProtectedRouteElement element={<Login />} needAuth={false} />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/register" element={<ProtectedRouteElement element={<Register />} needAuth={false} />} />
               <Route
                 path="/forgot-password"
