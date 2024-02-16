@@ -4,19 +4,19 @@ import { useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register.module.css';
 import { registerAction } from '../../services/actions/user/register';
+import { useForm } from '../../hooks/useForm';
 
 export const Register = () => {
   const dispatch = useDispatch();
-  const [formValue, setFormValue] = useState({
+  const { formValues, handleChange, setFormValues } = useForm({
     name: '',
     email: '',
     pass: '',
     nameError: false,
     emailError: false,
     passError: false,
+    isShowPass: false,
   });
-
-  const [isShowPass, setIsShowPass] = useState(false);
 
   const nameRef = useRef(null);
   const emailRef = useRef(null);
@@ -24,16 +24,9 @@ export const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (formValue.name && formValue.email && formValue.pass) {
-      dispatch(registerAction(formValue.email, formValue.pass, formValue.name));
+    if (formValues.name && formValues.email && formValues.pass) {
+      dispatch(registerAction(formValues.email, formValues.pass, formValues.name));
     }
-  };
-
-  const setFormData = (e) => {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -44,10 +37,10 @@ export const Register = () => {
           <Input
             type="text"
             placeholder="Имя"
-            onChange={setFormData}
-            value={formValue.name}
+            onChange={handleChange}
+            value={formValues.name}
             name="name"
-            error={formValue.nameError}
+            error={formValues.nameError}
             ref={nameRef}
             errorText="Введите в формате..."
             size="default"
@@ -56,25 +49,25 @@ export const Register = () => {
           <Input
             type="text"
             placeholder="E-mail"
-            onChange={setFormData}
-            value={formValue.email}
+            onChange={handleChange}
+            value={formValues.email}
             name="email"
-            error={formValue.emailError}
+            error={formValues.emailError}
             ref={emailRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"
           />
           <Input
-            type={isShowPass ? 'text' : 'password'}
+            type={formValues.isShowPass ? 'text' : 'password'}
             placeholder="Пароль"
-            onChange={setFormData}
+            onChange={handleChange}
             icon="ShowIcon"
-            value={formValue.pass}
+            value={formValues.pass}
             name="pass"
-            error={formValue.passError}
+            error={formValues.passError}
             ref={passRef}
-            onIconClick={() => setIsShowPass(!isShowPass)}
+            onIconClick={() => setFormValues({ ...formValues, isShowPass: !formValues.isShowPass })}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"

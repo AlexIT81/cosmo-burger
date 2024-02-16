@@ -3,36 +3,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import {} from '../../utils/api';
 import { loginAction } from '../../services/actions/user/login';
 import { isLoggedInSelector } from '../../services/selectors';
+import { useForm } from '../../hooks/useForm';
 
 export const Login = () => {
   const dispatch = useDispatch();
-  const [formValue, setFormValue] = useState({
+  const { formValues, handleChange, setFormValues } = useForm({
     email: '',
     pass: '',
     emailError: false,
     passError: false,
+    isShowPass: false,
   });
-
-  const [isShowPass, setIsShowPass] = useState(false);
 
   const emailRef = useRef(null);
   const passRef = useRef(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (formValue.email && formValue.pass) {
-      dispatch(loginAction(formValue.email, formValue.pass));
+    if (formValues.email && formValues.pass) {
+      dispatch(loginAction(formValues.email, formValues.pass));
     }
-  };
-
-  const setFormData = (e) => {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
   };
 
   // роутинг
@@ -40,7 +32,6 @@ export const Login = () => {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const location = useLocation();
 
-  // eslint-disable-next-line prefer-destructuring
   const from = location.state?.from?.pathname || '/';
 
   useEffect(() => {
@@ -55,25 +46,25 @@ export const Login = () => {
           <Input
             type="text"
             placeholder="E-mail"
-            onChange={setFormData}
-            value={formValue.email}
+            onChange={handleChange}
+            value={formValues.email}
             name="email"
-            error={formValue.emailError}
+            error={formValues.emailError}
             ref={emailRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"
           />
           <Input
-            type={isShowPass ? 'text' : 'password'}
+            type={formValues.isShowPass ? 'text' : 'password'}
             placeholder="Пароль"
-            onChange={setFormData}
+            onChange={handleChange}
             icon="ShowIcon"
-            value={formValue.pass}
+            value={formValues.pass}
             name="pass"
-            error={formValue.passError}
+            error={formValues.passError}
             ref={passRef}
-            onIconClick={() => setIsShowPass(!isShowPass)}
+            onIconClick={() => setFormValues({ ...formValues, isShowPass: !formValues.isShowPass })}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"

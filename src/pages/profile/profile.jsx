@@ -1,20 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { ProfileMenu } from '../../components/profile-menu/profile-menu';
 import { getUserDataSelector } from '../../services/selectors';
 import { setUserDataAction } from '../../services/actions/user/set-user';
+import { useForm } from '../../hooks/useForm';
 
 export const Profile = () => {
   const dispatch = useDispatch();
   const { name, email } = useSelector(getUserDataSelector);
 
-  const [formValue, setFormValue] = useState({
-    name: '',
+  const { formValues, handleChange, setFormValues } = useForm({
+    name,
     nameError: false,
     nameDisabled: true,
-    email: '',
+    email,
     emailError: false,
     emailDisabled: true,
     pass: '',
@@ -22,62 +23,40 @@ export const Profile = () => {
     passDisabled: true,
   });
 
-  useEffect(() => {
-    if (name && email) {
-      setFormValue({
-        ...formValue,
-        name,
-        email,
-      });
-    }
-  }, [name, email]);
-
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
 
-  const setFormData = (e) => {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const onIconClick = (string) => {
     const key = `${string}Disabled`;
-    setFormValue({
-      ...formValue,
+    setFormValues({
+      ...formValues,
       nameDisabled: true,
       emailDisabled: true,
       passDisabled: true,
-      [key]: !formValue[key],
+      [key]: !formValues[key],
     });
   };
 
   useEffect(() => {
-    if (!formValue.nameDisabled) {
-      // nameRef.current.setSelectionRange(nameRef.current.value.length, nameRef.current.value.length);
+    if (!formValues.nameDisabled) {
       nameRef.current.focus();
-    } else if (!formValue.emailDisabled) {
-      // emailRef.current.type = 'text';
-      // emailRef.current.setSelectionRange(0, emailRef.current.value.length);
+    } else if (!formValues.emailDisabled) {
       emailRef.current.focus();
-      // emailRef.current.type = 'email';
-    } else if (!formValue.passDisabled) {
-      // passRef.current.setSelectionRange(passRef.current.value.length, passRef.current.value.length);
+    } else if (!formValues.passDisabled) {
       passRef.current.focus();
     }
-  }, [formValue.nameDisabled, formValue.emailDisabled, formValue.passDisabled]);
+  }, [formValues.nameDisabled, formValues.emailDisabled, formValues.passDisabled]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const bodyRequest = {};
-    if (formValue.name !== name && formValue.name !== '') bodyRequest.name = formValue.name;
-    if (formValue.email !== email && formValue.email !== '') bodyRequest.email = formValue.email;
-    if (formValue.pass !== '') bodyRequest.password = formValue.pass;
+    if (formValues.name !== name && formValues.name !== '') bodyRequest.name = formValues.name;
+    if (formValues.email !== email && formValues.email !== '') bodyRequest.email = formValues.email;
+    if (formValues.pass !== '') bodyRequest.password = formValues.pass;
     dispatch(setUserDataAction(bodyRequest));
-    setFormValue({
-      ...formValue,
+    setFormValues({
+      ...formValues,
       nameDisabled: true,
       emailDisabled: true,
       passDisabled: true,
@@ -86,15 +65,15 @@ export const Profile = () => {
   };
 
   const onReset = () => {
-    setFormValue({
-      ...formValue,
+    setFormValues({
+      ...formValues,
       name,
       email,
       pass: '',
     });
   };
 
-  const showButtons = name !== formValue.name || email !== formValue.email || formValue.pass;
+  const showButtons = name !== formValues.name || email !== formValues.email || formValues.pass;
 
   return (
     <main>
@@ -105,47 +84,47 @@ export const Profile = () => {
             autoFocus
             type="text"
             placeholder="Имя"
-            onChange={setFormData}
-            value={formValue.name || ''}
+            onChange={handleChange}
+            value={formValues.name || ''}
             name="name"
-            error={formValue.nameError}
+            error={formValues.nameError}
             ref={nameRef}
             errorText="Введите в формате ..."
             size="default"
             extraClass="mb-6"
             icon="EditIcon"
             onIconClick={() => onIconClick('name')}
-            disabled={formValue.nameDisabled}
+            disabled={formValues.nameDisabled}
           />
           <Input
             type="email"
             placeholder="Логин"
-            onChange={setFormData}
-            value={formValue.email}
+            onChange={handleChange}
+            value={formValues.email}
             name="email"
-            error={formValue.emailError}
+            error={formValues.emailError}
             ref={emailRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"
             icon="EditIcon"
             onIconClick={() => onIconClick('email')}
-            disabled={formValue.emailDisabled}
+            disabled={formValues.emailDisabled}
           />
           <Input
             type="password"
             placeholder="Пароль"
-            onChange={setFormData}
-            value={formValue.pass}
+            onChange={handleChange}
+            value={formValues.pass}
             name="pass"
-            error={formValue.passError}
+            error={formValues.passError}
             ref={passRef}
             errorText="Только латиница и числа + символы"
             size="default"
             extraClass="mb-6"
             icon="EditIcon"
             onIconClick={() => onIconClick('pass')}
-            disabled={formValue.passDisabled}
+            disabled={formValues.passDisabled}
           />
           {showButtons && (
             <div className={styles['buttons-wrapper']}>

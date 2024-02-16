@@ -1,6 +1,6 @@
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useMemo, useState } from 'react';
 import styles from './ingredients.module.css';
 import { getInrgedientsSelector } from '../../services/selectors';
 import { Preloader } from '../../components/preloader/preloader';
@@ -10,7 +10,7 @@ export const IngredientView = () => {
   const { id } = useParams();
   const ingredients = useSelector(getInrgedientsSelector);
 
-  useEffect(() => {
+  useMemo(() => {
     setCurrentIngredient(ingredients.find((item) => item._id === id));
   }, [id, ingredients]);
 

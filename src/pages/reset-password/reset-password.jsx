@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
 import { resetPasswordRequest } from '../../utils/api';
+import { useForm } from '../../hooks/useForm';
 
 export const ResetPassword = () => {
   const navigate = useNavigate();
@@ -14,24 +15,23 @@ export const ResetPassword = () => {
     }
   });
 
-  const [formValue, setFormValue] = useState({
+  const { formValues, handleChange, setFormValues } = useForm({
     code: '',
     pass: '',
     codeError: false,
     passError: false,
+    isShowPass: false,
   });
 
   const [apiError, setApiError] = useState('');
-
-  const [isShowPass, setIsShowPass] = useState(false);
 
   const codeRef = useRef(null);
   const passRef = useRef(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (formValue.code && formValue.pass) {
-      resetPasswordRequest({ password: formValue.pass, token: formValue.code })
+    if (formValues.code && formValues.pass) {
+      resetPasswordRequest({ password: formValues.pass, token: formValues.code })
         .then(() => {
           localStorage.removeItem('forgotPassword');
           setApiError('');
@@ -39,6 +39,7 @@ export const ResetPassword = () => {
         })
         .catch((err) => {
           setApiError('Указанный токен не найден!');
+          // eslint-disable-next-line no-console
           console.log(err.message);
         });
     }
@@ -46,10 +47,7 @@ export const ResetPassword = () => {
 
   const setFormData = (e) => {
     if (apiError) setApiError('');
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
+    handleChange(e);
   };
 
   return (
@@ -58,15 +56,15 @@ export const ResetPassword = () => {
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <form name="reset-password" className={styles.form} onSubmit={onSubmit}>
           <Input
-            type={isShowPass ? 'text' : 'password'}
+            type={formValues.isShowPass ? 'text' : 'password'}
             placeholder="Введите новый пароль"
             onChange={setFormData}
             icon="ShowIcon"
-            value={formValue.pass}
+            value={formValues.pass}
             name="pass"
-            error={formValue.passError}
+            error={formValues.passError}
             ref={passRef}
-            onIconClick={() => setIsShowPass(!isShowPass)}
+            onIconClick={() => setFormValues({ ...formValues, isShowPass: !formValues.isShowPass })}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"
@@ -75,9 +73,9 @@ export const ResetPassword = () => {
             type="text"
             placeholder="Введите код из письма"
             onChange={setFormData}
-            value={formValue.code}
+            value={formValues.code}
             name="code"
-            error={formValue.codeError}
+            error={formValues.codeError}
             ref={codeRef}
             errorText="Введите в формате example@ya.ru"
             size="default"

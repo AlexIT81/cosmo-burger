@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 import { getInrgedientsSelector } from '../../services/selectors';
@@ -10,7 +10,7 @@ export const IngredientDetails = () => {
   const { id } = useParams();
   const ingredients = useSelector(getInrgedientsSelector);
 
-  useEffect(() => {
+  useMemo(() => {
     setCurrentIngredient(ingredients.find((item) => item._id === id));
   }, [id, ingredients]);
 

@@ -3,31 +3,22 @@ import { useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password.module.css';
 import { forgotPasswordRequest } from '../../utils/api';
+import { useForm } from '../../hooks/useForm';
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [formValue, setFormValue] = useState({
-    email: '',
-    emailError: false,
-  });
-
+  const { formValues, handleChange } = useForm({ email: '', emailError: false,});
   const emailRef = useRef(null);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    forgotPasswordRequest(formValue.email)
+    forgotPasswordRequest(formValues.email)
       .then(() => {
         localStorage.setItem('forgotPassword', true);
         navigate('/reset-password', { replace: true });
       })
+      // eslint-disable-next-line no-console
       .catch((err) => console.log(err));
-  };
-
-  const setFormData = (e) => {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -38,10 +29,10 @@ export const ForgotPassword = () => {
           <Input
             type="email"
             placeholder="Укажите e-mail"
-            onChange={setFormData}
-            value={formValue.email}
+            onChange={handleChange}
+            value={formValues.email}
             name="email"
-            error={formValue.emailError}
+            error={formValues.emailError}
             ref={emailRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
