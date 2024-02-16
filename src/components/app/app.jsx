@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
-import { removeIngredient } from '../../services/actions/ingredient';
 import {
   getBurgerBunSelector,
   getBurgerIngredientsErrorSelector,
@@ -33,10 +28,12 @@ import { getCookie } from '../../utils/cookie';
 import { updateTokenAction } from '../../services/actions/user/update-token';
 import { getUserDataAction } from '../../services/actions/user/get-user';
 import { ProtectedRouteElement } from '../protected-route/protected-route';
+import { IngredientView } from '../../pages/ingredients/ingredients';
+import { getInrgedients } from '../../services/actions/ingredients';
 
 function App() {
   const dispatch = useDispatch();
-  const [isOpenModalIngredient, setIsOpenModalIngredient] = useState(false);
+  const navigate = useNavigate();
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
 
   const orderBun = useSelector(getBurgerBunSelector);
@@ -44,6 +41,12 @@ function App() {
 
   const apiError = useSelector(getBurgerIngredientsErrorSelector);
 
+  // начальное получение всех ингредиентов
+  useEffect(() => {
+    dispatch(getInrgedients());
+  }, [dispatch]);
+
+  // конструктор заказа
   const setOrderData = () => {
     const orderData = [];
     orderIngredients.forEach((item) => {
@@ -54,13 +57,10 @@ function App() {
     dispatch(getOrder(orderData));
   };
 
+  // модальные окна
   const handleModalOrder = () => {
     setOrderData();
     setIsOpenModalOrder(true);
-  };
-
-  const handleModalIngredient = () => {
-    setIsOpenModalIngredient(true);
   };
 
   const closeModal = () => {
@@ -69,10 +69,13 @@ function App() {
       dispatch(clearOrder());
       setIsOpenModalOrder(false);
     } else {
-      dispatch(removeIngredient());
-      setIsOpenModalIngredient(false);
+      navigate(-1);
     }
   };
+
+  // для модалки ингредиента
+  const location = useLocation();
+  const { state } = location;
 
   // авторизация
   const refreshToken = localStorage.getItem('refreshToken');
@@ -85,19 +88,15 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <div className={`${styles.App} mb-10`}>
-          <AppHeader />
-          {apiError ? (
-            <p style={{ textAlign: 'center' }}>
-              Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.
-            </p>
-          ) : (
-            <Routes>
-              <Route
-                path="/"
-                element={<Main handleModalIngredient={handleModalIngredient} handleModalOrder={handleModalOrder} />}
-              />
+      {/* <BrowserRouter> */}
+      <div className={`${styles.App} mb-10`}>
+        <AppHeader />
+        {apiError ? (
+          <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.</p>
+        ) : (
+          <>
+            <Routes location={state?.backgroundLocation || location}>
+              <Route path="/" element={<Main handleModalOrder={handleModalOrder} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<ProtectedRouteElement element={<Register />} needAuth={false} />} />
               <Route
@@ -111,16 +110,26 @@ function App() {
               <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} needAuth />} />
               <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
               <Route path="/feed" element={<ProtectedRouteElement element={<Feed />} needAuth />} />
+              <Route path="/ingredients/:id" element={<IngredientView />} />
               <Route path="*" element={<NotFound404 />} />
             </Routes>
-          )}
-        </div>
-      </BrowserRouter>
-      {isOpenModalIngredient && (
-        <Modal closeModal={closeModal} title="Детали ингредиента">
-          <IngredientDetails />
-        </Modal>
-      )}
+
+            {state?.backgroundLocation && (
+              <Routes>
+                <Route
+                  path="/ingredients/:id"
+                  element={
+                    <Modal closeModal={closeModal} title="Детали ингредиента">
+                      <IngredientDetails />
+                    </Modal>
+                  }
+                />
+              </Routes>
+            )}
+          </>
+        )}
+      </div>
+      {/* </BrowserRouter> */}
       {isOpenModalOrder && (
         <Modal closeModal={closeModal}>
           <OrderDetails />

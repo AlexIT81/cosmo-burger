@@ -9,7 +9,7 @@ export const ProfileMenu = () => {
 
   const logout = () => {
     dispatch(logoutAction());
-    <Navigate to="/login" replace />
+    <Navigate to="/login" replace />;
   };
 
   return (

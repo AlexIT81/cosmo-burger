@@ -5,11 +5,11 @@ import { BurgerIngredients } from '../../components/burger-ingredients/burger-in
 import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor'
 import styles from './main.module.css'
 
-export const Main = ({handleModalIngredient, handleModalOrder}) => {
+export const Main = ({handleModalOrder}) => {
   return (
     <main className={styles.main}>
     <DndProvider backend={HTML5Backend}>
-      <BurgerIngredients handleModalIngredient={handleModalIngredient} />
+      <BurgerIngredients />
       <BurgerConstructor handleModalOrder={handleModalOrder} />
     </DndProvider>
   </main>

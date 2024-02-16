@@ -25,12 +25,7 @@ export const Modal = ({ children, title, closeModal }) => {
       <div className={styles.modal}>
         <div className={styles.header}>
           <h1 className="text text_type_main-large">{title}</h1>
-          <button
-            type="button"
-            aria-label="Закрыть"
-            className={`${styles['btn-close']}`}
-            onClick={closeModal}
-          >
+          <button type="button" aria-label="Закрыть" className={`${styles['btn-close']}`} onClick={closeModal}>
             <CloseIcon type="primary" />
           </button>
         </div>
@@ -46,4 +41,3 @@ Modal.propTypes = {
   title: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
 };
-

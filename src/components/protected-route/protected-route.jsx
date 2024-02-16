@@ -12,8 +12,6 @@ export const ProtectedRouteElement = ({ element, needAuth }) => {
   if (isLoggedIn && !needAuth) return <Navigate to="/profile" replace state={{ from: location }}/>;
 
   return element;
-
-  // return isLoggedIn ? element : <Navigate to="/login" replace state={{ from: location }} />;
 };
 
 ProtectedRouteElement.propTypes = {
