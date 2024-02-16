@@ -3,7 +3,17 @@
 [Cсылка на макет](https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1).
 
 ## О проекте
-Бургерная с возможностью выбора ингредиентов для бургера и отправки заказ. (будет дополняться)
+Бургерная с возможностью выбора ингредиентов для бургера и отправки заказа. Авторизация пользователя, возможность редактировать данных пользователя и т.п(будет добавляться)
+
+### 3 спринт
+К предыдущему функционалу добавилось:
+* Страницы авторизации и регистрации.
+* Страницы восстановления и сброса пароля.
+* Страница профиля пользователя.
+* Авторизация и регистрация пользователя, обновление токена.
+* Получение и обновление информации о пользователе.
+* Настроен роутинг в приложении.
+
 
 ### 2 спринт
 * Создано хранилище для хранения данных:
@@ -46,6 +56,7 @@
 ![css](https://img.shields.io/badge/CSS_3-073502?style=for-the-badge&logo=css3&labelColor=3d3f3d)
 ![javascript](https://img.shields.io/badge/javascript-073502?style=for-the-badge&logo=javascript&labelColor=3d3f3d)
 ![react](https://img.shields.io/badge/react-073502?style=for-the-badge&logo=react&labelColor=3d3f3d)
+![reactrouter](https://img.shields.io/badge/react_router-073502?style=for-the-badge&logo=reactrouter&labelColor=3d3f3d)
 ![nodedotjs](https://img.shields.io/badge/node.js-073502?style=for-the-badge&logo=nodedotjs&labelColor=3d3f3d)
 ![npm](https://img.shields.io/badge/npm-073502?style=for-the-badge&logo=npm&labelColor=3d3f3d)
 ![webpack](https://img.shields.io/badge/webpack-073502?style=for-the-badge&logo=webpack&labelColor=3d3f3d)

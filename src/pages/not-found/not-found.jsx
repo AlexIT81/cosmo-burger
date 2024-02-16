@@ -6,8 +6,10 @@ export const NotFound404 = () => {
   return (
     <main className={styles.primary}>
       <section className={styles.wrapper}>
-        <img src={image} alt='Страница не найдена' className={styles.image}/>
-        <Link to='/' className={styles.link}>Перейти на главную</Link>
+        <img src={image} alt="Страница не найдена" className={styles.image} />
+        <Link to="/" className={styles.link}>
+          Перейти на главную
+        </Link>
       </section>
     </main>
   );

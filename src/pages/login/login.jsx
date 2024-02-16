@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import {  } from '../../utils/api';
+import {} from '../../utils/api';
 import { loginAction } from '../../services/actions/user/login';
 import { isLoggedInSelector } from '../../services/selectors';
 
@@ -24,7 +24,7 @@ export const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (formValue.email && formValue.pass) {
-      dispatch(loginAction(formValue.email, formValue.pass))
+      dispatch(loginAction(formValue.email, formValue.pass));
     }
   };
 
@@ -44,8 +44,8 @@ export const Login = () => {
   const from = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    if (isLoggedIn) navigate(from, {replace: true})
-  }, [isLoggedIn, navigate, from])
+    if (isLoggedIn) navigate(from, { replace: true });
+  }, [isLoggedIn, navigate, from]);
 
   return (
     <main className={styles.primary}>

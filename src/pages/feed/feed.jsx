@@ -5,7 +5,6 @@ export const Feed = () => {
     <main>
       <section className={styles.wrapper}>
         <h1 className={styles.title}>Страница с лентой заказов</h1>
-
       </section>
     </main>
   );

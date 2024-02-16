@@ -19,7 +19,7 @@ export const IngredientView = () => {
       <section className={styles.wrapper}>
         {currentIngredient ? (
           <>
-          <h1 className="text text_type_main-large">Детали ингредиента</h1>
+            <h1 className="text text_type_main-large">Детали ингредиента</h1>
             <img src={currentIngredient.image_large} alt={currentIngredient.name} className={styles.image} />
             <h2 className={styles.title}>{currentIngredient.name}</h2>
             <ul className={styles.nutritionals}>
