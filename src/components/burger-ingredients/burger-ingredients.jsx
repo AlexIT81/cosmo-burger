@@ -1,19 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
-import { getInrgedients } from '../../services/actions/ingredients';
 import { getInrgedientsSelector } from '../../services/selectors';
 
-export const BurgerIngredients = ({ handleModalIngredient }) => {
-  const dispatch = useDispatch();
-  // получение ингредиентов из API
-  useEffect(() => {
-    dispatch(getInrgedients());
-  }, [dispatch]);
-
+export const BurgerIngredients = () => {
   const ingredients = useSelector(getInrgedientsSelector);
 
   const [current, setCurrent] = useState('bun');
@@ -49,7 +41,7 @@ export const BurgerIngredients = ({ handleModalIngredient }) => {
     const bunRefLength = Math.abs(containerRef.current.offsetTop - bunRef.current.getBoundingClientRect().top);
     const sauceRefLength = Math.abs(containerRef.current.offsetTop - sauceRef.current.getBoundingClientRect().top);
     const mainRefLength = Math.abs(containerRef.current.offsetTop - mainRef.current.getBoundingClientRect().top);
-    // console.log(`${bunRefLength}  | ${sauceRefLength} | ${mainRefLength}`);
+
     if (bunRefLength < sauceRefLength && bunRefLength < mainRefLength) {
       setCurrent('bun');
     } else if (sauceRefLength < mainRefLength && sauceRefLength < bunRefLength) {
@@ -85,21 +77,16 @@ export const BurgerIngredients = ({ handleModalIngredient }) => {
         <h2 className="text text_type_main-medium" ref={bunRef}>
           Булки
         </h2>
-        <IngredientsList ingredients={bunArr} handleModalIngredient={handleModalIngredient} />
+        <IngredientsList ingredients={bunArr} />
         <h2 className="text text_type_main-medium" ref={sauceRef}>
           Соусы
         </h2>
-        <IngredientsList ingredients={sauceArr} handleModalIngredient={handleModalIngredient} />
+        <IngredientsList ingredients={sauceArr} />
         <h2 className="text text_type_main-medium" ref={mainRef}>
           Начинки
         </h2>
-        <IngredientsList ingredients={mainArr} handleModalIngredient={handleModalIngredient} />
+        <IngredientsList ingredients={mainArr} />
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  // ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-  handleModalIngredient: PropTypes.func.isRequired,
 };

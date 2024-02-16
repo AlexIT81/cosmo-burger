@@ -1,48 +1,58 @@
-import {
-  Logo,
-  BurgerIcon,
-  ListIcon,
-  ProfileIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 
 export function AppHeader() {
+  const { pathname } = useLocation();
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <nav>
         <ul className={`${styles['header-menu__list']}`}>
           <li className={`${styles['header-menu__item']} pt-4 pr-5 pb-4 pl-5`}>
-            <a
-              href="/"
-              className={`${styles['header-menu__link']} ${styles['header-menu__link_active']}`}
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
+                  : `${styles['header-menu__link']}`
+              }
             >
-              <BurgerIcon type="primary" />
+              <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />
               <span className="text text_type_main-default">Конструктор</span>
-            </a>
+            </NavLink>
           </li>
           <li className={`${styles['header-menu__item']} pt-4 pr-5 pb-4 pl-5`}>
-            <a href="/" className={`${styles['header-menu__link']}`}>
-              <ListIcon type="secondary" />
+            <NavLink
+              to="/feed"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
+                  : `${styles['header-menu__link']}`
+              }
+            >
+              <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} />
               <span className="text text_type_main-default">Лента заказов</span>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
       <nav>
-        <ul
-          className={`${styles['header-menu__list_type_profile']} ${styles['header-menu__list']}`}
-        >
-          <li className={`${styles['header-menu__item']}`}>
-            <a
-              href="/"
-              className={`${styles['header-menu__link']} pt-4 pr-5 pb-4 pl-5`}
+        <ul className={`${styles['header-menu__list_type_profile']} ${styles['header-menu__list']}`}>
+          <li className={`${styles['header-menu__item']} pt-4 pr-5 pb-4 pl-5`}>
+            <Link
+              to="/profile"
+              className={
+                pathname === '/profile'
+                  ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
+                  : `${styles['header-menu__link']}`
+              }
             >
-              <ProfileIcon type="secondary" />
-              <span className="text text_type_main-default">
-                Личный кабинет
-              </span>
-            </a>
+              <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
+              <span className="text text_type_main-default">Личный кабинет</span>
+            </Link>
           </li>
         </ul>
       </nav>

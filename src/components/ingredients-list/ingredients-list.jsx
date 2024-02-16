@@ -3,17 +3,11 @@ import styles from './ingredients-list.module.css';
 import { IngredientsCard } from '../ingredients-card/ingredients-card';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-export const IngredientsList = ({ ingredients, handleModalIngredient }) => {
+export const IngredientsList = ({ ingredients }) => {
   return (
     <ul className={styles.list}>
       {ingredients.map((item) => {
-        return (
-          <IngredientsCard
-            key={item._id}
-            ingredient={item}
-            handleModalIngredient={handleModalIngredient}
-          />
-        );
+        return <IngredientsCard key={item._id} ingredient={item} />;
       })}
     </ul>
   );
@@ -21,5 +15,4 @@ export const IngredientsList = ({ ingredients, handleModalIngredient }) => {
 
 IngredientsList.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-  handleModalIngredient: PropTypes.func.isRequired,
 };
