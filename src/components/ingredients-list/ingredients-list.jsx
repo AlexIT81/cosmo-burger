@@ -6,8 +6,9 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 export const IngredientsList = ({ ingredients }) => {
   return (
     <ul className={styles.list}>
-      {ingredients.map((item) => {
-        return <IngredientsCard key={item._id} ingredient={item} />;
+      {ingredients.map((ingredient) => {
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        return <IngredientsCard key={ingredient._id} {...ingredient} />;
       })}
     </ul>
   );

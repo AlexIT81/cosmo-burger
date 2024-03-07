@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import styles from './app.module.css';
@@ -30,9 +30,10 @@ import { getUserDataAction } from '../../services/actions/user/get-user';
 import { ProtectedRouteElement } from '../protected-route/protected-route';
 import { IngredientView } from '../../pages/ingredients/ingredients';
 import { getInrgedients } from '../../services/actions/ingredients';
+import { IIngredient } from '../../utils/types';
 
-function App() {
-  const dispatch = useDispatch();
+const App: FC = () => {
+  const dispatch = useDispatch<any>();
   const navigate = useNavigate();
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
 
@@ -47,9 +48,9 @@ function App() {
   }, [dispatch]);
 
   // конструктор заказа
-  const setOrderData = () => {
+  const setOrderData = (): void => {
     const orderData = [];
-    orderIngredients.forEach((item) => {
+    orderIngredients.forEach((item: IIngredient) => {
       orderData.push(item._id);
     });
     orderData.push(orderBun._id);
@@ -58,12 +59,12 @@ function App() {
   };
 
   // модальные окна
-  const handleModalOrder = () => {
+  const handleModalOrder = (): void => {
     setOrderData();
     setIsOpenModalOrder(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     if (isOpenModalOrder) {
       dispatch(clearBurgerIngredient());
       dispatch(clearOrder());
@@ -88,7 +89,6 @@ function App() {
 
   return (
     <>
-      {/* <BrowserRouter> */}
       <div className={`${styles.App} mb-10`}>
         <AppHeader />
         {apiError ? (
@@ -129,7 +129,6 @@ function App() {
           </>
         )}
       </div>
-      {/* </BrowserRouter> */}
       {isOpenModalOrder && (
         <Modal closeModal={closeModal}>
           <OrderDetails />

@@ -1,12 +1,12 @@
-import { useCallback, useRef } from 'react';
+import { FC, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import styles from './constructor-card.module.css';
 import { removeBurgerIngredient, sortBurgerIngredient } from '../../services/actions/burger';
+import { IConstructorCard, IHoverItem } from '../../utils/types';
 
-export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, type, index }) => {
+export const ConstructorCard: FC<IConstructorCard> = ({ id, isDraggable, isLocked, name, price, img, type, index }) => {
   const dispatch = useDispatch();
 
   const onRemove = () => {
@@ -14,20 +14,20 @@ export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, t
   };
 
   // DnD
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
 
-  const sortCard = useCallback((dragIndex, hoverIndex) => {
+  const sortCard = useCallback((dragIndex: number, hoverIndex: number) => {
     dispatch(sortBurgerIngredient(dragIndex, hoverIndex));
   }, [dispatch]);
 
   const [, drop] = useDrop({
     accept: type ? 'none' : 'sort',
-    hover(item) {
+    hover(item: IHoverItem) {
       if (!ref.current) {
         return;
       }
       const dragIndex = item.index;
-      const hoverIndex = index;
+      const hoverIndex = index!;
 
       if (dragIndex === hoverIndex) {
         return;
@@ -62,23 +62,4 @@ export const ConstructorCard = ({ id, isDraggable, isLocked, name, price, img, t
       />
     </div>
   );
-};
-
-ConstructorCard.propTypes = {
-  id: PropTypes.string,
-  isDraggable: PropTypes.bool,
-  isLocked: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  img: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  index: PropTypes.number,
-};
-
-ConstructorCard.defaultProps = {
-  id: '',
-  isDraggable: true,
-  isLocked: false,
-  type: '',
-  index: 0,
 };

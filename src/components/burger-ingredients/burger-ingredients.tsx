@@ -1,32 +1,29 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { getInrgedientsSelector } from '../../services/selectors';
+import { IIngredientWithId } from '../../utils/types';
 
 export const BurgerIngredients = () => {
   const ingredients = useSelector(getInrgedientsSelector);
 
   const [current, setCurrent] = useState('bun');
-  const bunArr = ingredients.filter((item) => item.type === 'bun');
-  const sauceArr = ingredients.filter((item) => item.type === 'sauce');
-  const mainArr = ingredients.filter((item) => item.type === 'main');
+  const bunArr = ingredients.filter((item: IIngredientWithId) => item.type === 'bun');
+  const sauceArr = ingredients.filter((item: IIngredientWithId) => item.type === 'sauce');
+  const mainArr = ingredients.filter((item: IIngredientWithId) => item.type === 'main');
 
   // Прокрутка
-  const containerRef = useRef(null);
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const scrollingElement = document.querySelector('.scrolling');
-    const scrollToElement = (elementRef) => {
-      scrollingElement.scrollTo({
-        top: elementRef.current.scrollIntoView(),
-        behavior: 'smooth',
-      });
-    };
+    const scrollToElement = (elementRef: RefObject<HTMLHeadingElement | HTMLDivElement>): void =>
+      elementRef.current!.scrollIntoView();
+
     if (current === 'sauce') {
       scrollToElement(sauceRef);
     } else if (current === 'main') {
@@ -36,11 +33,11 @@ export const BurgerIngredients = () => {
     }
   }, [current]);
 
-  // прокрутка с подсветкой
-  const handleScroll = () => {
-    const bunRefLength = Math.abs(containerRef.current.offsetTop - bunRef.current.getBoundingClientRect().top);
-    const sauceRefLength = Math.abs(containerRef.current.offsetTop - sauceRef.current.getBoundingClientRect().top);
-    const mainRefLength = Math.abs(containerRef.current.offsetTop - mainRef.current.getBoundingClientRect().top);
+  // Прокрутка с подсветкой
+  const handleScroll = (): void => {
+    const bunRefLength = Math.abs(containerRef.current!.offsetTop - bunRef.current!.getBoundingClientRect().top);
+    const sauceRefLength = Math.abs(containerRef.current!.offsetTop - sauceRef.current!.getBoundingClientRect().top);
+    const mainRefLength = Math.abs(containerRef.current!.offsetTop - mainRef.current!.getBoundingClientRect().top);
 
     if (bunRefLength < sauceRefLength && bunRefLength < mainRefLength) {
       setCurrent('bun');
