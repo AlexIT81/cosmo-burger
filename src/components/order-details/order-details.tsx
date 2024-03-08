@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './order-details.module.css';
 import doneIcon from '../../images/done.svg';
 import { Preloader } from '../preloader/preloader';
 import { getOrderErrorSelector, getOrderSelector, getOrderRequestActiveSelector } from '../../services/selectors';
 
-export const OrderDetails = () => {
+export const OrderDetails: FC = () => {
   const order = useSelector(getOrderSelector);
   const isLoading = useSelector(getOrderRequestActiveSelector);
   const apiError = useSelector(getOrderErrorSelector);

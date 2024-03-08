@@ -8,7 +8,7 @@ import { IIngredient } from '../../utils/types';
 
 export const IngredientDetails: FC = () => {
   const [currentIngredient, setCurrentIngredient] = useState<IIngredient>();
-  const { id } = useParams();
+  const { id } = useParams<string>();
   const ingredients = useSelector(getInrgedientsSelector);
 
   useMemo(() => {

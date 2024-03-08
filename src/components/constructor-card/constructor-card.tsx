@@ -27,14 +27,16 @@ export const ConstructorCard: FC<IConstructorCard> = ({ id, isDraggable, isLocke
         return;
       }
       const dragIndex = item.index;
-      const hoverIndex = index!;
+      const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
         return;
       }
 
-      sortCard(dragIndex, hoverIndex);
-      item.index = hoverIndex;
+      if (hoverIndex || hoverIndex === 0) {
+        sortCard(dragIndex, hoverIndex);
+        item.index = hoverIndex;
+      }
     },
   });
 

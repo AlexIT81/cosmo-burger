@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredients-card.module.css';
 import { getAllBurgerParts } from '../../services/selectors';
-import { IIngredient, IIngredientsCard } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
 
 export const IngredientsCard: FC<IIngredient> = (ingredient) => {
   const {type, _id: id, image_large: image, name, price} = ingredient;
@@ -25,7 +25,7 @@ export const IngredientsCard: FC<IIngredient> = (ingredient) => {
   // Счетчик
   const allBurgerParts = useSelector((state) => getAllBurgerParts(state));
 
-  const counter = useMemo(() => {
+  const counter = useMemo<number>(() => {
     return allBurgerParts.reduce((acc, item) => {
       if (item === null) return acc;
       return item._id === id ? (acc += 1) : acc;

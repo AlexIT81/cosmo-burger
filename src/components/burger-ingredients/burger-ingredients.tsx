@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useState, useEffect, useRef, RefObject, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
@@ -6,7 +6,7 @@ import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { getInrgedientsSelector } from '../../services/selectors';
 import { IIngredientWithId } from '../../utils/types';
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients: FC = () => {
   const ingredients = useSelector(getInrgedientsSelector);
 
   const [current, setCurrent] = useState('bun');
@@ -21,8 +21,9 @@ export const BurgerIngredients = () => {
   const mainRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const scrollToElement = (elementRef: RefObject<HTMLHeadingElement | HTMLDivElement>): void =>
-      elementRef.current!.scrollIntoView();
+    const scrollToElement = (elementRef: RefObject<HTMLHeadingElement | HTMLDivElement>): void => {
+      if (elementRef && elementRef.current) elementRef.current.scrollIntoView();
+    };
 
     if (current === 'sauce') {
       scrollToElement(sauceRef);
@@ -35,16 +36,29 @@ export const BurgerIngredients = () => {
 
   // Прокрутка с подсветкой
   const handleScroll = (): void => {
-    const bunRefLength = Math.abs(containerRef.current!.offsetTop - bunRef.current!.getBoundingClientRect().top);
-    const sauceRefLength = Math.abs(containerRef.current!.offsetTop - sauceRef.current!.getBoundingClientRect().top);
-    const mainRefLength = Math.abs(containerRef.current!.offsetTop - mainRef.current!.getBoundingClientRect().top);
+    if (
+      containerRef &&
+      bunRef &&
+      containerRef &&
+      sauceRef &&
+      containerRef &&
+      mainRef &&
+      containerRef.current &&
+      bunRef.current &&
+      sauceRef.current &&
+      mainRef.current
+    ) {
+      const bunRefLength = Math.abs(containerRef.current.offsetTop - bunRef.current.getBoundingClientRect().top);
+      const sauceRefLength = Math.abs(containerRef.current.offsetTop - sauceRef.current.getBoundingClientRect().top);
+      const mainRefLength = Math.abs(containerRef.current.offsetTop - mainRef.current.getBoundingClientRect().top);
 
-    if (bunRefLength < sauceRefLength && bunRefLength < mainRefLength) {
-      setCurrent('bun');
-    } else if (sauceRefLength < mainRefLength && sauceRefLength < bunRefLength) {
-      setCurrent('sauce');
-    } else {
-      setCurrent('main');
+      if (bunRefLength < sauceRefLength && bunRefLength < mainRefLength) {
+        setCurrent('bun');
+      } else if (sauceRefLength < mainRefLength && sauceRefLength < bunRefLength) {
+        setCurrent('sauce');
+      } else {
+        setCurrent('main');
+      }
     }
   };
 

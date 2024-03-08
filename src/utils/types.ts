@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from "react";
+
 export interface IIngredient {
   _id: string;
   name: string;
@@ -42,6 +44,22 @@ export interface IConstructorTotal {
   handleModalOrder: () => void;
 }
 
-export interface IIngredientsCard<IIngredient> {
-  ingredient: IIngredient;
+export interface IIngredientsList {
+  ingredients: IIngredient[];
+}
+
+export interface IModal {
+  title?: string;
+  closeModal: () => void;
+  children: ReactNode;
+}
+
+export interface IModalOverlay {
+  closeModal: () => void;
+  children: ReactNode; 
+}
+
+export interface IProtectedRouteElement {
+  element: ReactElement;
+  needAuth: boolean;
 }
