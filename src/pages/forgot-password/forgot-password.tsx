@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password.module.css';
 import { forgotPasswordRequest } from '../../utils/api';
@@ -8,13 +8,13 @@ import { useForm } from '../../hooks/useForm';
 export const ForgotPassword = () => {
   const navigate = useNavigate();
   const { formValues, handleChange } = useForm({ email: '', emailError: false,});
-  const emailRef = useRef(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     forgotPasswordRequest(formValues.email)
       .then(() => {
-        localStorage.setItem('forgotPassword', true);
+        localStorage.setItem('forgotPassword', 'true');
         navigate('/reset-password', { replace: true });
       })
       // eslint-disable-next-line no-console

@@ -1,34 +1,31 @@
+import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
 import { resetPasswordRequest } from '../../utils/api';
 import { useForm } from '../../hooks/useForm';
 
-export const ResetPassword = () => {
+export const ResetPassword: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const forgotPasswordCheck = localStorage.getItem('forgotPassword');
-    if (!forgotPasswordCheck) {
+    if (forgotPasswordCheck !== 'true') {
       navigate('/forgot-password', { replace: true });
     }
   });
 
-  const { formValues, handleChange, setFormValues } = useForm({
+  const { formValues, handleChange } = useForm({
     code: '',
     pass: '',
     codeError: false,
     passError: false,
-    isShowPass: false,
   });
-
   const [apiError, setApiError] = useState('');
+  const [isShowPass, setIsShowPass] = useState(false);
 
-  const codeRef = useRef(null);
-  const passRef = useRef(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formValues.code && formValues.pass) {
       resetPasswordRequest({ password: formValues.pass, token: formValues.code })
@@ -45,7 +42,7 @@ export const ResetPassword = () => {
     }
   };
 
-  const setFormData = (e) => {
+  const setFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (apiError) setApiError('');
     handleChange(e);
   };
@@ -56,15 +53,14 @@ export const ResetPassword = () => {
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <form name="reset-password" className={styles.form} onSubmit={onSubmit}>
           <Input
-            type={formValues.isShowPass ? 'text' : 'password'}
+            type={isShowPass ? 'text' : 'password'}
             placeholder="Введите новый пароль"
             onChange={setFormData}
             icon="ShowIcon"
             value={formValues.pass}
             name="pass"
             error={formValues.passError}
-            ref={passRef}
-            onIconClick={() => setFormValues({ ...formValues, isShowPass: !formValues.isShowPass })}
+            onIconClick={() => setIsShowPass(!isShowPass)}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"
@@ -76,7 +72,6 @@ export const ResetPassword = () => {
             value={formValues.code}
             name="code"
             error={formValues.codeError}
-            ref={codeRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"

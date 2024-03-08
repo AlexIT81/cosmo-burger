@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from 'react';
 
 export interface IIngredient {
   _id: string;
@@ -13,11 +13,11 @@ export interface IIngredient {
   image_mobile: string;
   image_large: string;
   __v: number;
-};
+}
 
 export interface IIngredientWithId extends IIngredient {
   id: string;
-};
+}
 
 export interface IBurgerConstructor {
   handleModalOrder: () => void;
@@ -31,7 +31,7 @@ export interface IConstructorCard {
   price: number;
   img: string;
   type?: 'top' | 'bottom';
-  index?: number; 
+  index?: number;
 }
 
 export interface IHoverItem {
@@ -56,10 +56,24 @@ export interface IModal {
 
 export interface IModalOverlay {
   closeModal: () => void;
-  children: ReactNode; 
+  children: ReactNode;
 }
 
 export interface IProtectedRouteElement {
   element: ReactElement;
   needAuth: boolean;
+}
+
+export interface IUseForm {
+  [name: string]: string | number | boolean | undefined;
+}
+
+export interface IMain {
+  handleModalOrder: () => void;
+}
+
+export interface IbodyRequest {
+  name?: string;
+  email?: string;
+  password?: string;
 }
