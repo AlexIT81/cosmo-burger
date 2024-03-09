@@ -29,7 +29,7 @@ const checkSuccess = <T>(res: any): Promise<T> => {
 export const getDataRequest = () => {
   return fetch(`${API_URL}/ingredients`)
     .then((res) => checkResponse<TGetDataRequest>(res))
-    .then(res => checkSuccess<TGetDataRequest>(res));
+    .then((res) => checkSuccess<TGetDataRequest>(res));
 };
 
 export const createOrderRequest = (data: string[]) => {
@@ -42,7 +42,7 @@ export const createOrderRequest = (data: string[]) => {
     body: JSON.stringify({ ingredients: data }),
   })
     .then((res) => checkResponse<TCreateOrderRequest>(res))
-    .then(res => checkSuccess<TCreateOrderRequest>(res));
+    .then((res) => checkSuccess<TCreateOrderRequest>(res));
 };
 
 export const forgotPasswordRequest = (email: string) => {
@@ -52,7 +52,7 @@ export const forgotPasswordRequest = (email: string) => {
     body: JSON.stringify({ email }),
   })
     .then((res) => checkResponse<TPasswordAndLogoutRequest>(res))
-    .then(res => checkSuccess<TPasswordAndLogoutRequest>(res));
+    .then((res) => checkSuccess<TPasswordAndLogoutRequest>(res));
 };
 
 export const resetPasswordRequest = (password: string, token: string) => {
@@ -63,7 +63,7 @@ export const resetPasswordRequest = (password: string, token: string) => {
     body: JSON.stringify({ password, token }),
   })
     .then((res) => checkResponse<TPasswordAndLogoutRequest>(res))
-    .then(res => checkSuccess<TPasswordAndLogoutRequest>(res));
+    .then((res) => checkSuccess<TPasswordAndLogoutRequest>(res));
 };
 
 export const registerRequest = (email: string, password: string, name: string) => {
@@ -73,7 +73,7 @@ export const registerRequest = (email: string, password: string, name: string) =
     body: JSON.stringify({ email, password, name }),
   })
     .then((res) => checkResponse<TRegisterAndAuthRequest>(res))
-    .then(res => checkSuccess<TRegisterAndAuthRequest>(res));
+    .then((res) => checkSuccess<TRegisterAndAuthRequest>(res));
 };
 
 export const loginRequest = (email: string, password: string) => {
@@ -83,7 +83,7 @@ export const loginRequest = (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => checkResponse<TRegisterAndAuthRequest>(res))
-    .then(res => checkSuccess<TRegisterAndAuthRequest>(res));
+    .then((res) => checkSuccess<TRegisterAndAuthRequest>(res));
 };
 
 export const updateTokenRequest = () => {
@@ -93,7 +93,7 @@ export const updateTokenRequest = () => {
     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   })
     .then((res) => checkResponse<TRegisterAndAuthRequest>(res))
-    .then(res => checkSuccess<TRegisterAndAuthRequest>(res));
+    .then((res) => checkSuccess<TRegisterAndAuthRequest>(res));
 };
 
 export const logoutRequest = () => {
@@ -103,7 +103,7 @@ export const logoutRequest = () => {
     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   })
     .then((res) => checkResponse<TPasswordAndLogoutRequest>(res))
-    .then(res => checkSuccess<TPasswordAndLogoutRequest>(res));
+    .then((res) => checkSuccess<TPasswordAndLogoutRequest>(res));
 };
 
 export const getUserDataRequest = () => {
@@ -113,7 +113,7 @@ export const getUserDataRequest = () => {
     headers: myHeaders,
   })
     .then((res) => checkResponse<TGetUserDataRequest>(res))
-    .then(res => checkSuccess<TGetUserDataRequest>(res));
+    .then((res) => checkSuccess<TGetUserDataRequest>(res));
 };
 
 export const setUserDataRequest = (data: string) => {
@@ -126,5 +126,5 @@ export const setUserDataRequest = (data: string) => {
     body: JSON.stringify(data),
   })
     .then((res) => checkResponse<TGetUserDataRequest>(res))
-    .then(res => checkSuccess<TGetUserDataRequest>(res));
+    .then((res) => checkSuccess<TGetUserDataRequest>(res));
 };

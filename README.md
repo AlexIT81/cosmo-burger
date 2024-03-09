@@ -5,6 +5,9 @@
 ## О проекте
 Бургерная с возможностью выбора ингредиентов для бургера и отправки заказа. Авторизация пользователя, возможность редактировать данных пользователя и т.п(будет добавляться)
 
+### 4 спринт
+Проект переведен на typescript(за исключением хранилища данных).
+
 ### 3 спринт
 К предыдущему функционалу добавилось:
 * Страницы авторизации и регистрации.
@@ -67,3 +70,4 @@
 ![json](https://img.shields.io/badge/json-073502?style=for-the-badge&logo=json&labelColor=3d3f3d)
 ![API](https://img.shields.io/badge/API-API-073502?style=for-the-badge&labelColor=3d3f3d)
 ![redux](https://img.shields.io/badge/redux-073502?style=for-the-badge&logo=redux&labelColor=3d3f3d)
+![typescript](https://img.shields.io/badge/typescript-072f13?style=for-the-badge&logo=typescript&labelColor=3d3f3d)
