@@ -6,9 +6,9 @@ import { ConstructorCard } from '../constructor-card/constructor-card';
 import { ConstructorTotal } from '../constructor-total/constructor-total';
 import { getBurgerBunSelector, getBurgerIngredientsSelector } from '../../services/selectors';
 import { addBurgerIngredient } from '../../services/actions/burger';
-import { IBurgerConstructor, IIngredient, IIngredientWithId } from '../../utils/types';
+import { IOnlyModal, IIngredient, IIngredientWithId } from '../../utils/types';
 
-export const BurgerConstructor: FC<IBurgerConstructor> = ({ handleModalOrder }) => {
+export const BurgerConstructor: FC<IOnlyModal> = ({ handleModalOrder }) => {
   const dispatch = useDispatch();
   const burgerIng = useSelector(getBurgerIngredientsSelector);
   const burgerBun = useSelector(getBurgerBunSelector);

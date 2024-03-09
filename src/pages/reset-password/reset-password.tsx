@@ -28,7 +28,7 @@ export const ResetPassword: FC = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formValues.code && formValues.pass) {
-      resetPasswordRequest({ password: formValues.pass, token: formValues.code })
+      resetPasswordRequest(formValues.pass, formValues.code)
         .then(() => {
           localStorage.removeItem('forgotPassword');
           setApiError('');

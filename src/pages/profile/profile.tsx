@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
@@ -6,9 +6,9 @@ import { ProfileMenu } from '../../components/profile-menu/profile-menu';
 import { getUserDataSelector } from '../../services/selectors';
 import { setUserDataAction } from '../../services/actions/user/set-user';
 import { useForm } from '../../hooks/useForm';
-import { IbodyRequest } from '../../utils/types';
+import { IBodyRequest } from '../../utils/types';
 
-export const Profile = () => {
+export const Profile: FC = () => {
   const dispatch = useDispatch<any>();
   const { name, email } = useSelector(getUserDataSelector);
 
@@ -55,7 +55,7 @@ export const Profile = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const bodyRequest: IbodyRequest = {};
+    const bodyRequest: IBodyRequest = {};
     if (formValues.name !== name && formValues.name !== '') bodyRequest.name = formValues.name;
     if (formValues.email !== email && formValues.email !== '') bodyRequest.email = formValues.email;
     if (formValues.pass !== '') bodyRequest.password = formValues.pass;

@@ -9,23 +9,13 @@ import App from './components/app/app';
 import { rootReducer } from './services/reducers';
 
 const composeEnhancers =
-	typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-		? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-		: compose;
+  typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
-
-// const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-
-// const composeEnhancers =
-//   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-//     : compose;
-// const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-// const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

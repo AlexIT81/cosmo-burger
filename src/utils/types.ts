@@ -19,7 +19,7 @@ export interface IIngredientWithId extends IIngredient {
   id: string;
 }
 
-export interface IBurgerConstructor {
+export interface IOnlyModal {
   handleModalOrder: () => void;
 }
 
@@ -39,24 +39,21 @@ export interface IHoverItem {
   index: number;
 }
 
-export interface IConstructorTotal {
+export interface IConstructorTotal extends IOnlyModal {
   totalSum: number;
-  handleModalOrder: () => void;
 }
 
 export interface IIngredientsList {
   ingredients: IIngredient[];
 }
 
-export interface IModal {
-  title?: string;
+export interface IModalOverlay {
   closeModal: () => void;
   children: ReactNode;
 }
 
-export interface IModalOverlay {
-  closeModal: () => void;
-  children: ReactNode;
+export interface IModal extends IModalOverlay {
+  title?: string;
 }
 
 export interface IProtectedRouteElement {
@@ -68,12 +65,40 @@ export interface IUseForm {
   [name: string]: string | number | boolean | undefined;
 }
 
-export interface IMain {
-  handleModalOrder: () => void;
-}
-
-export interface IbodyRequest {
+export interface IBodyRequest {
   name?: string;
   email?: string;
   password?: string;
+}
+
+// API
+export type TServerResponse<T> = {
+  success: boolean;
+} & T;
+
+export type TGetDataRequest = TServerResponse<{
+  data: IIngredient[];
+}>;
+
+export type TCreateOrderRequest = TServerResponse<{
+  name: string;
+  order: {
+      number: number;
+  }
+}>
+
+export type TPasswordAndLogoutRequest = TServerResponse<{
+  message: string;
+}>
+
+export type TGetUserDataRequest = TServerResponse<{
+  user: {
+      email: string,
+      name: string,
+  },
+}>
+
+export type TRegisterAndAuthRequest = TGetUserDataRequest & {
+  accessToken: string;
+  refreshToken: string;
 }
