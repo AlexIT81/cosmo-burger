@@ -18,12 +18,16 @@ export const Register: FC = () => {
   });
   const [isShowPass, setIsShowPass] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formValues.name && formValues.email && formValues.pass) {
       dispatch(registerAction(formValues.email, formValues.pass, formValues.name));
     }
   };
+
+  const setShowPass = () => {
+    setIsShowPass(!isShowPass);
+  }
 
   return (
     <main className={styles.primary}>
@@ -60,7 +64,7 @@ export const Register: FC = () => {
             value={formValues.pass}
             name="pass"
             error={formValues.passError}
-            onIconClick={() => setIsShowPass(!isShowPass)}
+            onIconClick={setShowPass}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"

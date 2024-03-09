@@ -6,6 +6,7 @@ import {
   TRegisterAndAuthRequest,
   TGetUserDataRequest,
   TPasswordAndLogoutRequest,
+  TServerResponse,
 } from './types';
 
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -15,16 +16,12 @@ const checkResponse = <T>(res: Response): Promise<T> => {
   return Promise.reject(new Error(`Ошибка ${res.status}`));
 };
 
-const checkSuccess = <T>(res: any): Promise<T> => {
+const checkSuccess = <T>(res: TServerResponse<T>): T => {
   if (res && res.success) {
     return res;
   }
-  return Promise.reject(new Error(`Ответ не success: ${res}`));
+  throw new Error(`Ответ не success: ${res}`);
 };
-
-// const request = async (endpoint, options) => {
-//   return fetch(`${API_URL}/${endpoint}`, options).then(checkResponse).then(checkSuccess);
-// };
 
 export const getDataRequest = () => {
   return fetch(`${API_URL}/ingredients`)
@@ -56,7 +53,6 @@ export const forgotPasswordRequest = (email: string) => {
 };
 
 export const resetPasswordRequest = (password: string, token: string) => {
-  // тут в обекте было
   return fetch(`${API_URL}/password-reset/reset`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

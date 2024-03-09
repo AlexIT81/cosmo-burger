@@ -6,7 +6,7 @@ import { IIngredient, IIngredientsList } from '../../utils/types';
 export const IngredientsList: FC<IIngredientsList> = ({ingredients}) => {
   return (
     <ul className={styles.list}>
-      {ingredients.map((ingredient: IIngredient) => {
+      {ingredients.map((ingredient) => {
         return <IngredientsCard key={ingredient._id} {...ingredient} />;
       })}
     </ul>

@@ -48,7 +48,7 @@ const App: FC = () => {
   }, [dispatch]);
 
   // конструктор заказа
-  const setOrderData = (): void => {
+  const setOrderData = () => {
     const orderData = [];
     orderIngredients.forEach((item: IIngredient) => {
       orderData.push(item._id);
@@ -59,12 +59,12 @@ const App: FC = () => {
   };
 
   // модальные окна
-  const handleModalOrder = (): void => {
+  const handleModalOrder = () => {
     setOrderData();
     setIsOpenModalOrder(true);
   };
 
-  const closeModal = (): void => {
+  const closeModal = () => {
     if (isOpenModalOrder) {
       dispatch(clearBurgerIngredient());
       dispatch(clearOrder());

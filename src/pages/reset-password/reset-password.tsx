@@ -47,6 +47,10 @@ export const ResetPassword: FC = () => {
     handleChange(e);
   };
 
+  const setShowPass = () => {
+    setIsShowPass(!isShowPass);
+  }
+
   return (
     <main className={styles.primary}>
       <section className={styles.wrapper}>
@@ -60,7 +64,7 @@ export const ResetPassword: FC = () => {
             value={formValues.pass}
             name="pass"
             error={formValues.passError}
-            onIconClick={() => setIsShowPass(!isShowPass)}
+            onIconClick={setShowPass}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"

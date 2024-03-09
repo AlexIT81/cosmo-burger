@@ -10,7 +10,7 @@ export const ConstructorTotal: FC<IConstructorTotal> = ({ totalSum, handleModalO
   const isLoggedIn = useSelector(isLoggedInSelector);
   const navigate = useNavigate();
 
-  const onModalOrder = (): void => {
+  const onModalOrder = () => {
     if (isLoggedIn) {
       handleModalOrder();
     } else {

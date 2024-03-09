@@ -28,7 +28,7 @@ export const Profile: FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
 
-  const onIconClick = (string: string): void => {
+  const onIconClick = (string: string) => {
     const key = `${string}Disabled`;
     if (key === 'nameDisabled' || key === 'emailDisabled' || key === 'passDisabled') {
       setFormValues({
@@ -42,7 +42,7 @@ export const Profile: FC = () => {
   };
 
   useEffect(() => {
-    if (nameRef && emailRef && passRef && nameRef.current && emailRef.current && passRef.current) {
+    if (nameRef.current && emailRef.current && passRef.current) {
       if (!formValues.nameDisabled) {
         nameRef.current.focus();
       } else if (!formValues.emailDisabled) {

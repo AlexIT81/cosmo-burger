@@ -1,13 +1,13 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { loginAction } from '../../services/actions/user/login';
 import { isLoggedInSelector } from '../../services/selectors';
 import { useForm } from '../../hooks/useForm';
 
-export const Login = () => {
+export const Login: FC = () => {
   const dispatch = useDispatch<any>();
   const { formValues, handleChange } = useForm({
     email: '',
@@ -35,6 +35,10 @@ export const Login = () => {
     if (isLoggedIn) navigate(from, { replace: true });
   }, [isLoggedIn, navigate, from]);
 
+  const setShowPass = () => {
+    setIsShowPass(!isShowPass);
+  }
+
   return (
     <main className={styles.primary}>
       <section className={styles.wrapper}>
@@ -59,7 +63,7 @@ export const Login = () => {
             value={formValues.pass}
             name="pass"
             error={formValues.passError}
-            onIconClick={() => setIsShowPass(!isShowPass)}
+            onIconClick={setShowPass}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"

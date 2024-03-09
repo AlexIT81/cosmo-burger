@@ -35,22 +35,12 @@ export const BurgerIngredients: FC = () => {
   }, [current]);
 
   // Прокрутка с подсветкой
-  const handleScroll = (): void => {
-    if (
-      containerRef &&
-      bunRef &&
-      containerRef &&
-      sauceRef &&
-      containerRef &&
-      mainRef &&
-      containerRef.current &&
-      bunRef.current &&
-      sauceRef.current &&
-      mainRef.current
-    ) {
-      const bunRefLength = Math.abs(containerRef.current.offsetTop - bunRef.current.getBoundingClientRect().top);
-      const sauceRefLength = Math.abs(containerRef.current.offsetTop - sauceRef.current.getBoundingClientRect().top);
-      const mainRefLength = Math.abs(containerRef.current.offsetTop - mainRef.current.getBoundingClientRect().top);
+  const handleScroll = () => {
+    if (containerRef.current && bunRef.current && sauceRef.current && mainRef.current) {
+      const containerLength = containerRef.current.offsetTop;
+      const bunRefLength = Math.abs(containerLength - bunRef.current.getBoundingClientRect().top);
+      const sauceRefLength = Math.abs(containerLength - sauceRef.current.getBoundingClientRect().top);
+      const mainRefLength = Math.abs(containerLength - mainRef.current.getBoundingClientRect().top);
 
       if (bunRefLength < sauceRefLength && bunRefLength < mainRefLength) {
         setCurrent('bun');
