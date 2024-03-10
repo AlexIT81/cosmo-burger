@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 
-export function AppHeader() {
+export const AppHeader: FC = () => {
   const { pathname } = useLocation();
   return (
     <header className={`${styles.header} pt-4 pb-4`}>

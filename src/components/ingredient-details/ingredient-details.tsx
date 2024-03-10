@@ -1,17 +1,18 @@
 import { useParams } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 import { getInrgedientsSelector } from '../../services/selectors';
 import { Preloader } from '../preloader/preloader';
+import { IIngredient } from '../../utils/types';
 
-export const IngredientDetails = () => {
-  const [currentIngredient, setCurrentIngredient] = useState({});
-  const { id } = useParams();
+export const IngredientDetails: FC = () => {
+  const [currentIngredient, setCurrentIngredient] = useState<IIngredient>();
+  const { id } = useParams<string>();
   const ingredients = useSelector(getInrgedientsSelector);
 
   useMemo(() => {
-    setCurrentIngredient(ingredients.find((item) => item._id === id));
+    setCurrentIngredient(ingredients.find((item: IIngredient) => item._id === id));
   }, [id, ingredients]);
 
   return (

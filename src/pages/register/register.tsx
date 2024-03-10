@@ -1,33 +1,33 @@
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register.module.css';
 import { registerAction } from '../../services/actions/user/register';
 import { useForm } from '../../hooks/useForm';
 
-export const Register = () => {
-  const dispatch = useDispatch();
-  const { formValues, handleChange, setFormValues } = useForm({
+export const Register: FC = () => {
+  const dispatch = useDispatch<any>();
+  const { formValues, handleChange } = useForm({
     name: '',
     email: '',
     pass: '',
     nameError: false,
     emailError: false,
     passError: false,
-    isShowPass: false,
   });
+  const [isShowPass, setIsShowPass] = useState(false);
 
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passRef = useRef(null);
-
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formValues.name && formValues.email && formValues.pass) {
       dispatch(registerAction(formValues.email, formValues.pass, formValues.name));
     }
   };
+
+  const setShowPass = () => {
+    setIsShowPass(!isShowPass);
+  }
 
   return (
     <main className={styles.primary}>
@@ -41,7 +41,6 @@ export const Register = () => {
             value={formValues.name}
             name="name"
             error={formValues.nameError}
-            ref={nameRef}
             errorText="Введите в формате..."
             size="default"
             extraClass="mb-6"
@@ -53,21 +52,19 @@ export const Register = () => {
             value={formValues.email}
             name="email"
             error={formValues.emailError}
-            ref={emailRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"
           />
           <Input
-            type={formValues.isShowPass ? 'text' : 'password'}
+            type={isShowPass ? 'text' : 'password'}
             placeholder="Пароль"
             onChange={handleChange}
             icon="ShowIcon"
             value={formValues.pass}
             name="pass"
             error={formValues.passError}
-            ref={passRef}
-            onIconClick={() => setFormValues({ ...formValues, isShowPass: !formValues.isShowPass })}
+            onIconClick={setShowPass}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"

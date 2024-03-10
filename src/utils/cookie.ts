@@ -1,13 +1,18 @@
-export function getCookie(name) {
+export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     // eslint-disable-next-line no-useless-escape
-    new RegExp(`(?:^|; )${  name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')  }=([^;]*)`)
+    new RegExp(`(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`),
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
-  props = props || {};
+export function setCookie(
+  name: string,
+  value: string,
+  props: {
+    [key: string]: string | number | Date | boolean;
+  } = {},
+) {
   let exp = props.expires;
   if (typeof exp === 'number' && exp) {
     const d = new Date();
@@ -15,22 +20,22 @@ export function setCookie(name, value, props) {
     // eslint-disable-next-line no-multi-assign
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
+  if (exp && exp instanceof Date) {
     props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
-  let updatedCookie = `${name  }=${  value}`;
+  let updatedCookie = `${name}=${value}`;
   // eslint-disable-next-line
   for (const propName in props) {
-    updatedCookie += `; ${  propName}`;
+    updatedCookie += `; ${propName}`;
     const propValue = props[propName];
     if (propValue !== true) {
-      updatedCookie += `=${  propValue}`;
+      updatedCookie += `=${propValue}`;
     }
   }
   document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string) {
+  setCookie(name, '', { expires: -1 });
 }

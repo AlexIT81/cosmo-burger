@@ -4,14 +4,15 @@ import { useMemo, useState } from 'react';
 import styles from './ingredients.module.css';
 import { getInrgedientsSelector } from '../../services/selectors';
 import { Preloader } from '../../components/preloader/preloader';
+import { IIngredient } from '../../utils/types';
 
 export const IngredientView = () => {
-  const [currentIngredient, setCurrentIngredient] = useState({});
+  const [currentIngredient, setCurrentIngredient] = useState<IIngredient>();
   const { id } = useParams();
   const ingredients = useSelector(getInrgedientsSelector);
 
   useMemo(() => {
-    setCurrentIngredient(ingredients.find((item) => item._id === id));
+    setCurrentIngredient(ingredients.find((item: IIngredient) => item._id === id));
   }, [id, ingredients]);
 
   return (

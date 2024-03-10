@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './not-found.module.css';
 import image from '../../images/404.webp';
 
-export const NotFound404 = () => {
+export const NotFound404: FC = () => {
   return (
     <main className={styles.primary}>
       <section className={styles.wrapper}>

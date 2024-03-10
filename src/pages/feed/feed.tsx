@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import styles from './feed.module.css';
 
-export const Feed = () => {
+export const Feed: FC = () => {
   return (
     <main>
       <section className={styles.wrapper}>

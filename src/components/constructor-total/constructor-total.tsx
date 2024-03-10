@@ -1,11 +1,12 @@
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import styles from './constructor-total.module.css';
 import { isLoggedInSelector } from '../../services/selectors';
+import { IConstructorTotal } from '../../utils/types';
 
-export const ConstructorTotal = ({ totalSum, handleModalOrder }) => {
+export const ConstructorTotal: FC<IConstructorTotal> = ({ totalSum, handleModalOrder }) => {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const navigate = useNavigate();
 
@@ -28,9 +29,4 @@ export const ConstructorTotal = ({ totalSum, handleModalOrder }) => {
       </Button>
     </div>
   );
-};
-
-ConstructorTotal.propTypes = {
-  totalSum: PropTypes.number.isRequired,
-  handleModalOrder: PropTypes.func.isRequired,
 };

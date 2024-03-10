@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
@@ -6,9 +6,10 @@ import { ProfileMenu } from '../../components/profile-menu/profile-menu';
 import { getUserDataSelector } from '../../services/selectors';
 import { setUserDataAction } from '../../services/actions/user/set-user';
 import { useForm } from '../../hooks/useForm';
+import { IBodyRequest } from '../../utils/types';
 
-export const Profile = () => {
-  const dispatch = useDispatch();
+export const Profile: FC = () => {
+  const dispatch = useDispatch<any>();
   const { name, email } = useSelector(getUserDataSelector);
 
   const { formValues, handleChange, setFormValues } = useForm({
@@ -23,34 +24,38 @@ export const Profile = () => {
     passDisabled: true,
   });
 
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passRef = useRef(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
 
-  const onIconClick = (string) => {
+  const onIconClick = (string: string) => {
     const key = `${string}Disabled`;
-    setFormValues({
-      ...formValues,
-      nameDisabled: true,
-      emailDisabled: true,
-      passDisabled: true,
-      [key]: !formValues[key],
-    });
+    if (key === 'nameDisabled' || key === 'emailDisabled' || key === 'passDisabled') {
+      setFormValues({
+        ...formValues,
+        nameDisabled: true,
+        emailDisabled: true,
+        passDisabled: true,
+        [key]: !formValues[key],
+      });
+    }
   };
 
   useEffect(() => {
-    if (!formValues.nameDisabled) {
-      nameRef.current.focus();
-    } else if (!formValues.emailDisabled) {
-      emailRef.current.focus();
-    } else if (!formValues.passDisabled) {
-      passRef.current.focus();
+    if (nameRef.current && emailRef.current && passRef.current) {
+      if (!formValues.nameDisabled) {
+        nameRef.current.focus();
+      } else if (!formValues.emailDisabled) {
+        emailRef.current.focus();
+      } else if (!formValues.passDisabled) {
+        passRef.current.focus();
+      }
     }
   }, [formValues.nameDisabled, formValues.emailDisabled, formValues.passDisabled]);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const bodyRequest = {};
+    const bodyRequest: IBodyRequest = {};
     if (formValues.name !== name && formValues.name !== '') bodyRequest.name = formValues.name;
     if (formValues.email !== email && formValues.email !== '') bodyRequest.email = formValues.email;
     if (formValues.pass !== '') bodyRequest.password = formValues.pass;

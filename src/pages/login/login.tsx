@@ -1,26 +1,23 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { loginAction } from '../../services/actions/user/login';
 import { isLoggedInSelector } from '../../services/selectors';
 import { useForm } from '../../hooks/useForm';
 
-export const Login = () => {
-  const dispatch = useDispatch();
-  const { formValues, handleChange, setFormValues } = useForm({
+export const Login: FC = () => {
+  const dispatch = useDispatch<any>();
+  const { formValues, handleChange } = useForm({
     email: '',
     pass: '',
     emailError: false,
     passError: false,
-    isShowPass: false,
   });
+  const [isShowPass, setIsShowPass] = useState(false);
 
-  const emailRef = useRef(null);
-  const passRef = useRef(null);
-
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formValues.email && formValues.pass) {
       dispatch(loginAction(formValues.email, formValues.pass));
@@ -38,6 +35,10 @@ export const Login = () => {
     if (isLoggedIn) navigate(from, { replace: true });
   }, [isLoggedIn, navigate, from]);
 
+  const setShowPass = () => {
+    setIsShowPass(!isShowPass);
+  }
+
   return (
     <main className={styles.primary}>
       <section className={styles.wrapper}>
@@ -50,21 +51,19 @@ export const Login = () => {
             value={formValues.email}
             name="email"
             error={formValues.emailError}
-            ref={emailRef}
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"
           />
           <Input
-            type={formValues.isShowPass ? 'text' : 'password'}
+            type={isShowPass ? 'text' : 'password'}
             placeholder="Пароль"
             onChange={handleChange}
             icon="ShowIcon"
             value={formValues.pass}
             name="pass"
             error={formValues.passError}
-            ref={passRef}
-            onIconClick={() => setFormValues({ ...formValues, isShowPass: !formValues.isShowPass })}
+            onIconClick={setShowPass}
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"
