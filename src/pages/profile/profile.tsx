@@ -1,5 +1,4 @@
 import { FC, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { ProfileMenu } from '../../components/profile-menu/profile-menu';
@@ -7,16 +6,17 @@ import { getUserDataSelector } from '../../services/selectors';
 import { setUserDataAction } from '../../services/actions/user/set-user';
 import { useForm } from '../../hooks/useForm';
 import { IBodyRequest } from '../../utils/types';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 export const Profile: FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const { name, email } = useSelector(getUserDataSelector);
 
   const { formValues, handleChange, setFormValues } = useForm({
-    name,
+    name: name as string,
     nameError: false,
     nameDisabled: true,
-    email,
+    email: email as string,
     emailError: false,
     emailDisabled: true,
     pass: '',
@@ -56,9 +56,9 @@ export const Profile: FC = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const bodyRequest: IBodyRequest = {};
-    if (formValues.name !== name && formValues.name !== '') bodyRequest.name = formValues.name;
-    if (formValues.email !== email && formValues.email !== '') bodyRequest.email = formValues.email;
-    if (formValues.pass !== '') bodyRequest.password = formValues.pass;
+    if (formValues.name !== name && formValues.name !== '') bodyRequest.name = formValues.name as string;
+    if (formValues.email !== email && formValues.email !== '') bodyRequest.email = formValues.email as string;
+    if (formValues.pass !== '') bodyRequest.password = formValues.pass as string;
     dispatch(setUserDataAction(bodyRequest));
     setFormValues({
       ...formValues,
@@ -72,8 +72,8 @@ export const Profile: FC = () => {
   const onReset = () => {
     setFormValues({
       ...formValues,
-      name,
-      email,
+      name: name as string,
+      email: email as string,
       pass: '',
     });
   };

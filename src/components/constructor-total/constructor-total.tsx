@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-total.module.css';
 import { isLoggedInSelector } from '../../services/selectors';
 import { IConstructorTotal } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
 
 export const ConstructorTotal: FC<IConstructorTotal> = ({ totalSum, handleModalOrder }) => {
   const isLoggedIn = useSelector(isLoggedInSelector);

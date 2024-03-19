@@ -7,6 +7,7 @@ import {
   TGetUserDataRequest,
   TPasswordAndLogoutRequest,
   TServerResponse,
+  IBodyRequest,
 } from './types';
 
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -112,7 +113,7 @@ export const getUserDataRequest = () => {
     .then((res) => checkSuccess<TGetUserDataRequest>(res));
 };
 
-export const setUserDataRequest = (data: string) => {
+export const setUserDataRequest = (data: IBodyRequest) => {
   const myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${getCookie('accessToken')}`);
   myHeaders.append('Content-Type', 'application/json');

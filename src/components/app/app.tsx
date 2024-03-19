@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/hooks';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
@@ -33,7 +33,7 @@ import { getInrgedients } from '../../services/actions/ingredients';
 import { IIngredient } from '../../utils/types';
 
 const App: FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
 
@@ -53,8 +53,8 @@ const App: FC = () => {
     orderIngredients.forEach((item: IIngredient) => {
       orderData.push(item._id);
     });
-    orderData.push(orderBun._id);
-    orderData.unshift(orderBun._id);
+    orderData.push(orderBun!._id);
+    orderData.unshift(orderBun!._id);
     dispatch(getOrder(orderData));
   };
 

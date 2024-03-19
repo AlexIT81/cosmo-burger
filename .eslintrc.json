@@ -45,7 +45,9 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "no-undef":"off",
+    "no-restricted-globals":"off"
   },
   "settings": {
     "import/resolver": {

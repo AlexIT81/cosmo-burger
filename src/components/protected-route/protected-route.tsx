@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { isLoggedInSelector } from '../../services/selectors';
 import { IProtectedRouteElement } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
 
 export const ProtectedRouteElement: FC<IProtectedRouteElement> = ({ element, needAuth }) => {
   const isLoggedIn = useSelector(isLoggedInSelector);

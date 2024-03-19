@@ -1,17 +1,24 @@
+import { IIngredientWithId } from '../../utils/types';
 import {
   ADD_BURGER_INGREDIENT,
   CLEAR_BURGER_INGREDIENT,
+  TBurgerActions,
   REMOVE_BURGER_INGREDIENT,
   SORT_BURGER_INGREDIENT,
 } from '../actions/burger';
 
-const initialState = {
+type TBurgerState = {
+  bun: null | IIngredientWithId;
+  ingredients: IIngredientWithId[];
+};
+
+const initialState: TBurgerState = {
   bun: null,
   ingredients: [],
 };
 
 // eslint-disable-next-line
-export const burgerReducer = (state = initialState, action) => {
+export const burgerReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
   switch (action.type) {
     case ADD_BURGER_INGREDIENT: {
       if (action.payload.type === 'bun') {
@@ -20,12 +27,6 @@ export const burgerReducer = (state = initialState, action) => {
       return { ...state, ingredients: [...state.ingredients, action.payload] };
     }
     case REMOVE_BURGER_INGREDIENT: {
-      if (action.payload.type === 'bun') {
-        return {
-          ...state,
-          bun: initialState.bun,
-        };
-      }
       return { ...state, ingredients: [...state.ingredients].filter((item) => item.id !== action.payload) };
     }
     case CLEAR_BURGER_INGREDIENT: {

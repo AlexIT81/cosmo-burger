@@ -1,5 +1,25 @@
 import { ReactElement, ReactNode } from 'react';
+import { TBurgerActions } from '../services/actions/burger';
+import { TIngredientActions } from '../services/actions/ingredient';
+import { TGetInrgedientsActions } from '../services/actions/ingredients';
+import { TGetOrderActions } from '../services/actions/order';
+import { TUserActions } from '../services/actions/user';
+import { store } from '../services/store';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
+// store
+type TApplicationActions =
+  | TBurgerActions
+  | TIngredientActions
+  | TGetInrgedientsActions
+  | TGetOrderActions
+  | TUserActions;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ThunkDispatch<RootState, unknown, TApplicationActions>;
+export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
+
+// components
 export interface IIngredient {
   _id: string;
   name: string;

@@ -1,10 +1,21 @@
+import { TUserActions } from '../actions/user';
 import { GET_USER_DATA_ERROR, GET_USER_DATA_REQUEST, GET_USER_DATA_SUCCESS } from '../actions/user/get-user';
 import { LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS } from '../actions/user/login';
 import { LOGOUT_ERROR, LOGOUT_REQUEST, LOGOUT_SUCCESS } from '../actions/user/logout';
 import { REGISTER_ERROR, REGISTER_REQUEST, REGISTER_SUCCESS } from '../actions/user/register';
 import { SET_USER_DATA_ERROR, SET_USER_DATA_REQUEST, SET_USER_DATA_SUCCESS } from '../actions/user/set-user';
 
-const initialState = {
+type TUserState = {
+  user: {
+    email: string | null,
+    name: string | null,
+  },
+  isLoggedIn: boolean,
+  isLoading: boolean,
+  isRequestFailed: boolean,
+}
+
+const initialState: TUserState = {
   user: {
     email: null,
     name: null,
@@ -15,8 +26,7 @@ const initialState = {
 };
 
 // eslint-disable-next-line
-export const userReducer = (state = initialState, action) => {
-  const { type, ...rest } = action;
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return {
@@ -31,8 +41,8 @@ export const userReducer = (state = initialState, action) => {
         isRequestFailed: false,
         isLoggedIn: true,
         user: {
-          email: rest.email,
-          name: rest.name,
+          email: action.email,
+          name: action.name,
         },
       };
     }
@@ -57,8 +67,8 @@ export const userReducer = (state = initialState, action) => {
         isRequestFailed: false,
         isLoggedIn: true,
         user: {
-          email: rest.email,
-          name: rest.name,
+          email: action.email,
+          name: action.name,
         },
       };
     }
@@ -99,8 +109,8 @@ export const userReducer = (state = initialState, action) => {
         isRequestFailed: false,
         isLoggedIn: true,
         user: {
-          email: rest.email,
-          name: rest.name,
+          email: action.email,
+          name: action.name,
         },
       };
     }
@@ -124,8 +134,8 @@ export const userReducer = (state = initialState, action) => {
         isLoading: false,
         isRequestFailed: false,
         user: {
-          email: rest.email,
-          name: rest.name,
+          email: action.email,
+          name: action.name,
         },
       };
     }

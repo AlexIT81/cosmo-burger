@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { FC, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
@@ -6,6 +5,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from './ingredients-card.module.css';
 import { getAllBurgerParts } from '../../services/selectors';
 import { IIngredient } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
 
 export const IngredientsCard: FC<IIngredient> = (ingredient) => {
   const {type, _id: id, image_large: image, name, price} = ingredient;

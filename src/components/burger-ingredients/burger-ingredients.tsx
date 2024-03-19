@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef, RefObject, FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { getInrgedientsSelector } from '../../services/selectors';
-import { IIngredientWithId } from '../../utils/types';
+import { IIngredient, IIngredientWithId } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
 
 export const BurgerIngredients: FC = () => {
   const ingredients = useSelector(getInrgedientsSelector);
 
   const [current, setCurrent] = useState('bun');
-  const bunArr = ingredients.filter((item: IIngredientWithId) => item.type === 'bun');
-  const sauceArr = ingredients.filter((item: IIngredientWithId) => item.type === 'sauce');
-  const mainArr = ingredients.filter((item: IIngredientWithId) => item.type === 'main');
+  const bunArr = ingredients.filter((item: IIngredient) => item.type === 'bun');
+  const sauceArr = ingredients.filter((item: IIngredient) => item.type === 'sauce');
+  const mainArr = ingredients.filter((item: IIngredient) => item.type === 'main');
 
   // Прокрутка
   const containerRef = useRef<HTMLDivElement>(null);
