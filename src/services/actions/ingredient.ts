@@ -3,12 +3,12 @@ import { IIngredient } from '../../utils/types';
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT: 'REMOVE_INGREDIENT' = 'REMOVE_INGREDIENT';
 
-export interface IAddIngredient {
+interface IAddIngredient {
   readonly type: typeof ADD_INGREDIENT;
   readonly payload: IIngredient;
 }
 
-export interface IRemoveIngredient {
+interface IRemoveIngredient {
   readonly type: typeof REMOVE_INGREDIENT;
 }
 

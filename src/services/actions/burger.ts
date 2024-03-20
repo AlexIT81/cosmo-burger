@@ -6,21 +6,21 @@ export const REMOVE_BURGER_INGREDIENT: 'REMOVE_BURGER_INGREDIENT' = 'REMOVE_BURG
 export const CLEAR_BURGER_INGREDIENT: 'CLEAR_BURGER_INGREDIENT' = 'CLEAR_BURGER_INGREDIENT';
 export const SORT_BURGER_INGREDIENT: 'SORT_BURGER_INGREDIENT' = 'SORT_BURGER_INGREDIENT';
 
-export interface IAddBurgerIngredientAction {
+interface IAddBurgerIngredientAction {
   readonly type: typeof ADD_BURGER_INGREDIENT;
   readonly payload: IIngredientWithId;
 }
 
-export interface IRemoveBurgerIngredientAction {
+interface IRemoveBurgerIngredientAction {
   readonly type: typeof REMOVE_BURGER_INGREDIENT;
   readonly payload: string;
 }
 
-export interface IClearBurgerIngredientAction {
+interface IClearBurgerIngredientAction {
   readonly type: typeof CLEAR_BURGER_INGREDIENT;
 }
 
-export interface ISortBurgerIngredientAction {
+interface ISortBurgerIngredientAction {
   readonly type: typeof SORT_BURGER_INGREDIENT;
   readonly payload: {
     [key: string]: number;

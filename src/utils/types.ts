@@ -6,6 +6,7 @@ import { TGetOrderActions } from '../services/actions/order';
 import { TUserActions } from '../services/actions/user';
 import { store } from '../services/store';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { TWSActions } from '../services/actions/wsActions';
 
 // store
 type TApplicationActions =
@@ -13,7 +14,8 @@ type TApplicationActions =
   | TIngredientActions
   | TGetInrgedientsActions
   | TGetOrderActions
-  | TUserActions;
+  | TUserActions
+  | TWSActions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, unknown, TApplicationActions>;
@@ -103,22 +105,38 @@ export type TGetDataRequest = TServerResponse<{
 export type TCreateOrderRequest = TServerResponse<{
   name: string;
   order: {
-      number: number;
-  }
-}>
+    number: number;
+  };
+}>;
 
 export type TPasswordAndLogoutRequest = TServerResponse<{
   message: string;
-}>
+}>;
 
 export type TGetUserDataRequest = TServerResponse<{
   user: {
-      email: string,
-      name: string,
-  },
-}>
+    email: string;
+    name: string;
+  };
+}>;
 
 export type TRegisterAndAuthRequest = TGetUserDataRequest & {
   accessToken: string;
   refreshToken: string;
+};
+
+// WS
+export interface IOrdersResponse {
+  success: boolean;
+  orders: {
+    ingredients: string[];
+    _id: string;
+    status: string;
+    number: number;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
+
+  total: number;
+  totalToday: number;
 }
