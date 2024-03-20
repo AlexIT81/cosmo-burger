@@ -2,8 +2,6 @@ import type { Middleware, MiddlewareAPI } from 'redux';
 import { AppDispatch, RootState } from '../../utils/types';
 import { TWSActions, TWSStoreActions } from '../actions/wsActions';
 
-
-// export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Middleware => {
 export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
@@ -14,7 +12,6 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
       // const { user } = getState().user;
       if (type === wsInit) {
-        console.log(action.url)
         // socket = new WebSocket(`${wsUrl}?token=${user.token}`);
         // socket = new WebSocket(`${wsUrl}`);
         socket = new WebSocket(action.url);

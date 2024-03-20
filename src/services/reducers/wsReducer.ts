@@ -9,13 +9,13 @@ import {
 
 type TWSState = {
   wsConnected: boolean;
-  orders: IOrdersResponse | {};
+  orders: IOrdersResponse | null;
   error?: Event;
 };
 
 const initialState: TWSState = {
   wsConnected: false,
-  orders: {},
+  orders: null,
 };
 
 // eslint-disable-next-line default-param-last

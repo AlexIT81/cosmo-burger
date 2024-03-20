@@ -109,7 +109,7 @@ const App: FC = () => {
               />
               <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} needAuth />} />
               <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
-              <Route path="/feed" element={<ProtectedRouteElement element={<Feed />} needAuth />} />
+              <Route path="/feed" element={<Feed />} />
               <Route path="/ingredients/:id" element={<IngredientView />} />
               <Route path="*" element={<NotFound404 />} />
             </Routes>
@@ -136,6 +136,6 @@ const App: FC = () => {
       )}
     </>
   );
-}
+};
 
 export default App;

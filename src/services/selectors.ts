@@ -54,3 +54,16 @@ export const getUserDataSelector = (state: RootState) => {
 export const isLoggedInSelector = (state: RootState) => {
   return state.user.isLoggedIn;
 };
+
+// WS orders selectors
+export const getAllOrdersQuantitySelector = (state: RootState) => {
+  return state.orders.orders?.total;
+};
+
+export const getTodayOrdersQuantitySelector = (state: RootState) => {
+  return state.orders.orders?.totalToday;
+};
+
+export const getAllOrdersSelector = (state: RootState) => {
+  return state.orders.orders?.orders;
+};

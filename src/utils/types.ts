@@ -7,6 +7,7 @@ import { TUserActions } from '../services/actions/user';
 import { store } from '../services/store';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { TWSActions } from '../services/actions/wsActions';
+import { Interface } from 'readline';
 
 // store
 type TApplicationActions =
@@ -93,6 +94,15 @@ export interface IBodyRequest {
   password?: string;
 }
 
+export interface IBurgerItem {
+  name: string;
+  number: number;
+  data: string;
+  images: string[];
+  price: number;
+  status?: string;
+}
+
 // API
 export type TServerResponse<T> = {
   success: boolean;
@@ -126,17 +136,18 @@ export type TRegisterAndAuthRequest = TGetUserDataRequest & {
 };
 
 // WS
+export interface IOrder {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface IOrdersResponse {
   success: boolean;
-  orders: {
-    ingredients: string[];
-    _id: string;
-    status: string;
-    number: number;
-    createdAt: Date;
-    updatedAt: Date;
-  }[];
-
   total: number;
   totalToday: number;
+  orders: IOrder[];
 }

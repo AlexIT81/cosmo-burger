@@ -1,11 +1,50 @@
-.wrapper {
-  display: flex;
-  justify-content: flex-start;
-  gap: 60px;
-  padding: 120px 0;
+.main {
+  margin-top: 38px;
 }
 
 .title {
-  composes: text text_type_main-large from global;
-  text-align: center;
+  composes: text text_type_main-large mb-6 ml-6 from global;
+  text-align: left;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 608px 580px;
+  gap: 60px;
+  justify-content: center;
+}
+
+.burgers-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+  padding: 0 8px;
+  overflow-y: auto;
+  height: calc(100vh - 88px - 45px - 64px - 30px);
+}
+
+.orders-info {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.orders-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-bottom: 60px;
+}
+
+.orders-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+  height: 100%;
+  max-height: 185px;
+  overflow-y: auto;
+}
+
+.ready {
+  color: var(--interface-success);
+  composes: text text_type_digits-default from global;
 }

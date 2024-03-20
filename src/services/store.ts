@@ -17,7 +17,6 @@ const composeEnhancers =
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const wsUrl: string = 'wss://norma.nomoreparties.space/orders/all';
 const wsActions: TWSStoreActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
