@@ -7,13 +7,10 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
     let socket: WebSocket | null = null;
 
     return next => (action: TWSActions) => {
-      const { dispatch, getState } = store;
+      const { dispatch } = store;
       const { type } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-      // const { user } = getState().user;
+      const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
       if (type === wsInit) {
-        // socket = new WebSocket(`${wsUrl}?token=${user.token}`);
-        // socket = new WebSocket(`${wsUrl}`);
         socket = new WebSocket(action.url);
       }
       if (socket) {
@@ -28,20 +25,12 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          // const { success, ...restParsedData } = parsedData;
-
           dispatch({ type: onMessage, payload: parsedData});
         };
 
         socket.onclose = event => {
           dispatch({ type: onClose, payload: event });
         };
-
-        // if (type === wsSendMessage) {
-        //   const payload = action.payload;
-        //   const message = { ...(payload as IMessage), token: user?.token };
-        //   socket.send(JSON.stringify(message));
-        // }
       }
 
       next(action);

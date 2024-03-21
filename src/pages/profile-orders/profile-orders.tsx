@@ -5,7 +5,6 @@ import { useDispatch } from '../../services/hooks';
 import { wsConnectionClosedAction, wsConnectionStartAction } from '../../services/actions/wsActions';
 import { WS_URL } from '../../utils/constants';
 import { getCookie } from '../../utils/cookie';
-import { OrderInfo } from '../../components/order-info/order-info';
 import { OrdersList } from '../../components/orders-list/orders-list';
 
 export const ProfileOrders: FC = () => {

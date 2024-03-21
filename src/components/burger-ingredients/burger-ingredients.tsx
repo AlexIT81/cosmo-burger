@@ -3,7 +3,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { IngredientsList } from '../ingredients-list/ingredients-list';
 import { getInrgedientsSelector } from '../../services/selectors';
-import { IIngredient, IIngredientWithId } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
 import { useSelector } from '../../services/hooks';
 
 export const BurgerIngredients: FC = () => {

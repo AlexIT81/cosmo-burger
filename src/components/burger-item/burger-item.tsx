@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-item.module.css';

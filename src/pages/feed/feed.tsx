@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import styles from './feed.module.css';
 import { wsConnectionClosedAction, wsConnectionStartAction } from '../../services/actions/wsActions';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { getCookie } from '../../utils/cookie';
 import { ORDERS_IN_COLUMN, WS_URL } from '../../utils/constants';
 import {
   getAllOrdersSelector,
@@ -15,10 +14,8 @@ import { Preloader } from '../../components/preloader/preloader';
 import { OrdersList } from '../../components/orders-list/orders-list';
 
 export const Feed: FC = () => {
-  // const accessToken = getCookie('accessToken');
-  // const wsUserUrl = `${WS_URL}?token=${accessToken}`;
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(wsConnectionStartAction(`${WS_URL}/all`));
     return () => {

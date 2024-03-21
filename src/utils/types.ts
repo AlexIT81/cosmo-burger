@@ -7,7 +7,6 @@ import { TUserActions } from '../services/actions/user';
 import { store } from '../services/store';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { TWSActions } from '../services/actions/wsActions';
-import { Interface } from 'readline';
 
 // store
 type TApplicationActions =
