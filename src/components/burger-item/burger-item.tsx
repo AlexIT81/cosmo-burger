@@ -34,7 +34,7 @@ export const BurgerItem: FC<IBurgerItem> = ({ name, number, data, images, price,
         </div>
         <div>
           <h2 className={styles.title}>{name}</h2>
-          {location.pathname === '/feed' && status && getStatus()}
+          {location.pathname === '/profile/orders' && status && getStatus()}
         </div>
         <div className={styles.main}>
           <div className={styles.gallery}>

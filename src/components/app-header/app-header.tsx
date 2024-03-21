@@ -46,12 +46,12 @@ export const AppHeader: FC = () => {
             <Link
               to="/profile"
               className={
-                pathname === '/profile'
+                pathname === '/profile' || '/profile/orders'
                   ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
                   : `${styles['header-menu__link']}`
               }
             >
-              <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
+              <ProfileIcon type={pathname === '/profile' || '/profile/orders' ? 'primary' : 'secondary'} />
               <span className="text text_type_main-default">Личный кабинет</span>
             </Link>
           </li>
