@@ -1,57 +1,5 @@
 .main {
-  display: flex;
-  justify-content: center;
-  margin-top: 120px;
-}
-
-.order {
   width: 640px;
-}
-
-.number {
-  display: block;
-  width: 100%;
-  text-align: center;
-  composes: text text_type_digits-default mb-10 from global;
-}
-
-.status {
-  composes: text text_type_main-default mb-15 from global;
-  display: block;
-}
-
-.done {
-  color: var(--interface-success);
-}
-
-.element {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.price-wrapper {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.price {
-  composes: text text_type_digits-default from global;
-  white-space: nowrap;
-}
-
-.wrapper {
-  padding-right: 24px;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 16px;
-  max-height: 304px;
-  overflow-y: auto;
-  margin-bottom: 40px;
-}
-
-.total-wrapper {
-  display: flex;
-  justify-content: space-between;
+  margin: 0 auto;
+  margin-top: 120px;
 }

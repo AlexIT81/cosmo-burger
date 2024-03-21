@@ -1,16 +1,15 @@
 import { FC, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './feed-id.module.css';
+import styles from './order-info.module.css';
 import { IOrder } from '../../utils/types';
 import { getInrgedientsSelector } from '../../services/selectors';
 import { useSelector } from '../../services/hooks';
-import { Preloader } from '../../components/preloader/preloader';
-import { OrderIngredient } from '../../components/order-ingredient/order-ingredient';
+import { Preloader } from '../preloader/preloader';
+import { OrderIngredient } from '../order-ingredient/order-ingredient';
 import { getOrderInfoRequest } from '../../utils/api';
-import { OrderInfo } from '../../components/order-info/order-info';
 
-export const FeedId: FC = () => {
+export const OrderInfo: FC = () => {
   const { id } = useParams<string>();
   const [currentOrder, setCurrentOrder] = useState<IOrder>();
   const allInitialIngredients = useSelector(getInrgedientsSelector);
@@ -73,10 +72,9 @@ export const FeedId: FC = () => {
   };
 
   return (
-    <main className={styles.main}>
-      <OrderInfo />
-      {/* {currentOrder && orderIngredientsSortedArray ? (
-        <section className={styles.order}>
+    <section className={styles.order}>
+      {currentOrder && orderIngredientsSortedArray ? (
+        <>
           <span className={styles.number}>#{currentOrder.number}</span>
           <h1 className="text text_type_main-medium mb-3">{currentOrder.name}</h1>
           {getStatus()}
@@ -104,10 +102,10 @@ export const FeedId: FC = () => {
               <CurrencyIcon type="primary" />
             </div>
           </div>
-        </section>
+        </>
       ) : (
         <Preloader />
-      )} */}
-    </main>
+      )}
+    </section>
   );
 };

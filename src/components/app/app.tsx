@@ -32,6 +32,7 @@ import { IngredientView } from '../../pages/ingredients/ingredients';
 import { getInrgedients } from '../../services/actions/ingredients';
 import { IIngredient } from '../../utils/types';
 import { FeedId } from '../../pages/feed-id/feed-id';
+import { OrderInfo } from '../order-info/order-info';
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -123,6 +124,14 @@ const App: FC = () => {
                   element={
                     <Modal closeModal={closeModal} title="Детали ингредиента">
                       <IngredientDetails />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path="/feed/:id"
+                  element={
+                    <Modal closeModal={closeModal}>
+                      <OrderInfo />
                     </Modal>
                   }
                 />

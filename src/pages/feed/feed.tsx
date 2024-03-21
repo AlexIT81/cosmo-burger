@@ -1,9 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import styles from './feed.module.css';
-import { WS_CONNECTION_CLOSED, wsConnectionStartAction } from '../../services/actions/wsActions';
+import { wsConnectionClosedAction, wsConnectionStartAction } from '../../services/actions/wsActions';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { getCookie } from '../../utils/cookie';
-import { WS_URL } from '../../utils/constants';
+import { ORDERS_IN_COLUMN, WS_URL } from '../../utils/constants';
 import { BurgerItem } from '../../components/burger-item/burger-item';
 import {
   getAllOrdersSelector,
@@ -18,27 +18,25 @@ import { Preloader } from '../../components/preloader/preloader';
 export const Feed: FC = () => {
   // const accessToken = getCookie('accessToken');
   // const wsUserUrl = `${WS_URL}?token=${accessToken}`;
-  // const wsAllUrl = `${WS_URL}/all`;
 
-  const [readyOrdersSplit, setReadyOrdersSplit] = useState<IOrder[]>();
-  const [pendingOrdersSplit, setPendingOrders] = useState<IOrder[]>();
-  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(wsConnectionStartAction(`${WS_URL}/all`));
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(wsConnectionClosedAction());
     };
   }, [WS_URL, dispatch]);
 
+  const allOrders = useSelector(getAllOrdersSelector);
   const allOrdersQuantity = useSelector(getAllOrdersQuantitySelector);
   const todayOrdersQuantity = useSelector(getTodayOrdersQuantitySelector);
-  const allOrders = useSelector(getAllOrdersSelector);
-  const readyOrders = allOrders?.filter((order) => order.status === 'done');
-  const pendingOrders = allOrders?.filter((order) => order.status === 'pending' || order.status === 'created');
   const allInitialIngredients = useSelector(getInrgedientsSelector);
 
-  const sliceIntoChunks = (arr: any, chunkSize: number) => {
+  const [readyOrdersSplit, setReadyOrdersSplit] = useState<IOrder[][]>();
+  const [pendingOrdersSplit, setPendingOrders] = useState<IOrder[][]>();
+  
+
+  const sliceIntoChunks = (arr: IOrder[], chunkSize: number) => {
     const res = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
       const chunk = arr.slice(i, i + chunkSize);
@@ -48,12 +46,13 @@ export const Feed: FC = () => {
   };
 
   useEffect(() => {
-    if (readyOrders) setReadyOrdersSplit(sliceIntoChunks(readyOrders, 10))
-    if (pendingOrders) setPendingOrders(sliceIntoChunks(readyOrders, 10))
-  }, [])
-
-  console.log(readyOrdersSplit)
-  console.log(pendingOrders)
+    if (allOrders) {
+      const readyOrders = allOrders?.filter((order) => order.status === 'done');
+      const pendingOrders = allOrders?.filter((order) => order.status === 'pending' || order.status === 'created');
+      setReadyOrdersSplit(sliceIntoChunks(readyOrders, ORDERS_IN_COLUMN));
+      setPendingOrders(sliceIntoChunks(pendingOrders, ORDERS_IN_COLUMN));
+    }
+  }, [allOrders]);
 
   const getOrderImages = (order: IOrder) => {
     const images: string[] = [];
@@ -75,7 +74,7 @@ export const Feed: FC = () => {
 
   return (
     <main className={styles.main}>
-      {allInitialIngredients && allOrders && readyOrders && pendingOrders ? (
+      {allInitialIngredients && allOrders && readyOrdersSplit && pendingOrdersSplit ? (
         <>
           <h1 className={styles.title}>Лента заказов</h1>
           <div className={styles.wrapper}>
@@ -104,25 +103,35 @@ export const Feed: FC = () => {
               <div className={`${styles['orders-wrapper']}`}>
                 <div>
                   <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
-                  <ul className={`${styles['orders-list']}`}>
-                    {readyOrders &&
-                      readyOrders.map((order) => (
-                        <li key={order._id} className={styles.ready}>
-                          {order.number}
-                        </li>
-                      ))}
-                  </ul>
+                  <div className={`${styles['orders-list-wrapper']}`}>
+                    {readyOrdersSplit[0] && readyOrdersSplit.map((arr) => {
+                      return (
+                        <ul key={arr[0]._id} className={`${styles['orders-list']}`}>
+                          {arr.map((order) => (
+                            <li key={order._id} className={styles.ready}>
+                              {order.number}
+                            </li>
+                          ))}
+                        </ul>
+                      );
+                    })}
+                  </div>
                 </div>
                 <div>
                   <h3 className="text text_type_main-medium mb-6">В работе:</h3>
-                  <ul className={`${styles['orders-list']}`}>
-                    {pendingOrders &&
-                      pendingOrders.map((order) => (
-                        <li key={order._id} className={styles.ready}>
-                          {order.number}
-                        </li>
-                      ))}
-                  </ul>
+                  <div className={`${styles['orders-list-wrapper']}`}>
+                  {pendingOrdersSplit[0] && pendingOrdersSplit.map((arr) => {
+                    return (
+                      <ul key={arr[0]._id} className={`${styles['orders-list']}`}>
+                        {arr.map((order) => (
+                          <li key={order._id} className={styles.ready}>
+                            {order.number}
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  })}
+                  </div>
                 </div>
               </div>
               <p className="text text_type_main-medium">Выполнено за все время:</p>
