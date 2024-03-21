@@ -113,6 +113,7 @@ const App: FC = () => {
               <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/feed/:id" element={<FeedId />} />
+              <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<FeedId />} needAuth />} />
               <Route path="/ingredients/:id" element={<IngredientView />} />
               <Route path="*" element={<NotFound404 />} />
             </Routes>
@@ -129,6 +130,14 @@ const App: FC = () => {
                 />
                 <Route
                   path="/feed/:id"
+                  element={
+                    <Modal closeModal={closeModal}>
+                      <OrderInfo />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path="/profile/orders/:id"
                   element={
                     <Modal closeModal={closeModal}>
                       <OrderInfo />

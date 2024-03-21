@@ -23,8 +23,10 @@ export const BurgerItem: FC<IBurgerItem> = ({ name, number, data, images, price,
     return null;
   };
 
+  const url = location.pathname.includes('/feed') ? '/feed' : '/profile/orders';
+
   return (
-    <Link to={`/feed/${number.toString()}`} state={{ backgroundLocation: location }} className={styles.link}>
+    <Link to={`${url}/${number}`} state={{ backgroundLocation: location }} className={styles.link}>
       <li className={styles.wrapper}>
         <div className={styles.header}>
           <p className={styles.number}>{number}</p>
