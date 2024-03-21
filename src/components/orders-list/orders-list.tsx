@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import styles from './orders-list.module.css';
 import { useSelector } from '../../services/hooks';
 import { BurgerItem } from '../burger-item/burger-item';
@@ -28,11 +28,36 @@ export const OrdersList: FC = () => {
     return price;
   };
 
+  // Простая проверка заказа полученного по ws
+  const checkedOrders = useMemo(() => {
+    if (allOrders) {
+      return allOrders.reduce((result: IOrder[], order: IOrder) => {
+        if (
+          typeof order.number === 'number' &&
+          typeof order._id === 'string' &&
+          order._id.length > 0 &&
+          typeof order.status === 'string' &&
+          order.status.length > 0 &&
+          typeof order.name === 'string' &&
+          order.name.length > 0 &&
+          typeof order.createdAt === 'string' &&
+          order.createdAt.length > 0 &&
+          Array.isArray(order.ingredients) &&
+          order.ingredients.length
+        ) {
+          result.push(order);
+        }
+        return result;
+      }, []);
+    }
+    return [];
+  }, [allOrders]);
+
   return (
     <section>
-      {allOrders && allInitialIngredients ? (
+      {allOrders && checkedOrders.length && allInitialIngredients ? (
         <ul className={`${styles['burgers-list']}`}>
-          {allOrders.map((order: IOrder) => {
+          {checkedOrders.map((order: IOrder) => {
             const images = getOrderImages(order);
             const price = getOrderPrice(order);
             return (

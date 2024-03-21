@@ -10,11 +10,10 @@ import { OrdersList } from '../../components/orders-list/orders-list';
 
 export const ProfileOrders: FC = () => {
   const accessToken = getCookie('accessToken');
-  console.log(accessToken)
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(wsConnectionStartAction(`${WS_URL}?token=${accessToken}`));
+    if (accessToken) dispatch(wsConnectionStartAction(`${WS_URL}?token=${accessToken}`));
     return () => {
       dispatch(wsConnectionClosedAction());
     };
