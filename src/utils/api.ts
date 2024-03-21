@@ -8,6 +8,7 @@ import {
   TPasswordAndLogoutRequest,
   TServerResponse,
   IBodyRequest,
+  TGetOrderInfoRequest,
 } from './types';
 
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -124,4 +125,10 @@ export const setUserDataRequest = (data: IBodyRequest) => {
   })
     .then((res) => checkResponse<TGetUserDataRequest>(res))
     .then((res) => checkSuccess<TGetUserDataRequest>(res));
+};
+
+export const getOrderInfoRequest = (orderNumber: string) => {
+  return fetch(`${API_URL}/orders/${orderNumber}`)
+    .then((res) => checkResponse<TGetOrderInfoRequest>(res))
+    .then((res) => checkSuccess<TGetOrderInfoRequest>(res));
 };

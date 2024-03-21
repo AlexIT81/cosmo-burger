@@ -35,9 +35,13 @@ interface IWSSendMessageAction {
   readonly payload: { message: string };
 }
 
-export const wsConnectionStart = (url:string): IWSConnectionStartAction => ({
+export const wsConnectionStartAction = (url:string): IWSConnectionStartAction => ({
   type: WS_CONNECTION_START,
   url
+});
+
+export const wsConnectionClosedAction = (): IWSConnectionClosedAction => ({
+  type: WS_CONNECTION_CLOSED,
 });
 
 export type TWSActions =

@@ -24,7 +24,8 @@ export const BurgerItem: FC<IBurgerItem> = ({ name, number, data, images, price,
   };
 
   return (
-    <Link to={`/feed/${number}`} state={{ backgroundLocation: location }} className={styles.link}>
+    // <Link to={`/feed/${number.toString()}`} state={{ backgroundLocation: location }} className={styles.link}>
+    <Link to={`/feed/${number.toString()}`} className={styles.link}>
       <li className={styles.wrapper}>
         <div className={styles.header}>
           <p className={styles.number}>{number}</p>

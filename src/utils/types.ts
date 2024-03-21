@@ -103,6 +103,13 @@ export interface IBurgerItem {
   status?: string;
 }
 
+export interface IOrderIngredient {
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+}
+
 // API
 export type TServerResponse<T> = {
   success: boolean;
@@ -144,6 +151,7 @@ export interface IOrder {
   name: string;
   createdAt: string;
   updatedAt: string;
+  __v?: number;
 }
 export interface IOrdersResponse {
   success: boolean;
@@ -151,3 +159,8 @@ export interface IOrdersResponse {
   totalToday: number;
   orders: IOrder[];
 }
+
+export type TGetOrderInfoRequest = {
+  success: boolean;
+  orders: IOrder[];
+};

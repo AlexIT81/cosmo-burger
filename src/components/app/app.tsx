@@ -31,6 +31,7 @@ import { ProtectedRouteElement } from '../protected-route/protected-route';
 import { IngredientView } from '../../pages/ingredients/ingredients';
 import { getInrgedients } from '../../services/actions/ingredients';
 import { IIngredient } from '../../utils/types';
+import { FeedId } from '../../pages/feed-id/feed-id';
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -110,6 +111,7 @@ const App: FC = () => {
               <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} needAuth />} />
               <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
               <Route path="/feed" element={<Feed />} />
+              <Route path="/feed/:id" element={<FeedId />} />
               <Route path="/ingredients/:id" element={<IngredientView />} />
               <Route path="*" element={<NotFound404 />} />
             </Routes>

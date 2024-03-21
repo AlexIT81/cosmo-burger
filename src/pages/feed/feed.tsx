@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import styles from './feed.module.css';
-import { WS_CONNECTION_CLOSED, wsConnectionStart } from '../../services/actions/wsActions';
+import { WS_CONNECTION_CLOSED, wsConnectionStartAction } from '../../services/actions/wsActions';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { getCookie } from '../../utils/cookie';
 import { WS_URL } from '../../utils/constants';
@@ -10,22 +10,26 @@ import {
   getAllOrdersQuantitySelector,
   getTodayOrdersQuantitySelector,
   getInrgedientsSelector,
+  getWsConnectionStatusSelector,
 } from '../../services/selectors';
 import { IOrder } from '../../utils/types';
 import { Preloader } from '../../components/preloader/preloader';
 
 export const Feed: FC = () => {
-  const accessToken = getCookie('accessToken');
-  const wsUserUrl = `${WS_URL}?token=${accessToken}`;
-  const wsAllUrl = `${WS_URL}/all`;
+  // const accessToken = getCookie('accessToken');
+  // const wsUserUrl = `${WS_URL}?token=${accessToken}`;
+  // const wsAllUrl = `${WS_URL}/all`;
 
+  const [readyOrdersSplit, setReadyOrdersSplit] = useState<IOrder[]>();
+  const [pendingOrdersSplit, setPendingOrders] = useState<IOrder[]>();
+  
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(wsConnectionStart(wsAllUrl));
+    dispatch(wsConnectionStartAction(`${WS_URL}/all`));
     return () => {
-      dispatch({type: WS_CONNECTION_CLOSED})
-  }
-  }, [wsAllUrl, dispatch]);
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, [WS_URL, dispatch]);
 
   const allOrdersQuantity = useSelector(getAllOrdersQuantitySelector);
   const todayOrdersQuantity = useSelector(getTodayOrdersQuantitySelector);
@@ -33,6 +37,23 @@ export const Feed: FC = () => {
   const readyOrders = allOrders?.filter((order) => order.status === 'done');
   const pendingOrders = allOrders?.filter((order) => order.status === 'pending' || order.status === 'created');
   const allInitialIngredients = useSelector(getInrgedientsSelector);
+
+  const sliceIntoChunks = (arr: any, chunkSize: number) => {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  };
+
+  useEffect(() => {
+    if (readyOrders) setReadyOrdersSplit(sliceIntoChunks(readyOrders, 10))
+    if (pendingOrders) setPendingOrders(sliceIntoChunks(readyOrders, 10))
+  }, [])
+
+  console.log(readyOrdersSplit)
+  console.log(pendingOrders)
 
   const getOrderImages = (order: IOrder) => {
     const images: string[] = [];

@@ -67,3 +67,7 @@ export const getTodayOrdersQuantitySelector = (state: RootState) => {
 export const getAllOrdersSelector = (state: RootState) => {
   return state.orders.orders?.orders;
 };
+
+export const getWsConnectionStatusSelector = (state: RootState) => {
+  return state.orders.wsConnected;
+}
