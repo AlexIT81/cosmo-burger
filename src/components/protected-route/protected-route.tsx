@@ -1,16 +1,18 @@
 import { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { isLoggedInSelector } from '../../services/selectors';
+import { getUserDataLoading, isLoggedInSelector } from '../../services/selectors';
 import { IProtectedRouteElement } from '../../utils/types';
 import { useSelector } from '../../services/hooks';
+import { Preloader } from '../preloader/preloader';
 
 export const ProtectedRouteElement: FC<IProtectedRouteElement> = ({ element, needAuth }) => {
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const isLoading = useSelector(getUserDataLoading);
   const location = useLocation();
 
-  if (isLoggedIn && needAuth) return element;
-  if (!isLoggedIn && needAuth) return <Navigate to="/login" replace state={{ from: location }} />;
-  if (isLoggedIn && !needAuth) return <Navigate to="/profile" replace state={{ from: location }} />;
-
+  if (isLoading) return <Preloader />;
+  if (!isLoggedIn && needAuth) return <Navigate to="/login" state={{ from: location }} replace />;
+  if (isLoggedIn && !needAuth)
+    return <Navigate to={location.state?.from || '/profile'} replace />;
   return element;
 };

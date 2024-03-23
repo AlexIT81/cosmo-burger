@@ -76,17 +76,17 @@ const App: FC = () => {
     }
   };
 
-  // для модалки ингредиента
+  // для модалок
   const location = useLocation();
-  const { state } = location;
-
+  const backgroundLocation = location.state && location.state.backgroundLocation;
+ 
   // авторизация
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = getCookie('accessToken');
 
   useEffect(() => {
     if (!accessToken && refreshToken) dispatch(updateTokenAction());
-    if (accessToken) dispatch(getUserDataAction());
+    if (accessToken && refreshToken) dispatch(getUserDataAction());
   }, [refreshToken, accessToken, dispatch]);
 
   return (
@@ -97,9 +97,10 @@ const App: FC = () => {
           <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.</p>
         ) : (
           <>
-            <Routes location={state?.backgroundLocation || location}>
+            <Routes location={backgroundLocation || location}>
               <Route path="/" element={<Main handleModalOrder={handleModalOrder} />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<ProtectedRouteElement element={<Login />} needAuth={false} />} />
+              {/* <Route path="/login" element={<Login />} /> */}
               <Route path="/register" element={<ProtectedRouteElement element={<Register />} needAuth={false} />} />
               <Route
                 path="/forgot-password"
@@ -110,15 +111,17 @@ const App: FC = () => {
                 element={<ProtectedRouteElement element={<ResetPassword />} needAuth={false} />}
               />
               <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} needAuth />} />
+              {/* <Route path="/profile/orders" element={<ProfileOrders />} /> */}
               <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/feed/:id" element={<FeedId />} />
+              {/* <Route path="/profile/orders/:id" element={<FeedId />} /> */}
               <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<FeedId />} needAuth />} />
               <Route path="/ingredients/:id" element={<IngredientView />} />
               <Route path="*" element={<NotFound404 />} />
             </Routes>
 
-            {state?.backgroundLocation && (
+            {backgroundLocation && (
               <Routes>
                 <Route
                   path="/ingredients/:id"
@@ -139,10 +142,20 @@ const App: FC = () => {
                 <Route
                   path="/profile/orders/:id"
                   element={
-                    <Modal closeModal={closeModal}>
-                      <OrderInfo />
-                    </Modal>
+                    <ProtectedRouteElement
+                      element={
+                        <Modal closeModal={closeModal}>
+                          <OrderInfo />
+                        </Modal>
+                      }
+                      needAuth
+                    />
                   }
+                  // element={
+                  //   <Modal closeModal={closeModal}>
+                  //     <OrderInfo />
+                  //   </Modal>
+                  // }
                 />
               </Routes>
             )}

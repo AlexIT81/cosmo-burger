@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-item.module.css';
 import { IBurgerItem } from '../../utils/types';
@@ -41,9 +40,10 @@ export const BurgerItem: FC<IBurgerItem> = ({ name, number, data, images, price,
         <div className={styles.main}>
           <div className={styles.gallery}>
             {images.slice(0, VISIBLE_IMAGES_COUNT).map((image, index) => {
+              const key = `${image}${index}`
               return (
                 <img
-                  key={uuidv4()}
+                  key={key}
                   style={{ zIndex: ` ${images.length - index}` }}
                   alt=""
                   src={image}

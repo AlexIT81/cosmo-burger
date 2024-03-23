@@ -1,13 +1,13 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register.module.css';
 import { registerAction } from '../../services/actions/user/register';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch } from '../../services/hooks';
 
 export const Register: FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const { formValues, handleChange } = useForm({
     name: '',
     email: '',

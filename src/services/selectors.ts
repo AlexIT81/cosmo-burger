@@ -67,3 +67,7 @@ export const getAllOrdersSelector = (state: RootState) => {
 export const getWsConnectionStatusSelector = (state: RootState) => {
   return state.orders.wsConnected;
 }
+
+export const getUserDataLoading = (state: RootState) => {
+  return state.user.isLoading;
+}

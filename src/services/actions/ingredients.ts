@@ -1,6 +1,5 @@
 import { getDataRequest } from '../../utils/api';
-import { IIngredient } from '../../utils/types';
-import { AppDispatch, AppThunkAction } from '../../utils/types';
+import { AppDispatch, AppThunkAction, IIngredient } from '../../utils/types';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';

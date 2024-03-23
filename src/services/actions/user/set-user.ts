@@ -1,6 +1,5 @@
 import { setUserDataRequest } from '../../../utils/api';
-import { IBodyRequest } from '../../../utils/types';
-import { AppDispatch, AppThunkAction } from '../../../utils/types';
+import { AppDispatch, AppThunkAction, IBodyRequest } from '../../../utils/types';
 
 export const SET_USER_DATA_REQUEST: 'SET_USER_DATA_REQUEST' = 'SET_USER_DATA_REQUEST';
 export const SET_USER_DATA_SUCCESS: 'SET_USER_DATA_SUCCESS' = 'SET_USER_DATA_SUCCESS';
