@@ -81,6 +81,7 @@ export interface IModal extends IModalOverlay {
 export interface IProtectedRouteElement {
   element: ReactElement;
   needAuth: boolean;
+  backgroundLocation?: boolean;
 }
 
 export interface IUseForm {

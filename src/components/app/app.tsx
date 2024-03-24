@@ -79,7 +79,7 @@ const App: FC = () => {
   // для модалок
   const location = useLocation();
   const backgroundLocation = location.state && location.state.backgroundLocation;
- 
+
   // авторизация
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = getCookie('accessToken');
@@ -100,7 +100,6 @@ const App: FC = () => {
             <Routes location={backgroundLocation || location}>
               <Route path="/" element={<Main handleModalOrder={handleModalOrder} />} />
               <Route path="/login" element={<ProtectedRouteElement element={<Login />} needAuth={false} />} />
-              {/* <Route path="/login" element={<Login />} /> */}
               <Route path="/register" element={<ProtectedRouteElement element={<Register />} needAuth={false} />} />
               <Route
                 path="/forgot-password"
@@ -111,8 +110,12 @@ const App: FC = () => {
                 element={<ProtectedRouteElement element={<ResetPassword />} needAuth={false} />}
               />
               <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} needAuth />} />
-              {/* <Route path="/profile/orders" element={<ProfileOrders />} /> */}
-              <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
+              <Route
+                path="/profile/orders"
+                element={
+                  <ProtectedRouteElement backgroundLocation={backgroundLocation} element={<ProfileOrders />} needAuth />
+                }
+              />
               <Route path="/feed" element={<Feed />} />
               <Route path="/feed/:id" element={<FeedId />} />
               {/* <Route path="/profile/orders/:id" element={<FeedId />} /> */}
@@ -142,20 +145,10 @@ const App: FC = () => {
                 <Route
                   path="/profile/orders/:id"
                   element={
-                    <ProtectedRouteElement
-                      element={
-                        <Modal closeModal={closeModal}>
-                          <OrderInfo />
-                        </Modal>
-                      }
-                      needAuth
-                    />
+                    <Modal closeModal={closeModal}>
+                      <OrderInfo />
+                    </Modal>
                   }
-                  // element={
-                  //   <Modal closeModal={closeModal}>
-                  //     <OrderInfo />
-                  //   </Modal>
-                  // }
                 />
               </Routes>
             )}
