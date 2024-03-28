@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
 import styles from './ingredients.module.css';
 import { getInrgedientsSelector } from '../../services/selectors';
 import { Preloader } from '../../components/preloader/preloader';
 import { IIngredient } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
 
 export const IngredientView = () => {
   const [currentIngredient, setCurrentIngredient] = useState<IIngredient>();

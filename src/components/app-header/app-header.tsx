@@ -25,8 +25,8 @@ export const AppHeader: FC = () => {
           <li className={`${styles['header-menu__item']} pt-4 pr-5 pb-4 pl-5`}>
             <NavLink
               to="/feed"
-              className={({ isActive }) =>
-                isActive
+              className={
+                pathname === '/feed'
                   ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
                   : `${styles['header-menu__link']}`
               }
@@ -46,12 +46,12 @@ export const AppHeader: FC = () => {
             <Link
               to="/profile"
               className={
-                pathname === '/profile'
+                pathname.includes('/profile')
                   ? `${styles['header-menu__link']} ${styles['header-menu__link_active']}`
                   : `${styles['header-menu__link']}`
               }
             >
-              <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
+              <ProfileIcon type={pathname.includes('/profile') ? 'primary' : 'secondary'} />
               <span className="text text_type_main-default">Личный кабинет</span>
             </Link>
           </li>
@@ -59,4 +59,4 @@ export const AppHeader: FC = () => {
       </nav>
     </header>
   );
-}
+};

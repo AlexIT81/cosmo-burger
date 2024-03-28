@@ -1,14 +1,13 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { FC, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FC, useState } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { loginAction } from '../../services/actions/user/login';
-import { isLoggedInSelector } from '../../services/selectors';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch } from '../../services/hooks';
 
 export const Login: FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const { formValues, handleChange } = useForm({
     email: '',
     pass: '',
@@ -23,17 +22,6 @@ export const Login: FC = () => {
       dispatch(loginAction(formValues.email, formValues.pass));
     }
   };
-
-  // роутинг
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector(isLoggedInSelector);
-  const location = useLocation();
-
-  const from = location.state?.from?.pathname || '/';
-
-  useEffect(() => {
-    if (isLoggedIn) navigate(from, { replace: true });
-  }, [isLoggedIn, navigate, from]);
 
   const setShowPass = () => {
     setIsShowPass(!isShowPass);

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/hooks';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
@@ -31,9 +31,11 @@ import { ProtectedRouteElement } from '../protected-route/protected-route';
 import { IngredientView } from '../../pages/ingredients/ingredients';
 import { getInrgedients } from '../../services/actions/ingredients';
 import { IIngredient } from '../../utils/types';
+import { FeedId } from '../../pages/feed-id/feed-id';
+import { OrderInfo } from '../order-info/order-info';
 
 const App: FC = () => {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpenModalOrder, setIsOpenModalOrder] = useState(false);
 
@@ -53,8 +55,8 @@ const App: FC = () => {
     orderIngredients.forEach((item: IIngredient) => {
       orderData.push(item._id);
     });
-    orderData.push(orderBun._id);
-    orderData.unshift(orderBun._id);
+    orderData.push(orderBun!._id);
+    orderData.unshift(orderBun!._id);
     dispatch(getOrder(orderData));
   };
 
@@ -74,9 +76,9 @@ const App: FC = () => {
     }
   };
 
-  // для модалки ингредиента
+  // для модалок
   const location = useLocation();
-  const { state } = location;
+  const backgroundLocation = location.state && location.state.backgroundLocation;
 
   // авторизация
   const refreshToken = localStorage.getItem('refreshToken');
@@ -84,7 +86,7 @@ const App: FC = () => {
 
   useEffect(() => {
     if (!accessToken && refreshToken) dispatch(updateTokenAction());
-    if (accessToken) dispatch(getUserDataAction());
+    if (accessToken && refreshToken) dispatch(getUserDataAction());
   }, [refreshToken, accessToken, dispatch]);
 
   return (
@@ -95,9 +97,9 @@ const App: FC = () => {
           <p style={{ textAlign: 'center' }}>Ошибка получение данных с сервера. Пожалуйста, повторите запрос позже.</p>
         ) : (
           <>
-            <Routes location={state?.backgroundLocation || location}>
+            <Routes location={backgroundLocation || location}>
               <Route path="/" element={<Main handleModalOrder={handleModalOrder} />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<ProtectedRouteElement element={<Login />} needAuth={false} />} />
               <Route path="/register" element={<ProtectedRouteElement element={<Register />} needAuth={false} />} />
               <Route
                 path="/forgot-password"
@@ -108,19 +110,43 @@ const App: FC = () => {
                 element={<ProtectedRouteElement element={<ResetPassword />} needAuth={false} />}
               />
               <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} needAuth />} />
-              <Route path="/profile/orders" element={<ProtectedRouteElement element={<ProfileOrders />} needAuth />} />
-              <Route path="/feed" element={<ProtectedRouteElement element={<Feed />} needAuth />} />
+              <Route
+                path="/profile/orders"
+                element={
+                  <ProtectedRouteElement backgroundLocation={backgroundLocation} element={<ProfileOrders />} needAuth />
+                }
+              />
+              <Route path="/feed" element={<Feed />} />
+              <Route path="/feed/:id" element={<FeedId />} />
+              {/* <Route path="/profile/orders/:id" element={<FeedId />} /> */}
+              <Route path="/profile/orders/:id" element={<ProtectedRouteElement element={<FeedId />} needAuth />} />
               <Route path="/ingredients/:id" element={<IngredientView />} />
               <Route path="*" element={<NotFound404 />} />
             </Routes>
 
-            {state?.backgroundLocation && (
+            {backgroundLocation && (
               <Routes>
                 <Route
                   path="/ingredients/:id"
                   element={
                     <Modal closeModal={closeModal} title="Детали ингредиента">
                       <IngredientDetails />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path="/feed/:id"
+                  element={
+                    <Modal closeModal={closeModal}>
+                      <OrderInfo />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path="/profile/orders/:id"
+                  element={
+                    <Modal closeModal={closeModal}>
+                      <OrderInfo />
                     </Modal>
                   }
                 />
@@ -136,6 +162,6 @@ const App: FC = () => {
       )}
     </>
   );
-}
+};
 
 export default App;

@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useLocation, Navigate } from 'react-router-dom';
 import styles from './profile-menu.module.css';
 import { logoutAction } from '../../services/actions/user/logout';
+import { useDispatch } from '../../services/hooks';
 
 export const ProfileMenu: FC = () => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const logout = () => {
     dispatch(logoutAction());

@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { FC, useCallback, useMemo } from 'react';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
@@ -7,6 +6,7 @@ import { ConstructorTotal } from '../constructor-total/constructor-total';
 import { getBurgerBunSelector, getBurgerIngredientsSelector } from '../../services/selectors';
 import { addBurgerIngredient } from '../../services/actions/burger';
 import { IOnlyModal, IIngredient, IIngredientWithId } from '../../utils/types';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 export const BurgerConstructor: FC<IOnlyModal> = ({ handleModalOrder }) => {
   const dispatch = useDispatch();

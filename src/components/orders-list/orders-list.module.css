@@ -1,0 +1,8 @@
+.burgers-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+  max-height: calc(100vh - 88px - 45px - 64px - 30px);
+  padding: 0 8px;
+  overflow-y: auto;
+}

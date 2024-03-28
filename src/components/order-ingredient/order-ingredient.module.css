@@ -1,0 +1,33 @@
+.element {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.img {
+  box-sizing: border-box;
+  object-fit: cover;
+  width: 64px;
+  height: 64px;
+  border-radius: 100%;
+  background-image: linear-gradient(90deg, #801AB2, #4C4CFF);
+  background-origin: border-box;
+  box-shadow: inset 0 100vw var(--interface-bg);
+  border: 2px solid transparent;
+}
+
+.name {
+  composes: text text_type_main-default from global;
+  width: 100%;
+}
+
+.price-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.price {
+  composes: text text_type_digits-default from global;
+  white-space: nowrap;
+}

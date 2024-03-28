@@ -7,6 +7,8 @@ import {
   TGetUserDataRequest,
   TPasswordAndLogoutRequest,
   TServerResponse,
+  IBodyRequest,
+  TGetOrderInfoRequest,
 } from './types';
 
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -112,7 +114,7 @@ export const getUserDataRequest = () => {
     .then((res) => checkSuccess<TGetUserDataRequest>(res));
 };
 
-export const setUserDataRequest = (data: string) => {
+export const setUserDataRequest = (data: IBodyRequest) => {
   const myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${getCookie('accessToken')}`);
   myHeaders.append('Content-Type', 'application/json');
@@ -123,4 +125,10 @@ export const setUserDataRequest = (data: string) => {
   })
     .then((res) => checkResponse<TGetUserDataRequest>(res))
     .then((res) => checkSuccess<TGetUserDataRequest>(res));
+};
+
+export const getOrderInfoRequest = (orderNumber: string) => {
+  return fetch(`${API_URL}/orders/${orderNumber}`)
+    .then((res) => checkResponse<TGetOrderInfoRequest>(res))
+    .then((res) => checkSuccess<TGetOrderInfoRequest>(res));
 };
