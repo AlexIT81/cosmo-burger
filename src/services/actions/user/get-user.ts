@@ -21,17 +21,17 @@ interface IGetUserDataErrorAction {
 
 export type TGetUserDataActions = IGetUserDataRequestAction | IGetUserDataSuccessAction | IGetUserDataErrorAction;
 
-const getUserDataReq = (): IGetUserDataRequestAction => ({
+export const getUserDataReq = (): IGetUserDataRequestAction => ({
   type: GET_USER_DATA_REQUEST,
 });
 
-const getUserDataSuccess = (email: string, name: string): IGetUserDataSuccessAction => ({
+export const getUserDataSuccess = (email: string, name: string): IGetUserDataSuccessAction => ({
   type: GET_USER_DATA_SUCCESS,
   email,
   name,
 });
 
-const getUserDataError = (): IGetUserDataErrorAction => ({
+export const getUserDataError = (): IGetUserDataErrorAction => ({
   type: GET_USER_DATA_ERROR,
 });
 

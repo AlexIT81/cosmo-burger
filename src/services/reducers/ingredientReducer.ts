@@ -5,7 +5,7 @@ type TIngredientState = {
   ingredient: IIngredient | {};
 };
 
-const initialState: TIngredientState = {
+export const initialState: TIngredientState = {
   ingredient: {},
 };
 

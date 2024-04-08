@@ -15,7 +15,7 @@ type TUserState = {
   isRequestFailed: boolean,
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: {
     email: null,
     name: null,

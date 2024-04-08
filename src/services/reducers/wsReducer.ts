@@ -3,6 +3,7 @@ import {
   TWSActions,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
+  WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_GET_ORDERS,
 } from '../actions/wsActions';
@@ -13,7 +14,7 @@ type TWSState = {
   error?: Event;
 };
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
   wsConnected: false,
   orders: null,
 };
@@ -21,6 +22,12 @@ const initialState: TWSState = {
 // eslint-disable-next-line default-param-last
 export const wsReducer = (state = initialState, action: TWSActions) => {
   switch (action.type) {
+    case WS_CONNECTION_START:
+      return {
+        ...state,
+        error: undefined,
+      };
+
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,

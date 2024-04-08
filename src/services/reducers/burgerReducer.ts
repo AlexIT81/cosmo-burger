@@ -7,12 +7,12 @@ import {
   SORT_BURGER_INGREDIENT,
 } from '../actions/burger';
 
-type TBurgerState = {
+export type TBurgerState = {
   bun: null | IIngredientWithId;
   ingredients: IIngredientWithId[];
 };
 
-const initialState: TBurgerState = {
+export const initialState: TBurgerState = {
   bun: null,
   ingredients: [],
 };

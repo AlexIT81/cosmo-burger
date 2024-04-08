@@ -12,7 +12,7 @@ type TOrderState = {
   orderFailed: boolean,
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   order: {},
   orderRequest: false,
   orderFailed: false,
