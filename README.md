@@ -1,9 +1,14 @@
 # SPA - космическая бургерная!
 
 [Cсылка на макет](https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1).
+[Ссылка на сайт](https://burger.studioit.online)
 
 ## О проекте
 Бургерная с возможностью выбора ингредиентов для бургера и отправки заказа. Авторизация пользователя, возможность редактировать данных пользователя и т.п. Просмотром ленты всех и только своих заказов.
+
+### 6 спринт
+Реализовано тестирование всех редьюсеров в проекте.
+С помощью Cypress реализованы тесты открытия модального окна ингредиента и оформления заказа.
 
 ### 5 спринт
 К предыдущему функционалу добавилось:
@@ -59,6 +64,7 @@
 | `npm run start` | Запуск проекта в режиме разработки.|
 | `npm run build` | Запуск проекта в режиме продакшена. |
 | `npm run eslint` | Запуск линтера. |
+| `npm run cypress:open` | Запуск тестов. |
 
 
 ### Стек технологий
@@ -78,3 +84,5 @@
 ![API](https://img.shields.io/badge/API-API-073502?style=for-the-badge&labelColor=3d3f3d)
 ![redux](https://img.shields.io/badge/redux-073502?style=for-the-badge&logo=redux&labelColor=3d3f3d)
 ![typescript](https://img.shields.io/badge/typescript-072f13?style=for-the-badge&logo=typescript&labelColor=3d3f3d)
+![jest](https://img.shields.io/badge/jest-072f13?style=for-the-badge&logo=jest&labelColor=3d3f3d)
+![cypress](https://img.shields.io/badge/cypress-072f13?style=for-the-badge&logo=cypress&labelColor=3d3f3d)
