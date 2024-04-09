@@ -29,16 +29,16 @@ export type TGetOrderActions =
   | IGetOrderFailedAction
   | IClearOrderAction;
 
-const getOrderRequest = (): IGetOrderRequestAction => ({
+export const getOrderRequest = (): IGetOrderRequestAction => ({
   type: GET_ORDER_REQUEST,
 });
 
-const getOrderSuccess = (res: TCreateOrderRequest): IGetOrderSuccessAction => ({
+export const getOrderSuccess = (res: TCreateOrderRequest): IGetOrderSuccessAction => ({
   type: GET_ORDER_SUCCESS,
   payload: res,
 });
 
-const getOrderFailed = () => ({
+export const getOrderFailed = () => ({
   type: GET_ORDER_FAILED,
 });
 

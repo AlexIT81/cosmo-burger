@@ -22,17 +22,17 @@ interface IRegisterErrorAction {
 
 export type TRegisterActions = IRegisterRequestAction | IRegisterSuccessAction | IRegisterErrorAction;
 
-const registerReq = (): IRegisterRequestAction => ({
+export const registerReq = (): IRegisterRequestAction => ({
   type: REGISTER_REQUEST,
 });
 
-const registerSuccess = (email: string, name: string): IRegisterSuccessAction => ({
+export const registerSuccess = (email: string, name: string): IRegisterSuccessAction => ({
   type: REGISTER_SUCCESS,
   email,
   name,
 });
 
-const registerError = (): IRegisterErrorAction => ({
+export const registerError = (): IRegisterErrorAction => ({
   type: REGISTER_ERROR,
 });
 

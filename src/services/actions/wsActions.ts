@@ -34,8 +34,22 @@ export const wsConnectionStartAction = (url: string): IWSConnectionStartAction =
   url,
 });
 
+export const wsConnectionSuccessAction = (): IWSConnectionSuccessAction => ({
+  type: WS_CONNECTION_SUCCESS,
+});
+
+export const wsConnectionErrorAction = (payload: Event): IWSConnectionErrorAction => ({
+  type: WS_CONNECTION_ERROR,
+  payload
+});
+
 export const wsConnectionClosedAction = (): IWSConnectionClosedAction => ({
   type: WS_CONNECTION_CLOSED,
+});
+
+export const wsGetOrdersAction = (payload: IOrdersResponse): IWSGetOrdersAction => ({
+  type: WS_GET_ORDERS,
+  payload
 });
 
 export type TWSActions =

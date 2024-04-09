@@ -21,17 +21,17 @@ interface ISetUserDataErrorAction {
 
 export type TSetUserDataActions = ISetUserDataRequestAction | ISetUserDataSuccessAction | ISetUserDataErrorAction;
 
-const setUserDataReq = (): ISetUserDataRequestAction => ({
+export const setUserDataReq = (): ISetUserDataRequestAction => ({
   type: SET_USER_DATA_REQUEST,
 });
 
-const setUserDataSuccess = (email: string, name: string): ISetUserDataSuccessAction => ({
+export const setUserDataSuccess = (email: string, name: string): ISetUserDataSuccessAction => ({
   type: SET_USER_DATA_SUCCESS,
   email,
   name,
 });
 
-const setUserDataError = (): ISetUserDataErrorAction => ({
+export const setUserDataError = (): ISetUserDataErrorAction => ({
   type: SET_USER_DATA_ERROR,
 });
 

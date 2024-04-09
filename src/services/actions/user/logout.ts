@@ -20,15 +20,15 @@ interface ILogoutError {
 
 export type TLogoutActions = ILogoutRequest | ILogoutSuccess | ILogoutError;
 
-const logoutReq = (): ILogoutRequest => ({
+export const logoutReq = (): ILogoutRequest => ({
   type: LOGOUT_REQUEST,
 });
 
-const logoutSuccess = (): ILogoutSuccess => ({
+export const logoutSuccess = (): ILogoutSuccess => ({
   type: LOGOUT_SUCCESS,
 });
 
-const logoutError = (): ILogoutError => ({
+export const logoutError = (): ILogoutError => ({
   type: LOGOUT_ERROR,
 });
 

@@ -33,7 +33,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "eslint": "eslint . --ext .jsx --ignore-path .gitignore"
+    "eslint": "eslint . --ext .jsx --ignore-path .gitignore",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -54,13 +55,18 @@
     ]
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
     "@types/uuid": "^9.0.8",
+    "cypress": "^13.7.2",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "3.2.4"
+    "fetch-mock": "^9.11.0",
+    "prettier": "3.2.4",
+    "redux-mock-store": "^1.5.4"
   }
 }

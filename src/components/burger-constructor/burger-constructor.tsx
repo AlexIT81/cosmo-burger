@@ -69,7 +69,7 @@ export const BurgerConstructor: FC<IOnlyModal> = ({ handleModalOrder }) => {
 
   return (
     <section className="pt-25">
-      <div className={bunStyle} ref={dropBunTarget}>
+      <div className={bunStyle} ref={dropBunTarget} data-testid='bun-container'>
         {burgerBun ? (
           <ConstructorCard
             isDraggable={false}
@@ -83,7 +83,7 @@ export const BurgerConstructor: FC<IOnlyModal> = ({ handleModalOrder }) => {
           <p className="text text_type_main-medium ml-8">Перетащите сюда булку!</p>
         )}
       </div>
-      <ul className={listStyle} ref={dropIngredientTarget}>
+      <ul className={listStyle} ref={dropIngredientTarget} data-testid='fillings-container'>
         {burgerIng.length ? (
           burgerIng.map((item: IIngredientWithId, i: number) => renderCard(item, i))
         ) : (

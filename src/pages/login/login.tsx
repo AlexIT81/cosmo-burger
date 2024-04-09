@@ -42,6 +42,7 @@ export const Login: FC = () => {
             errorText="Введите в формате example@ya.ru"
             size="default"
             extraClass="mb-6"
+            data-testid='email-input'
           />
           <Input
             type={isShowPass ? 'text' : 'password'}
@@ -55,6 +56,7 @@ export const Login: FC = () => {
             errorText="Только латиница, цифры и спец. символы"
             size="default"
             extraClass="mb-6"
+            data-testid='password-input'
           />
           <Button htmlType="submit" type="primary" size="large">
             Войти

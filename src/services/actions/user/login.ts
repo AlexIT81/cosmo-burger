@@ -22,17 +22,17 @@ interface ILoginErrorAction {
 
 export type TLoginActions = ILoginRequestAction | ILoginSuccessAction | ILoginErrorAction;
 
-const loginReq = (): ILoginRequestAction => ({
+export const loginReq = (): ILoginRequestAction => ({
   type: LOGIN_REQUEST,
 });
 
-const loginSuccess = (email: string, name: string): ILoginSuccessAction => ({
+export const loginSuccess = (email: string, name: string): ILoginSuccessAction => ({
   type: LOGIN_SUCCESS,
   email,
   name,
 });
 
-const loginError = (): ILoginErrorAction => ({
+export const loginError = (): ILoginErrorAction => ({
   type: LOGIN_ERROR,
 });
 

@@ -23,16 +23,16 @@ export type TGetInrgedientsActions =
   | IGetIngredientsSuccessAction
   | IGetIngredientsFailedAction;
 
-const getIngredientsRequest = (): IGetIngredientsRequestAction => ({
+export const getIngredientsRequest = (): IGetIngredientsRequestAction => ({
   type: GET_INGREDIENTS_REQUEST,
 });
 
-const getIngredientsSuccess = (ingredients: IIngredient[]): IGetIngredientsSuccessAction => ({
+export const getIngredientsSuccess = (ingredients: IIngredient[]): IGetIngredientsSuccessAction => ({
   type: GET_INGREDIENTS_SUCCESS,
   payload: ingredients,
 });
 
-const getIngredientsFailed = (): IGetIngredientsFailedAction => ({
+export const getIngredientsFailed = (): IGetIngredientsFailedAction => ({
   type: GET_INGREDIENTS_FAILED,
 });
 
