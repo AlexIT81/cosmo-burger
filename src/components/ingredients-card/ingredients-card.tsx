@@ -8,7 +8,7 @@ import { IIngredient } from '../../utils/types';
 import { useSelector } from '../../services/hooks';
 
 export const IngredientsCard: FC<IIngredient> = (ingredient) => {
-  const {type, _id: id, image_large: image, name, price} = ingredient;
+  const { type, _id: id, image_large: image, name, price } = ingredient;
   const location = useLocation();
 
   // DnD
@@ -33,7 +33,12 @@ export const IngredientsCard: FC<IIngredient> = (ingredient) => {
   }, [allBurgerParts]);
 
   return (
-    <Link to={`/ingredients/${id}`} state={{ backgroundLocation: location }} className={styles.link}>
+    <Link
+      to={`/ingredients/${id}`}
+      state={{ backgroundLocation: location }}
+      className={styles.link}
+      data-testid="ingredient-card"
+    >
       <li className={styles.card} role="tab" ref={dragRef}>
         <img src={image} alt={name} className={styles.image} />
         <div className={styles['price-wrapper']}>

@@ -20,7 +20,7 @@ export const IngredientDetails: FC = () => {
       {currentIngredient ? (
         <>
           <img src={currentIngredient.image_large} alt={currentIngredient.name} className={styles.image} />
-          <h2 className={styles.title}>{currentIngredient.name}</h2>
+          <h2 className={styles.title} data-testid='ingredient-title'>{currentIngredient.name}</h2>
           <ul className={styles.nutritionals}>
             <li className={`${styles['nutritional-wrapper']}`}>
               <h3 className={`${styles['nutritional-title']}`}>Калории,ккал</h3>

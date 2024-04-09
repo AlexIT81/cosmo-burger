@@ -24,7 +24,7 @@ export const ConstructorTotal: FC<IConstructorTotal> = ({ totalSum, handleModalO
         <span className="text text_type_main-large mr-2">{totalSum}</span>
         <CurrencyIcon type="primary" />
       </div>
-      <Button htmlType="button" type="primary" size="large" onClick={onModalOrder}>
+      <Button htmlType="button" type="primary" size="large" onClick={onModalOrder} data-testid='button-order-submit'>
         Оформить заказ
       </Button>
     </div>
