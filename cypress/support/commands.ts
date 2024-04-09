@@ -1,3 +1,4 @@
+//@ts-nocheck
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -35,3 +36,16 @@
 //     }
 //   }
 // }
+
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.visit('/login');
+  cy.get('[data-testid=email-input]').type(`${email}`);
+  cy.get('[data-testid=password-input]').type(`${password}`);
+  cy.get('button').click();
+  cy.intercept('POST', 'api/auth/login', { fixture: 'login.json' });
+  cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' });
+
+  window.localStorage.setItem('refreshToken', JSON.stringify('test-refreshToken'));
+  cy.setCookie('accessToken', 'test-accessToken');
+})
